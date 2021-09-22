@@ -16,5 +16,10 @@ namespace Lab1
         {
             InitializeComponent();
         }
+
+        private void Task3Button_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
