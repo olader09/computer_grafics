@@ -26,9 +26,24 @@ namespace Lab1
 
             Pen p = new Pen(Color.White);
 
-            g1.DrawRectangle(p, new Rectangle(0, 0, Histogram1.Width, Histogram1.Height));
-            g2.DrawRectangle(p, new Rectangle(0, 0, Histogram2.Width, Histogram2.Height));
-            g3.DrawRectangle(p, new Rectangle(0, 0, Histogram3.Width, Histogram3.Height));
+            SolidBrush grayBrush = new SolidBrush(DefaultBackColor);
+
+            Rectangle r1 = new Rectangle(0, 0, Histogram1.Width, Histogram1.Height);
+            g1.FillRectangle(grayBrush, r1);
+
+            Rectangle r2 = new Rectangle(0, 0, Histogram2.Width, Histogram2.Height);
+            g2.FillRectangle(grayBrush, r2);
+
+            Rectangle r3 = new Rectangle(0, 0, Histogram3.Width, Histogram3.Height);
+            g3.FillRectangle(grayBrush, r3);
+
+            g1.DrawRectangle(p, r1);
+            g2.DrawRectangle(p, r2);
+            g3.DrawRectangle(p, r3);
+
+            g1.DrawRectangle(p, r1);
+            g2.DrawRectangle(p, r2);
+            g3.DrawRectangle(p, r3);
         }
 
         public void ClearPictures()
@@ -86,7 +101,11 @@ namespace Lab1
         {
             ClearHistograms();
             ClearPictures();
-            ClearHSV(); 
+            ClearHSV();
+
+            PictureBox2.Visible = true;
+            PictureBox3.Visible = true;
+
             // Picture 1
             Bitmap b = new Bitmap(picture.Width, picture.Height);
             int[] vec1 = new int[256];
@@ -177,6 +196,9 @@ namespace Lab1
             ClearPictures();
             ClearHSV();
 
+            PictureBox2.Visible = true;
+            PictureBox3.Visible = true;
+
             // Picture 1
             Bitmap b = new Bitmap(picture.Width, picture.Height);
             int[] vec1 = new int[256];
@@ -259,7 +281,10 @@ namespace Lab1
         private void Task3Button_Click(object sender, EventArgs e)
         {
             ClearHistograms();
-            ClearPictures(); 
+            ClearPictures();
+
+            PictureBox2.Visible = false;
+            PictureBox3.Visible = false;
 
             HBar.Visible = true;
             SBar.Visible = true;
