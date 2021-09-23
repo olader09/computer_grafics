@@ -54,20 +54,20 @@ namespace Lab1
             // 
             this.MainPicture.Location = new System.Drawing.Point(12, 12);
             this.MainPicture.Name = "MainPicture";
-            this.MainPicture.Size = new System.Drawing.Size(260, 315);
+            this.MainPicture.Size = new System.Drawing.Size(260, 299);
             this.MainPicture.TabIndex = 0;
             this.MainPicture.TabStop = false;
             // 
             // PictureName
             // 
-            this.PictureName.Location = new System.Drawing.Point(12, 333);
+            this.PictureName.Location = new System.Drawing.Point(12, 317);
             this.PictureName.Name = "PictureName";
             this.PictureName.Size = new System.Drawing.Size(260, 26);
             this.PictureName.TabIndex = 1;
             // 
             // BrouseButton
             // 
-            this.BrouseButton.Location = new System.Drawing.Point(12, 365);
+            this.BrouseButton.Location = new System.Drawing.Point(12, 349);
             this.BrouseButton.Name = "BrouseButton";
             this.BrouseButton.Size = new System.Drawing.Size(260, 100);
             this.BrouseButton.TabIndex = 2;
@@ -77,7 +77,7 @@ namespace Lab1
             // 
             // Task1Button
             // 
-            this.Task1Button.Location = new System.Drawing.Point(12, 493);
+            this.Task1Button.Location = new System.Drawing.Point(12, 455);
             this.Task1Button.Name = "Task1Button";
             this.Task1Button.Size = new System.Drawing.Size(260, 60);
             this.Task1Button.TabIndex = 3;
@@ -87,7 +87,7 @@ namespace Lab1
             // 
             // Task2Button
             // 
-            this.Task2Button.Location = new System.Drawing.Point(12, 584);
+            this.Task2Button.Location = new System.Drawing.Point(12, 521);
             this.Task2Button.Name = "Task2Button";
             this.Task2Button.Size = new System.Drawing.Size(260, 60);
             this.Task2Button.TabIndex = 4;
@@ -96,7 +96,7 @@ namespace Lab1
             // 
             // Task3Button
             // 
-            this.Task3Button.Location = new System.Drawing.Point(12, 672);
+            this.Task3Button.Location = new System.Drawing.Point(12, 587);
             this.Task3Button.Name = "Task3Button";
             this.Task3Button.Size = new System.Drawing.Size(260, 60);
             this.Task3Button.TabIndex = 5;
@@ -108,7 +108,7 @@ namespace Lab1
             // 
             this.PictureBox1.Location = new System.Drawing.Point(335, 12);
             this.PictureBox1.Name = "PictureBox1";
-            this.PictureBox1.Size = new System.Drawing.Size(260, 315);
+            this.PictureBox1.Size = new System.Drawing.Size(256, 299);
             this.PictureBox1.TabIndex = 6;
             this.PictureBox1.TabStop = false;
             // 
@@ -116,7 +116,7 @@ namespace Lab1
             // 
             this.PictureBox2.Location = new System.Drawing.Point(623, 12);
             this.PictureBox2.Name = "PictureBox2";
-            this.PictureBox2.Size = new System.Drawing.Size(260, 315);
+            this.PictureBox2.Size = new System.Drawing.Size(256, 299);
             this.PictureBox2.TabIndex = 7;
             this.PictureBox2.TabStop = false;
             // 
@@ -124,37 +124,37 @@ namespace Lab1
             // 
             this.PictureBox3.Location = new System.Drawing.Point(906, 12);
             this.PictureBox3.Name = "PictureBox3";
-            this.PictureBox3.Size = new System.Drawing.Size(260, 315);
+            this.PictureBox3.Size = new System.Drawing.Size(256, 299);
             this.PictureBox3.TabIndex = 8;
             this.PictureBox3.TabStop = false;
             // 
             // Histogram1
             // 
-            this.Histogram1.Location = new System.Drawing.Point(335, 365);
+            this.Histogram1.Location = new System.Drawing.Point(335, 333);
             this.Histogram1.Name = "Histogram1";
-            this.Histogram1.Size = new System.Drawing.Size(260, 367);
+            this.Histogram1.Size = new System.Drawing.Size(256, 314);
             this.Histogram1.TabIndex = 9;
             this.Histogram1.TabStop = false;
             // 
             // Histogram2
             // 
-            this.Histogram2.Location = new System.Drawing.Point(623, 365);
+            this.Histogram2.Location = new System.Drawing.Point(623, 333);
             this.Histogram2.Name = "Histogram2";
-            this.Histogram2.Size = new System.Drawing.Size(260, 367);
+            this.Histogram2.Size = new System.Drawing.Size(256, 314);
             this.Histogram2.TabIndex = 10;
             this.Histogram2.TabStop = false;
             // 
             // Histogram3
             // 
-            this.Histogram3.Location = new System.Drawing.Point(906, 365);
+            this.Histogram3.Location = new System.Drawing.Point(906, 333);
             this.Histogram3.Name = "Histogram3";
-            this.Histogram3.Size = new System.Drawing.Size(260, 367);
+            this.Histogram3.Size = new System.Drawing.Size(256, 314);
             this.Histogram3.TabIndex = 11;
             this.Histogram3.TabStop = false;
             // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(1178, 744);
+            this.ClientSize = new System.Drawing.Size(1178, 665);
             this.Controls.Add(this.Histogram3);
             this.Controls.Add(this.Histogram2);
             this.Controls.Add(this.Histogram1);

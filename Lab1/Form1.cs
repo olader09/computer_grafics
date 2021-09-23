@@ -42,42 +42,73 @@ namespace Lab1
 
         private void Task1Button_Click(object sender, EventArgs e)
         {
+            // Picture 1
             Bitmap b = new Bitmap(picture.Width, picture.Height);
+            int[] vec1 = new int[256];
             for (int i = 0; i < picture.Width; ++i)
                 for (int j = 0; j < picture.Height; ++j)
                 {
                     int y = (int)((0.299 * picture.GetPixel(i, j).R) +
                                   (0.587 * picture.GetPixel(i, j).G) +
                                   (0.114 * picture.GetPixel(i, j).B));
+                    vec1[y] += 1; 
                     b.SetPixel(i, j, Color.FromArgb(y, y, y));
                 }
 
             PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox1.Image = b;
 
+            // Picture 2
             Bitmap bb = new Bitmap(picture.Width, picture.Height);
+            int[] vec2 = new int[256];
             for (int i = 0; i < picture.Width; ++i)
                 for (int j = 0; j < picture.Height; ++j)
                 {
                     int y = (int)((0.2126 * picture.GetPixel(i, j).R) +
                                   (0.7152 * picture.GetPixel(i, j).G) +
                                   (0.0722 * picture.GetPixel(i, j).B));
+                    vec2[y] += 1;
                     bb.SetPixel(i, j, Color.FromArgb(y, y, y));
                 }
 
             PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox2.Image = bb;
 
+            // Picture 3
             Bitmap bbb = new Bitmap(picture.Width, picture.Height);
+            int[] vec3 = new int[256];
             for (int i = 0; i < picture.Width; ++i)
                 for (int j = 0; j < picture.Height; ++j)
                 {
                     int diff = Math.Abs(b.GetPixel(i, j).R - bb.GetPixel(i, j).R);
                     bbb.SetPixel(i, j, Color.FromArgb(diff, diff, diff));
+                    vec3[diff] += 1;
                 }
 
             PictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox3.Image = bbb;
+
+            // ------------------------------
+            Pen p = new Pen(Color.Black); 
+            // ------------------------------
+
+            // Histogram 1 
+            Graphics g1 = Histogram1.CreateGraphics();
+            for (int i = 0; i < 256; ++i)
+                g1.DrawLine(p, i, Histogram1.Height, i, 
+                    (int)(Histogram1.Height - (vec1[i] / (double)vec1.Max()) * Histogram1.Height ));
+
+            // Histogram 2 
+            Graphics g2 = Histogram2.CreateGraphics();
+            for (int i = 0; i < 256; ++i)
+                g2.DrawLine(p, i, Histogram2.Height, i, 
+                    (int)(Histogram2.Height - (vec2[i] / (double)vec2.Max()) * Histogram2.Height));
+
+            // Histogram 2 
+            Graphics g3 = Histogram3.CreateGraphics();
+            for (int i = 0; i < 256; ++i)
+                g3.DrawLine(p, i, Histogram3.Height, i,
+                    (int)(Histogram3.Height - (vec3[i] / (double)vec3.Max()) * Histogram3.Height));
         }
                 
     }
