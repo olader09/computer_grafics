@@ -73,6 +73,7 @@ namespace Lab1
             this.BrouseButton.TabIndex = 2;
             this.BrouseButton.Text = "Brouse picture";
             this.BrouseButton.UseVisualStyleBackColor = true;
+            this.BrouseButton.Click += new System.EventHandler(this.BrouseButton_Click);
             // 
             // Task1Button
             // 
@@ -82,6 +83,7 @@ namespace Lab1
             this.Task1Button.TabIndex = 3;
             this.Task1Button.Text = "Grey shades";
             this.Task1Button.UseVisualStyleBackColor = true;
+            this.Task1Button.Click += new System.EventHandler(this.Task1Button_Click);
             // 
             // Task2Button
             // 
