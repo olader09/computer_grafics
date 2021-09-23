@@ -93,6 +93,7 @@ namespace Lab1
             this.Task2Button.TabIndex = 4;
             this.Task2Button.Text = "R G B";
             this.Task2Button.UseVisualStyleBackColor = true;
+            this.Task2Button.Click += new System.EventHandler(this.Task2Button_Click);
             // 
             // Task3Button
             // 
