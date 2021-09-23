@@ -14,7 +14,8 @@ namespace Lab1
     {
         string file;
         Bitmap picture;
-        Tuple<double, double, double>[,] hsv; 
+        Tuple<double, double, double>[,] hsv;
+        double hh, ss, vv; 
 
         public void ClearHistograms()
         {
@@ -32,6 +33,16 @@ namespace Lab1
         public Form1()
         {
             InitializeComponent();
+            HBar.Minimum = 0;
+            HBar.Maximum = 360;
+            SBar.Minimum = 0;
+            SBar.Maximum = 100;
+            VBar.Minimum = 0;
+            VBar.Maximum = 100;
+            SBar.Value = 50;
+            VBar.Value = 50; 
+
+            
         }
 
         private void BrouseButton_Click(object sender, EventArgs e)
@@ -188,7 +199,11 @@ namespace Lab1
 
         private void Task3Button_Click(object sender, EventArgs e)
         {
-            ClearHistograms(); 
+            ClearHistograms();
+            HBar.Visible = true;
+            SBar.Visible = true;
+            VBar.Visible = true;
+            SaveButton.Visible = true; 
 
             Bitmap b = new Bitmap(picture.Width, picture.Height);
             hsv = new Tuple<double, double, double>[picture.Width, picture.Height]; 
@@ -222,11 +237,14 @@ namespace Lab1
                     hsv[i, j] = new Tuple<double, double, double>(h, s, v);
                 }
 
+            PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage; 
             PictureBox1.Image = picture; 
 
         }
 
-        private void HSVtoRGB(Tuple<double, double, double>[,] matrix)
+        
+
+        private Bitmap HSVtoRGB(Tuple<double, double, double>[,] matrix)
         {
             Bitmap map = new Bitmap(picture.Width, picture.Height); 
             for (int i = 0; i < picture.Width; ++i)
@@ -243,7 +261,7 @@ namespace Lab1
                     int q = (int)(v * (1 - s * f));
                     int t = (int)(v * (1 - (1 - f) * s));
 
-                    int r, g, b;
+                    int r = 0, g = 0, b = 0;
 
                     switch (hi)
                     {
@@ -267,14 +285,46 @@ namespace Lab1
                             break;
                     }
 
-
-
+                    map.SetPixel(i, j, Color.FromArgb(r, g, b)); 
                 }
+
+            return map; 
         }
 
         private void HBar_Scroll(object sender, EventArgs e)
         {
+            PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            hh = HBar.Value;
+            for (int i = 0; i < picture.Width; ++i)
+                for (int j = 0; j < picture.Height; ++j)
+                {
+                    hsv[i,j] = new Tuple<double, double, double>((hsv[i, j].Item1 + hh) % 360, hsv[i, j].Item2, hsv[i, j].Item3);
+                }
+            PictureBox1.Image = HSVtoRGB(hsv); 
+        }
 
+        private void SBar_Scroll(object sender, EventArgs e)
+        {
+            PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            ss = (SBar.Value - 50) / 100.0;
+            for (int i = 0; i < picture.Width; ++i)
+                for (int j = 0; j < picture.Height; ++j)
+                {
+                    hsv[i, j] = new Tuple<double, double, double>(hsv[i, j].Item1, hsv[i, j].Item2 + ss < 0 ? 0 : (hsv[i, j].Item2 + ss > 1 ? 1 : hsv[i, j].Item2 + ss), hsv[i, j].Item3);
+                }
+            PictureBox1.Image = HSVtoRGB(hsv);
+        }
+
+        private void VBar_Scroll(object sender, EventArgs e)
+        {
+            PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            vv = (VBar.Value - 50) / 700.0;
+            for (int i = 0; i < picture.Width; ++i)
+                for (int j = 0; j < picture.Height; ++j)
+                {
+                    hsv[i, j] = new Tuple<double, double, double>(hsv[i, j].Item1, hsv[i, j].Item2, hsv[i, j].Item3 + vv < 0 ? 0 : (hsv[i, j].Item3 + vv > 1 ? 1 : hsv[i, j].Item3 + vv));
+                }
+            PictureBox1.Image = HSVtoRGB(hsv);
         }
     }
 }

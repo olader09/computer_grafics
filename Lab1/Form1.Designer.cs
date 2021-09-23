@@ -162,34 +162,42 @@ namespace Lab1
             // 
             // HBar
             // 
-            this.HBar.Location = new System.Drawing.Point(1180, 12);
+            this.HBar.Location = new System.Drawing.Point(623, 12);
             this.HBar.Name = "HBar";
-            this.HBar.Size = new System.Drawing.Size(248, 69);
+            this.HBar.Size = new System.Drawing.Size(256, 69);
             this.HBar.TabIndex = 12;
+            this.HBar.Visible = false;
             this.HBar.Scroll += new System.EventHandler(this.HBar_Scroll);
             // 
             // SBar
             // 
-            this.SBar.Location = new System.Drawing.Point(1180, 87);
+            this.SBar.Location = new System.Drawing.Point(623, 87);
             this.SBar.Name = "SBar";
-            this.SBar.Size = new System.Drawing.Size(248, 69);
+            this.SBar.Size = new System.Drawing.Size(256, 69);
             this.SBar.TabIndex = 13;
+            this.SBar.Visible = false;
+            this.SBar.Scroll += new System.EventHandler(this.SBar_Scroll);
             // 
             // VBar
             // 
-            this.VBar.Location = new System.Drawing.Point(1180, 162);
+            this.VBar.Location = new System.Drawing.Point(623, 162);
             this.VBar.Name = "VBar";
-            this.VBar.Size = new System.Drawing.Size(248, 69);
+            this.VBar.Size = new System.Drawing.Size(256, 69);
             this.VBar.TabIndex = 14;
+            this.VBar.TabStop = false;
+            this.VBar.Visible = false;
+            this.VBar.Scroll += new System.EventHandler(this.VBar_Scroll);
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(1180, 237);
+            this.SaveButton.Location = new System.Drawing.Point(623, 237);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(248, 74);
+            this.SaveButton.Size = new System.Drawing.Size(256, 74);
             this.SaveButton.TabIndex = 15;
+            this.SaveButton.TabStop = false;
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Visible = false;
             // 
             // Form1
             // 
