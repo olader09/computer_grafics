@@ -12,7 +12,8 @@ namespace Lab1
 {
     public partial class Form1 : Form
     {
-        string file; 
+        string file;
+        Bitmap picture; 
 
         public Form1()
         {
@@ -26,18 +27,13 @@ namespace Lab1
 
         private void BrouseButton_Click(object sender, EventArgs e)
         {
-            /*string text = PictureName.Text;
-            MainPicture.Image = Image.FromFile(text);*/
             MainPicture.SizeMode = PictureBoxSizeMode.StretchImage;
-            // open file dialog   
             OpenFileDialog open = new OpenFileDialog();
-            // image filters  
             open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
             if (open.ShowDialog() == DialogResult.OK)
             {
-                // display image in picture box  
-                MainPicture.Image = new Bitmap(open.FileName);
-                // image file path  
+                picture = new Bitmap(open.FileName);
+                MainPicture.Image = picture; 
                 PictureName.Text = open.FileName;
                 file = open.FileName; 
             }
@@ -46,28 +42,43 @@ namespace Lab1
 
         private void Task1Button_Click(object sender, EventArgs e)
         {
-            Bitmap o = new Bitmap(file);
-            Bitmap b = new Bitmap(MainPicture.Width, MainPicture.Height);
-            for (int i = 0; i < b.Width; ++i)
-                for (int j = 0; j < b.Height; ++j)
+            Bitmap b = new Bitmap(picture.Width, picture.Height);
+            for (int i = 0; i < picture.Width; ++i)
+                for (int j = 0; j < picture.Height; ++j)
                 {
-                    int y = (int)((0.299 * o.GetPixel(i, j).R) + (0.587 * o.GetPixel(i, j).G) + (0.114 * o.GetPixel(i, j).B));
+                    int y = (int)((0.299 * picture.GetPixel(i, j).R) +
+                                  (0.587 * picture.GetPixel(i, j).G) +
+                                  (0.114 * picture.GetPixel(i, j).B));
                     b.SetPixel(i, j, Color.FromArgb(y, y, y));
                 }
 
-            PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage; 
+            PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox1.Image = b;
 
-            Bitmap bb = new Bitmap(MainPicture.Width, MainPicture.Height);
-            for (int i = 0; i < b.Width; ++i)
-                for (int j = 0; j < b.Height; ++j)
+            Bitmap bb = new Bitmap(picture.Width, picture.Height);
+            for (int i = 0; i < picture.Width; ++i)
+                for (int j = 0; j < picture.Height; ++j)
                 {
-                    int y = (int)((0.2126 * o.GetPixel(i, j).R) + (0.7152 * o.GetPixel(i, j).G) + (0.0722 * o.GetPixel(i, j).B));
-                    b.SetPixel(i, j, Color.FromArgb(y, y, y));
+                    int y = (int)((0.2126 * picture.GetPixel(i, j).R) +
+                                  (0.7152 * picture.GetPixel(i, j).G) +
+                                  (0.0722 * picture.GetPixel(i, j).B));
+                    bb.SetPixel(i, j, Color.FromArgb(y, y, y));
                 }
 
             PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox2.Image = bb;
+
+            Bitmap bbb = new Bitmap(picture.Width, picture.Height);
+            for (int i = 0; i < picture.Width; ++i)
+                for (int j = 0; j < picture.Height; ++j)
+                {
+                    int diff = Math.Abs(b.GetPixel(i, j).R - bb.GetPixel(i, j).R);
+                    bbb.SetPixel(i, j, Color.FromArgb(diff, diff, diff));
+                }
+
+            PictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            PictureBox3.Image = bbb;
         }
+                
     }
 }
