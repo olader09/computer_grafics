@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,15 +90,21 @@ namespace Lab1
             // Picture 1
             Bitmap b = new Bitmap(picture.Width, picture.Height);
             int[] vec1 = new int[256];
-            for (int i = 0; i < picture.Width; ++i)
-                for (int j = 0; j < picture.Height; ++j)
-                {
-                    int y = (int)((0.299 * picture.GetPixel(i, j).R) +
-                                  (0.587 * picture.GetPixel(i, j).G) +
-                                  (0.114 * picture.GetPixel(i, j).B));
-                    vec1[y] += 1; 
-                    b.SetPixel(i, j, Color.FromArgb(y, y, y));
-                }
+            using (var fb = new GraphFunc.FastBitmap(b))
+            using (var fpicture = new GraphFunc.FastBitmap(picture))
+            {
+                for (int i = 0; i < picture.Width; ++i)
+                    for (int j = 0; j < picture.Height; ++j)
+                    {
+
+                        int y = (int)((0.299 * fpicture.GetPixel(new Point(i, j)).R) +
+                                    (0.587 * fpicture.GetPixel(new Point(i, j)).G) +
+                                    (0.114 * fpicture.GetPixel(new Point(i, j)).B));
+                        vec1[y] += 1;
+
+                        fb.SetPixel(new Point(i, j), Color.FromArgb(y, y, y));
+                    }
+            }
 
             PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox1.Image = b;
@@ -105,15 +112,21 @@ namespace Lab1
             // Picture 2
             Bitmap bb = new Bitmap(picture.Width, picture.Height);
             int[] vec2 = new int[256];
-            for (int i = 0; i < picture.Width; ++i)
-                for (int j = 0; j < picture.Height; ++j)
+            using (var fbb = new GraphFunc.FastBitmap(bb))
+            {
+                using (var fpicture = new GraphFunc.FastBitmap(picture))
                 {
-                    int y = (int)((0.2126 * picture.GetPixel(i, j).R) +
-                                  (0.7152 * picture.GetPixel(i, j).G) +
-                                  (0.0722 * picture.GetPixel(i, j).B));
-                    vec2[y] += 1;
-                    bb.SetPixel(i, j, Color.FromArgb(y, y, y));
+                    for (int i = 0; i < picture.Width; ++i)
+                        for (int j = 0; j < picture.Height; ++j)
+                        {
+                            int y = (int)((0.2126 * fpicture.GetPixel(new Point(i, j)).R) +
+                                          (0.7152 * fpicture.GetPixel(new Point(i, j)).G) +
+                                          (0.0722 * fpicture.GetPixel(new Point(i, j)).B));
+                            vec2[y] += 1;
+                            fbb.SetPixel(new Point(i, j), Color.FromArgb(y, y, y));
+                        }
                 }
+            }
 
             PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox2.Image = bb;
@@ -121,13 +134,16 @@ namespace Lab1
             // Picture 3
             Bitmap bbb = new Bitmap(picture.Width, picture.Height);
             int[] vec3 = new int[256];
-            for (int i = 0; i < picture.Width; ++i)
-                for (int j = 0; j < picture.Height; ++j)
-                {
-                    int diff = Math.Abs(b.GetPixel(i, j).R - bb.GetPixel(i, j).R);
-                    bbb.SetPixel(i, j, Color.FromArgb(diff, diff, diff));
-                    vec3[diff] += 1;
-                }
+            using (var fbbb = new GraphFunc.FastBitmap(bbb))
+            {
+                for (int i = 0; i < picture.Width; ++i)
+                    for (int j = 0; j < picture.Height; ++j)
+                    {
+                        int diff = Math.Abs(b.GetPixel(i, j).R - bb.GetPixel(i, j).R);
+                        fbbb.SetPixel(new Point(i, j), Color.FromArgb(diff, diff, diff));
+                        vec3[diff] += 1;
+                    }
+            }
 
             PictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox3.Image = bbb;
@@ -145,7 +161,7 @@ namespace Lab1
             // Histogram 2 
             Graphics g2 = Histogram2.CreateGraphics();
             for (int i = 0; i < 256; ++i)
-                g2.DrawLine(p, i, Histogram2.Height, i, 
+                g2.DrawLine(p, i, Histogram2.Height, i,
                     (int)(Histogram2.Height - (vec2[i] / (double)vec2.Max()) * Histogram2.Height));
 
             // Histogram 2 
@@ -164,13 +180,19 @@ namespace Lab1
             // Picture 1
             Bitmap b = new Bitmap(picture.Width, picture.Height);
             int[] vec1 = new int[256];
-            for (int i = 0; i < picture.Width; ++i)
-                for (int j = 0; j < picture.Height; ++j)
+            using (var fb = new GraphFunc.FastBitmap(b))
+            {
+                using (var fpicture = new GraphFunc.FastBitmap(picture))
                 {
-                    int y = picture.GetPixel(i, j).R;
-                    vec1[y] += 1;
-                    b.SetPixel(i, j, Color.FromArgb(y, 0, 0));
+                    for (int i = 0; i < picture.Width; ++i)
+                        for (int j = 0; j < picture.Height; ++j)
+                        {
+                            int y = fpicture.GetPixel(new Point(i, j)).R;
+                            vec1[y] += 1;
+                            fb.SetPixel(new Point(i, j), Color.FromArgb(y, 0, 0));
+                        }
                 }
+            }
 
             PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox1.Image = b;
@@ -178,13 +200,19 @@ namespace Lab1
             // Picture 2
             Bitmap bb = new Bitmap(picture.Width, picture.Height);
             int[] vec2 = new int[256];
-            for (int i = 0; i < picture.Width; ++i)
-                for (int j = 0; j < picture.Height; ++j)
+            using (var fbb = new GraphFunc.FastBitmap(bb))
+            {
+                using (var fpicture = new GraphFunc.FastBitmap(picture))
                 {
-                    int y = picture.GetPixel(i, j).G;
-                    vec2[y] += 1;
-                    bb.SetPixel(i, j, Color.FromArgb(0, y, 0));
+                    for (int i = 0; i < picture.Width; ++i)
+                        for (int j = 0; j < picture.Height; ++j)
+                        {
+                            int y = fpicture.GetPixel(new Point(i, j)).G;
+                            vec2[y] += 1;
+                            fbb.SetPixel(new Point(i, j), Color.FromArgb(0, y, 0));
+                        }
                 }
+            }
 
             PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox2.Image = bb;
@@ -192,13 +220,19 @@ namespace Lab1
             // Picture 3
             Bitmap bbb = new Bitmap(picture.Width, picture.Height);
             int[] vec3 = new int[256];
-            for (int i = 0; i < picture.Width; ++i)
-                for (int j = 0; j < picture.Height; ++j)
+            using (var fbbb = new GraphFunc.FastBitmap(bbb))
+            {
+                using (var fpicture = new GraphFunc.FastBitmap(picture))
                 {
-                    int y = picture.GetPixel(i, j).B;
-                    vec3[y] += 1;
-                    bbb.SetPixel(i, j, Color.FromArgb(0, 0, y));
+                    for (int i = 0; i < picture.Width; ++i)
+                        for (int j = 0; j < picture.Height; ++j)
+                        {
+                            int y = fpicture.GetPixel(new Point(i, j)).B;
+                            vec3[y] += 1;
+                            fbbb.SetPixel(new Point(i, j), Color.FromArgb(0, 0, y));
+                        }
                 }
+            }
 
             PictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox3.Image = bbb;
@@ -232,7 +266,6 @@ namespace Lab1
             VBar.Visible = true;
             SaveButton.Visible = true; 
 
-            Bitmap b = new Bitmap(picture.Width, picture.Height);
             hsv = new Tuple<double, double, double>[picture.Width, picture.Height]; 
             for (int i = 0; i < picture.Width; ++i)
                 for (int j = 0; j < picture.Height; ++j)
@@ -253,7 +286,7 @@ namespace Lab1
                     else if (max == c.B)
                         h = 60 * ((c.R - c.G) / (max - min)) + 240;
 
-                    double s = 0.0;
+                    double s;
                     if (max == 0)
                         s = 0;
                     else
@@ -273,47 +306,50 @@ namespace Lab1
 
         private Bitmap HSVtoRGB(Tuple<double, double, double>[,] matrix)
         {
-            Bitmap map = new Bitmap(picture.Width, picture.Height); 
-            for (int i = 0; i < picture.Width; ++i)
-                for (int j = 0; j < picture.Height; ++j)
-                {
-                    var elem = matrix[i, j];
-                    var h = elem.Item1;
-                    var s = elem.Item2;
-                    var v = elem.Item3; 
-                    double temp = h / 60; 
-                    int hi = (int)Math.Floor(temp) % 6;
-                    double f = temp - Math.Floor(temp);
-                    int p = (int)(v * (1 - s));
-                    int q = (int)(v * (1 - s * f));
-                    int t = (int)(v * (1 - (1 - f) * s));
-
-                    int r = 0, g = 0, b = 0;
-
-                    switch (hi)
+            Bitmap map = new Bitmap(picture.Width, picture.Height);
+            using (var fmap = new GraphFunc.FastBitmap(map))
+            {
+                for (int i = 0; i < picture.Width; ++i)
+                    for (int j = 0; j < picture.Height; ++j)
                     {
-                        case 0:
-                            r = (int)v; b = t; g = p;
-                            break;
-                        case 1:
-                            r = q; b = (int)v; g = p;
-                            break;
-                        case 2:
-                            r = p; b = (int)v; g = t;
-                            break;
-                        case 3:
-                            r = p; b = q; g = (int)v;
-                            break;
-                        case 4:
-                            r = t; b = p; g = (int)v;
-                            break;
-                        case 5:
-                            r = (int)v; b = p; g = q;
-                            break;
-                    }
+                        var elem = matrix[i, j];
+                        var h = elem.Item1;
+                        var s = elem.Item2;
+                        var v = elem.Item3;
+                        double temp = h / 60;
+                        int hi = (int)Math.Floor(temp) % 6;
+                        double f = temp - Math.Floor(temp);
+                        int p = (int)(v * (1 - s));
+                        int q = (int)(v * (1 - s * f));
+                        int t = (int)(v * (1 - (1 - f) * s));
 
-                    map.SetPixel(i, j, Color.FromArgb(r, g, b)); 
-                }
+                        int r = 0, g = 0, b = 0;
+
+                        switch (hi)
+                        {
+                            case 0:
+                                r = (int)v; b = t; g = p;
+                                break;
+                            case 1:
+                                r = q; b = (int)v; g = p;
+                                break;
+                            case 2:
+                                r = p; b = (int)v; g = t;
+                                break;
+                            case 3:
+                                r = p; b = q; g = (int)v;
+                                break;
+                            case 4:
+                                r = t; b = p; g = (int)v;
+                                break;
+                            case 5:
+                                r = (int)v; b = p; g = q;
+                                break;
+                        }
+
+                        fmap.SetPixel(new Point(i, j), Color.FromArgb(r, g, b));
+                    }
+            }
 
             return map; 
         }
