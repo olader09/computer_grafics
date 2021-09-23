@@ -13,16 +13,25 @@ namespace Lab1
     public partial class Form1 : Form
     {
         string file;
-        Bitmap picture; 
+        Bitmap picture;
+        Tuple<double, double, double>[,] hsv; 
+
+        public void ClearHistograms()
+        {
+            Graphics g1 = Histogram1.CreateGraphics();
+            Graphics g2 = Histogram2.CreateGraphics();
+            Graphics g3 = Histogram3.CreateGraphics();
+
+            Pen p = new Pen(Color.White);
+
+            g1.DrawRectangle(p, new Rectangle(0, 0, Histogram1.Width, Histogram1.Height));
+            g2.DrawRectangle(p, new Rectangle(0, 0, Histogram2.Width, Histogram2.Height));
+            g3.DrawRectangle(p, new Rectangle(0, 0, Histogram3.Width, Histogram3.Height));
+        }
 
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private void Task3Button_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void BrouseButton_Click(object sender, EventArgs e)
@@ -42,6 +51,7 @@ namespace Lab1
 
         private void Task1Button_Click(object sender, EventArgs e)
         {
+            ClearHistograms(); 
             // Picture 1
             Bitmap b = new Bitmap(picture.Width, picture.Height);
             int[] vec1 = new int[256];
@@ -113,6 +123,8 @@ namespace Lab1
 
         private void Task2Button_Click(object sender, EventArgs e)
         {
+            ClearHistograms(); 
+
             // Picture 1
             Bitmap b = new Bitmap(picture.Width, picture.Height);
             int[] vec1 = new int[256];
@@ -172,6 +184,97 @@ namespace Lab1
             for (int i = 0; i < 256; ++i)
                 g3.DrawLine(new Pen(Color.Blue), i, Histogram3.Height, i,
                     (int)(Histogram3.Height - (vec3[i] / (double)vec3.Max()) * Histogram3.Height));
+        }
+
+        private void Task3Button_Click(object sender, EventArgs e)
+        {
+            ClearHistograms(); 
+
+            Bitmap b = new Bitmap(picture.Width, picture.Height);
+            hsv = new Tuple<double, double, double>[picture.Width, picture.Height]; 
+            for (int i = 0; i < picture.Width; ++i)
+                for (int j = 0; j < picture.Height; ++j)
+                {
+                    Color c = picture.GetPixel(i, j);
+                    double max = new int[] { c.R, c.G, c.B }.Max();
+                    double min = new int[] { c.R, c.G, c.B }.Min();
+
+                    double h = 0.0;
+                    if (max == min)
+                        h = 0;
+                    else if (max == c.R && c.G >= c.B)
+                        h = 60 * ((c.G - c.B) / (max - min)); 
+                    else if (max == c.R && c.G < c.B)
+                        h = 60 * ((c.G - c.B) / (max - min)) + 360;
+                    else if (max == c.G)
+                        h = 60 * ((c.B - c.R) / (max - min)) + 120;
+                    else if (max == c.B)
+                        h = 60 * ((c.R - c.G) / (max - min)) + 240;
+
+                    double s = 0.0;
+                    if (max == 0)
+                        s = 0;
+                    else
+                        s = 1 - min / max;
+
+                    double v = max;
+
+                    hsv[i, j] = new Tuple<double, double, double>(h, s, v);
+                }
+
+            PictureBox1.Image = picture; 
+
+        }
+
+        private void HSVtoRGB(Tuple<double, double, double>[,] matrix)
+        {
+            Bitmap map = new Bitmap(picture.Width, picture.Height); 
+            for (int i = 0; i < picture.Width; ++i)
+                for (int j = 0; j < picture.Height; ++j)
+                {
+                    var elem = matrix[i, j];
+                    var h = elem.Item1;
+                    var s = elem.Item2;
+                    var v = elem.Item3; 
+                    double temp = h / 60; 
+                    int hi = (int)Math.Floor(temp) % 6;
+                    double f = temp - Math.Floor(temp);
+                    int p = (int)(v * (1 - s));
+                    int q = (int)(v * (1 - s * f));
+                    int t = (int)(v * (1 - (1 - f) * s));
+
+                    int r, g, b;
+
+                    switch (hi)
+                    {
+                        case 0:
+                            r = (int)v; b = t; g = p;
+                            break;
+                        case 1:
+                            r = q; b = (int)v; g = p;
+                            break;
+                        case 2:
+                            r = p; b = (int)v; g = t;
+                            break;
+                        case 3:
+                            r = p; b = q; g = (int)v;
+                            break;
+                        case 4:
+                            r = t; b = p; g = (int)v;
+                            break;
+                        case 5:
+                            r = (int)v; b = p; g = q;
+                            break;
+                    }
+
+
+
+                }
+        }
+
+        private void HBar_Scroll(object sender, EventArgs e)
+        {
+
         }
     }
 }

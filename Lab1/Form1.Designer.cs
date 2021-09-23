@@ -41,6 +41,10 @@ namespace Lab1
             this.Histogram1 = new System.Windows.Forms.PictureBox();
             this.Histogram2 = new System.Windows.Forms.PictureBox();
             this.Histogram3 = new System.Windows.Forms.PictureBox();
+            this.HBar = new System.Windows.Forms.TrackBar();
+            this.SBar = new System.Windows.Forms.TrackBar();
+            this.VBar = new System.Windows.Forms.TrackBar();
+            this.SaveButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MainPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
@@ -48,6 +52,9 @@ namespace Lab1
             ((System.ComponentModel.ISupportInitialize)(this.Histogram1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Histogram2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Histogram3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VBar)).BeginInit();
             this.SuspendLayout();
             // 
             // MainPicture
@@ -153,9 +160,44 @@ namespace Lab1
             this.Histogram3.TabIndex = 11;
             this.Histogram3.TabStop = false;
             // 
+            // HBar
+            // 
+            this.HBar.Location = new System.Drawing.Point(1180, 12);
+            this.HBar.Name = "HBar";
+            this.HBar.Size = new System.Drawing.Size(248, 69);
+            this.HBar.TabIndex = 12;
+            this.HBar.Scroll += new System.EventHandler(this.HBar_Scroll);
+            // 
+            // SBar
+            // 
+            this.SBar.Location = new System.Drawing.Point(1180, 87);
+            this.SBar.Name = "SBar";
+            this.SBar.Size = new System.Drawing.Size(248, 69);
+            this.SBar.TabIndex = 13;
+            // 
+            // VBar
+            // 
+            this.VBar.Location = new System.Drawing.Point(1180, 162);
+            this.VBar.Name = "VBar";
+            this.VBar.Size = new System.Drawing.Size(248, 69);
+            this.VBar.TabIndex = 14;
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Location = new System.Drawing.Point(1180, 237);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(248, 74);
+            this.SaveButton.TabIndex = 15;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(1178, 665);
+            this.ClientSize = new System.Drawing.Size(1440, 665);
+            this.Controls.Add(this.SaveButton);
+            this.Controls.Add(this.VBar);
+            this.Controls.Add(this.SBar);
+            this.Controls.Add(this.HBar);
             this.Controls.Add(this.Histogram3);
             this.Controls.Add(this.Histogram2);
             this.Controls.Add(this.Histogram1);
@@ -176,6 +218,9 @@ namespace Lab1
             ((System.ComponentModel.ISupportInitialize)(this.Histogram1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Histogram2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Histogram3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,6 +240,10 @@ namespace Lab1
         private System.Windows.Forms.PictureBox Histogram1;
         private System.Windows.Forms.PictureBox Histogram2;
         private System.Windows.Forms.PictureBox Histogram3;
+        private System.Windows.Forms.TrackBar HBar;
+        private System.Windows.Forms.TrackBar SBar;
+        private System.Windows.Forms.TrackBar VBar;
+        private System.Windows.Forms.Button SaveButton;
     }
 }
 
