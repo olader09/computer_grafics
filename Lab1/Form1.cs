@@ -30,6 +30,27 @@ namespace Lab1
             g3.DrawRectangle(p, new Rectangle(0, 0, Histogram3.Width, Histogram3.Height));
         }
 
+        public void ClearPictures()
+        {
+            Graphics g1 = PictureBox1.CreateGraphics();
+            Graphics g2 = PictureBox2.CreateGraphics();
+            Graphics g3 = PictureBox3.CreateGraphics();
+
+            Pen p = new Pen(Color.White);
+
+            g1.DrawRectangle(p, new Rectangle(0, 0, PictureBox1.Width, PictureBox1.Height));
+            g2.DrawRectangle(p, new Rectangle(0, 0, PictureBox2.Width, PictureBox2.Height));
+            g3.DrawRectangle(p, new Rectangle(0, 0, PictureBox3.Width, PictureBox3.Height));
+        }
+
+        public void ClearHSV()
+        {
+            HBar.Visible = false;
+            SBar.Visible = false;
+            VBar.Visible = false;
+            SaveButton.Visible = false; 
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -62,7 +83,9 @@ namespace Lab1
 
         private void Task1Button_Click(object sender, EventArgs e)
         {
-            ClearHistograms(); 
+            ClearHistograms();
+            ClearPictures();
+            ClearHSV(); 
             // Picture 1
             Bitmap b = new Bitmap(picture.Width, picture.Height);
             int[] vec1 = new int[256];
@@ -134,7 +157,9 @@ namespace Lab1
 
         private void Task2Button_Click(object sender, EventArgs e)
         {
-            ClearHistograms(); 
+            ClearHistograms();
+            ClearPictures();
+            ClearHSV();
 
             // Picture 1
             Bitmap b = new Bitmap(picture.Width, picture.Height);
@@ -200,6 +225,8 @@ namespace Lab1
         private void Task3Button_Click(object sender, EventArgs e)
         {
             ClearHistograms();
+            ClearPictures(); 
+
             HBar.Visible = true;
             SBar.Visible = true;
             VBar.Visible = true;
@@ -303,6 +330,7 @@ namespace Lab1
             PictureBox1.Image = HSVtoRGB(hsv); 
         }
 
+       
         private void SBar_Scroll(object sender, EventArgs e)
         {
             PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -326,5 +354,11 @@ namespace Lab1
                 }
             PictureBox1.Image = HSVtoRGB(hsv);
         }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            HSVtoRGB(hsv).Save(System.IO.Path.GetFileNameWithoutExtension(file) + "-new" + System.IO.Path.GetExtension(file));
+        }
+
     }
 }
