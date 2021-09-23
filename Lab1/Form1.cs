@@ -155,26 +155,22 @@ namespace Lab1
             PictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox3.Image = bbb;
 
-            // ------------------------------
-            Pen p = new Pen(Color.Black);
-            // ------------------------------
-
             // Histogram 1 
             Graphics g1 = Histogram1.CreateGraphics();
             for (int i = 0; i < 256; ++i)
-                g1.DrawLine(p, i, Histogram1.Height, i,
+                g1.DrawLine(new Pen(Color.Red), i, Histogram1.Height, i,
                     (int)(Histogram1.Height - (vec1[i] / (double)vec1.Max()) * Histogram1.Height));
 
             // Histogram 2 
             Graphics g2 = Histogram2.CreateGraphics();
             for (int i = 0; i < 256; ++i)
-                g2.DrawLine(p, i, Histogram2.Height, i,
+                g2.DrawLine(new Pen(Color.Green), i, Histogram2.Height, i,
                     (int)(Histogram2.Height - (vec2[i] / (double)vec2.Max()) * Histogram2.Height));
 
             // Histogram 2 
             Graphics g3 = Histogram3.CreateGraphics();
             for (int i = 0; i < 256; ++i)
-                g3.DrawLine(p, i, Histogram3.Height, i,
+                g3.DrawLine(new Pen(Color.Blue), i, Histogram3.Height, i,
                     (int)(Histogram3.Height - (vec3[i] / (double)vec3.Max()) * Histogram3.Height));
         }
     }
