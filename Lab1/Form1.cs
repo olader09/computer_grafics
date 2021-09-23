@@ -41,9 +41,6 @@ namespace Lab1
             g2.DrawRectangle(p, r2);
             g3.DrawRectangle(p, r3);
 
-            g1.DrawRectangle(p, r1);
-            g2.DrawRectangle(p, r2);
-            g3.DrawRectangle(p, r3);
         }
 
         public void ClearPictures()
