@@ -6,4 +6,4 @@
 /Lab1/bin/Debug
 /Lab1/obj/Release
 /Lab1/obj/Debug
-/Lab1/.vs/
+*.suo
