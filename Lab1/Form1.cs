@@ -404,6 +404,7 @@ namespace Lab1
             PictureBox1.Image = HSVtoRGB(hsv);
         }
 
+
         private void VBar_Scroll(object sender, EventArgs e)
         {
             PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;

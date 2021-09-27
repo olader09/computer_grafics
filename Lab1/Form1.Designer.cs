@@ -64,6 +64,7 @@ namespace Lab1
             this.MainPicture.Size = new System.Drawing.Size(260, 299);
             this.MainPicture.TabIndex = 0;
             this.MainPicture.TabStop = false;
+            // this.MainPicture.Click += new System.EventHandler(this.MainPicture_Click);
             // 
             // PictureName
             // 
