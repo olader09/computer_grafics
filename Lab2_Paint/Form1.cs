@@ -22,7 +22,7 @@ namespace Lab2_Paint
         public Form1()
         {
             InitializeComponent();
-            this.Work.Items.AddRange(new object[] { "Floodfill", "Draw line", "Gradient", "Draw by mouse" });
+            this.Work.Items.AddRange(new object[] { "Floodfill", "Flood fill ps", "Draw line", "Gradient", "Draw by mouse" });
             picture = new Bitmap(Canvas.Width, Canvas.Height);
             for (int i = 0; i < Canvas.Width; ++i)
                 for (int j = 0; j < Canvas.Height; ++j)
@@ -39,45 +39,7 @@ namespace Lab2_Paint
 
         private void Canvas_Click(object sender, EventArgs e)
         {
-            var cl = (MouseEventArgs)e;
-            int x = (int)((double)cl.X / Canvas.Width * picture.Width), 
-                y = (int)((double)cl.Y / Canvas.Height * picture.Height);
-            // using (var fb = new GraphFunc.FastBitmap(picture))
-            {
-                switch (Work.SelectedIndex)
-                {
-                    case 0: // Flood Fill
-                        // Console.WriteLine(SelectedColor.A + " " + SelectedColor.G + " " + SelectedColor.B);
-                        // Console.WriteLine($"X = {x}, Y = {y}");
-                        Color col = picture.GetPixel(x, y);
-                        if (col == SelectedColor)
-                            return;
-                        Queue<(int, int)> q = new Queue<(int, int)>();
-                        q.Enqueue((x, y));
-                        while (q.Count != 0)
-                        {
-                            int pix_x, pix_y;
-                            // Console.WriteLine("Before deq: " + q.Count);
-                            (pix_x, pix_y) = q.Dequeue();
-                            // Console.WriteLine("After deq: " + q.Count);
-                            // if (pix_x - 1 < 0 || pix_x + 1 >= picture.Width || pix_y - 1 < 0 || pix_y + 1 >= picture.Height)
-                               // continue;
-                            if (pix_x - 1 > 0 && picture.GetPixel(pix_x - 1, pix_y) == col)
-                                q.Enqueue((pix_x - 1, pix_y));
-                            if (pix_x + 1 < picture.Width && picture.GetPixel(pix_x + 1, pix_y) == col)
-                                q.Enqueue((pix_x + 1, pix_y));
-                            if (pix_y - 1 > 0 && picture.GetPixel(pix_x, pix_y - 1) == col)
-                                q.Enqueue((pix_x, pix_y - 1));
-                            if (pix_y + 1 < picture.Height && picture.GetPixel(pix_x, pix_y + 1) == col)
-                                q.Enqueue((pix_x, pix_y + 1));
-                           picture.SetPixel(pix_x, pix_y, SelectedColor);
-                        }
-                        break;
 
-                }
-            }
-
-            Canvas.Image = picture;
         }
 
         private void ColorButton_Click(object sender, EventArgs e)
@@ -100,6 +62,11 @@ namespace Lab2_Paint
             }
 
             Canvas.Image = picture;
+        }
+
+        private double ColorDistance(Color c1, Color c2)
+        {
+            return Math.Sqrt((c1.R - c2.R)*(c1.R - c2.R) + (c1.G - c2.G)*(c1.G - c2.G) + (c1.B - c2.B)*(c1.B - c2.B));
         }
 
         private void Work_SelectedIndexChanged(object sender, EventArgs e)
@@ -142,7 +109,43 @@ namespace Lab2_Paint
                     };
                     break;
 
-                case 3:
+                case 1:
+                    Canvas.MouseClick += (object send, MouseEventArgs ev) =>
+                    {
+                        double delta = 2.3; 
+                        // using (var fb = new GraphFunc.FastBitmap(picture))
+                        {
+                            int x = (int)((double)ev.X / Canvas.Width * picture.Width),
+                            y = (int)((double)ev.Y / Canvas.Height * picture.Height);
+                            Color col = picture.GetPixel(x, y);
+                            if (col == SelectedColor)
+                                return;
+                            Queue<(int, int)> q = new Queue<(int, int)>();
+                            q.Enqueue((x, y));
+                            while (q.Count != 0)
+                            {
+                                int pix_x, pix_y;
+                                // Console.WriteLine("Before deq: " + q.Count);
+                                (pix_x, pix_y) = q.Dequeue();
+                                // Console.WriteLine("After deq: " + q.Count);
+                                // if (pix_x - 1 < 0 || pix_x + 1 >= picture.Width || pix_y - 1 < 0 || pix_y + 1 >= picture.Height)
+                                // continue;
+                                if (pix_x - 1 > 0 && ColorDistance(picture.GetPixel(pix_x - 1, pix_y), col) <= delta)
+                                    q.Enqueue((pix_x - 1, pix_y));
+                                if (pix_x + 1 < picture.Width && ColorDistance(picture.GetPixel(pix_x + 1, pix_y), col) <= delta)
+                                    q.Enqueue((pix_x + 1, pix_y));
+                                if (pix_y - 1 > 0 && ColorDistance(picture.GetPixel(pix_x, pix_y - 1), col) <= delta)
+                                    q.Enqueue((pix_x, pix_y - 1));
+                                if (pix_y + 1 < picture.Height && ColorDistance(picture.GetPixel(pix_x, pix_y + 1), col) <= delta)
+                                    q.Enqueue((pix_x, pix_y + 1));
+                                picture.SetPixel(pix_x, pix_y, SelectedColor);
+                            }
+                        }
+                        Canvas.Image = picture;
+                    };
+                    break;
+
+                case 4:
 
                     Canvas.MouseClick += null;
                     
