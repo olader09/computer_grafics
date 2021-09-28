@@ -50,8 +50,14 @@ namespace GraphFunc
         public void SetPixel(Point p, Color cl)
             => SetI(p.X + p.Y * Width, cl);
 
+        public void SetPixel(int x, int y, Color c)
+            => SetPixel(new Point(x, y), c);
+
         public Color GetPixel(Point p)
             => GetI(p.X + p.Y * Width);
+
+        public Color GetPixel(int x, int y)
+            => GetPixel(new Point(x, y));
 
         public void Dispose()
         {

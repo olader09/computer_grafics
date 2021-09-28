@@ -48,7 +48,7 @@ namespace Lab2_Paint
             this.Canvas.Size = new System.Drawing.Size(575, 612);
             this.Canvas.TabIndex = 0;
             this.Canvas.TabStop = false;
-            this.Canvas.Click += new System.EventHandler(this.Canvas_Click);
+            // this.Canvas.Click += new System.EventHandler(this.Canvas_Click);
             // 
             // FFImage
             // 
@@ -82,6 +82,7 @@ namespace Lab2_Paint
             this.Work.Name = "Work";
             this.Work.Size = new System.Drawing.Size(174, 28);
             this.Work.TabIndex = 4;
+            this.Work.SelectedIndexChanged += new System.EventHandler(this.Work_SelectedIndexChanged);
             // 
             // label1
             // 
