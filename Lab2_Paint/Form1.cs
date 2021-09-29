@@ -158,15 +158,17 @@ namespace Lab2_Paint
                         int blue = (int)(SelectedColor.B * c);
 
                         Color color = Color.FromArgb(red,green,blue);
-                        g.FillRectangle(new SolidBrush(color), x, y, 2, 2);
+                        picture.SetPixel(x, y, color);
+                        Canvas.Image = picture;
+                        //g.FillRectangle(new SolidBrush(color), x, y, 1, 1);
                     }
 
                     void drawPoint(int x0, int y0, int x1, int y1)
                     {
                         float dx = x1 - x0, dy = y1 - y0;
-                        float gradient = dy / dx;
+                        float gradient = Math.Abs(dy / dx);
 
-                        if (gradient <= 1)
+                        if (gradient > 0 && gradient <= 1)
                         {
                             float y = y0 + gradient;
                             for (int x = x0 + 1; x <= x1 - 1; x++)
@@ -176,7 +178,7 @@ namespace Lab2_Paint
                                 y += gradient;
                             }
                         }
-                        else
+                        else if (gradient > 1)
                         {
                             gradient = dx / dy;
                             float x = x0 + gradient;
@@ -235,8 +237,9 @@ namespace Lab2_Paint
                         Canvas.Image = picture;
                     };
                     break;
+                    
                 case 5:
-                    Canvas.MouseClick += null;
+                    //Canvas.MouseClick += null;
                     bool drawSegment_ = false;
                     int x_0_ = 0, y_0_ = 0, x_1_, y_1_;
                     g = Canvas.CreateGraphics();
@@ -292,6 +295,7 @@ namespace Lab2_Paint
                         }
                     };
                     break;
+                    
             }
         }
     }
