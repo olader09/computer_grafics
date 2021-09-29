@@ -13,35 +13,25 @@ namespace Lab2_Paint
 {
     public partial class Form1 : Form
     {
+        // Цвет, которым будем рисовать, задается при нажатии на Choose Color
         Color SelectedColor;
+        // Картинка для рисования на Canvas
         Bitmap picture;
-        bool drawing;
-        System.Threading.Thread drawThread = null;
-        System.Threading.Thread showThread = null;
 
         public Form1()
         {
             InitializeComponent();
             this.Work.Items.AddRange(new object[] { "Floodfill", "Flood fill ps", "Draw line by Wu", "Gradient", "Draw by mouse", "Draw line by Bresenham" });
+            // Заполняем белым цветом при загрузке
             picture = new Bitmap(Canvas.Width, Canvas.Height);
             for (int i = 0; i < Canvas.Width; ++i)
                 for (int j = 0; j < Canvas.Height; ++j)
                     picture.SetPixel(i, j, Color.White);
             Canvas.SizeMode = PictureBoxSizeMode.StretchImage;
             Canvas.Image = picture;
-            drawing = false;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void Canvas_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        // Диалог выбора цвета
         private void ColorButton_Click(object sender, EventArgs e)
         {
             var cd = new ColorDialog();
@@ -49,6 +39,7 @@ namespace Lab2_Paint
             SelectedColor = cd.Color;
         }
 
+        // Диалог загрузки картинки для заливки
         private void BrouseButton_Click(object sender, EventArgs e)
         {
             FFImage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -64,36 +55,45 @@ namespace Lab2_Paint
             Canvas.Image = picture;
         }
 
+        // Цветовое расстояние, используется в Flood fill ps
         private double ColorDistance(Color c1, Color c2)
         {
             return Math.Sqrt((c1.R - c2.R)*(c1.R - c2.R) + (c1.G - c2.G)*(c1.G - c2.G) + (c1.B - c2.B)*(c1.B - c2.B));
         }
 
+        // При выборе режима поведение при нажатии на картинку меняется
         private void Work_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (Work.SelectedIndex)
             {
-                case 0:
+                // ======================================================
+                case 0: // FloodFill
+                // ======================================================
 
+                    // При клике на точку должна происходить заливка области
                     Canvas.MouseClick += (object send, MouseEventArgs ev) =>
                     {
                         // using (var fb = new GraphFunc.FastBitmap(picture))
                         {
+                            // Если картинка меньше канваса (потом исправить)
                             int x = (int)((double)ev.X / Canvas.Width * picture.Width),
                             y = (int)((double)ev.Y / Canvas.Height * picture.Height);
+                            
+                            // Заливать будем все пиксели этого цвета
                             Color col = picture.GetPixel(x, y);
+                            // Если это уже нужный цвет то выходим
                             if (col == SelectedColor)
                                 return;
+
+                            // Очередь пикселейй для закраски (исправить)
+                            // TODO: 
+                            // Сделать закраску по линиям
                             Queue<(int, int)> q = new Queue<(int, int)>();
                             q.Enqueue((x, y));
                             while (q.Count != 0)
                             {
                                 int pix_x, pix_y;
-                                // Console.WriteLine("Before deq: " + q.Count);
                                 (pix_x, pix_y) = q.Dequeue();
-                                // Console.WriteLine("After deq: " + q.Count);
-                                // if (pix_x - 1 < 0 || pix_x + 1 >= picture.Width || pix_y - 1 < 0 || pix_y + 1 >= picture.Height)
-                                // continue;
                                 if (pix_x - 1 > 0 && picture.GetPixel(pix_x - 1, pix_y) == col)
                                     q.Enqueue((pix_x - 1, pix_y));
                                 if (pix_x + 1 < picture.Width && picture.GetPixel(pix_x + 1, pix_y) == col)
@@ -105,11 +105,19 @@ namespace Lab2_Paint
                                 picture.SetPixel(pix_x, pix_y, SelectedColor);
                             }
                         }
+
+                        // Выводим полученное изображение
                         Canvas.Image = picture;
                     };
                     break;
 
-                case 1:
+                // ======================================================
+                case 1: // Floodfill ps
+                // ======================================================
+
+                // То же самое что и  Flood fill, но закрашиваются пиксели
+                // Цветовое расстояние от которых меньше заданного в delta
+
                     Canvas.MouseClick += (object send, MouseEventArgs ev) =>
                     {
                         double delta = 2.3; 
@@ -145,7 +153,10 @@ namespace Lab2_Paint
                     };
                     break;
 
-                case 2:
+                // ======================================================
+                case 2: // Line by Wu
+                // ======================================================
+
                     Canvas.MouseClick += null;
                     bool drawSegment = false;
                     int x_0 = 0, y_0 = 0, x_1, y_1;
@@ -211,23 +222,38 @@ namespace Lab2_Paint
                     };
                     break;
 
-                case 4:
+                // ======================================================
+                case 3: // Gradient
+                // ======================================================
 
-                    Canvas.MouseClick += null;
-                    
-                    Canvas.MouseDown += (object send, MouseEventArgs ev) =>
+                    break;
+
+                // ======================================================
+                case 4: // Draw by mouse
+                // ======================================================
+
+                    void TurnOnDrawing()
                     {
                         Canvas.MouseMove += (object sendd, MouseEventArgs evv) =>
                         {
                             int xx = (int)((double)evv.X / Canvas.Width * picture.Width),
                             yy = (int)((double)evv.Y / Canvas.Height * picture.Height);
                             picture.SetPixel(xx, yy, SelectedColor);
-                            picture.SetPixel(xx - 1, yy, SelectedColor);
-                            picture.SetPixel(xx + 1, yy, SelectedColor);
-                            picture.SetPixel(xx, yy - 1, SelectedColor);
-                            picture.SetPixel(xx, yy + 1, SelectedColor);
+                            if (xx - 1 > 0)
+                                picture.SetPixel(xx - 1, yy, SelectedColor);
+                            if (xx + 1 < picture.Width)
+                                picture.SetPixel(xx + 1, yy, SelectedColor);
+                            if (yy - 1 > 0)
+                                picture.SetPixel(xx, yy - 1, SelectedColor);
+                            if (yy + 1 < picture.Height)
+                                picture.SetPixel(xx, yy + 1, SelectedColor);
                         };
-                    };
+                    }
+
+                    Canvas.MouseClick += null;
+                    
+                    Canvas.MouseDown += (object send, MouseEventArgs ev) =>
+                        TurnOnDrawing(); 
 
                     Canvas.MouseUp += (object send, MouseEventArgs ev) =>
                     {
@@ -235,7 +261,11 @@ namespace Lab2_Paint
                         Canvas.Image = picture;
                     };
                     break;
-                case 5:
+
+                // ======================================================
+                case 5: // Brasenham
+                // ======================================================
+
                     Canvas.MouseClick += null;
                     bool drawSegment_ = false;
                     int x_0_ = 0, y_0_ = 0, x_1_, y_1_;

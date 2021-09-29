@@ -117,7 +117,7 @@ namespace Lab2_Paint
             this.Controls.Add(this.Canvas);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            // this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FFImage)).EndInit();
             this.ResumeLayout(false);
