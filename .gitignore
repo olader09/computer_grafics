@@ -5,5 +5,11 @@
 /Lab1/bin/Release
 /Lab1/bin/Debug
 /Lab1/obj/Release
+/Lab1/.vs
 /Lab1/obj/Debug
+/Lab2_Paint/bin
+/Lab2_Paint/obj
+/Lab2_Paint/.vs
 *.suo
+*.cache 
+*.vs
