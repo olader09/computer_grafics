@@ -179,8 +179,10 @@ namespace Lab2_Paint
                         {
                             swap(ref x, ref y);
                         }
+
                         picture.SetPixel(x, y, color);
                         Canvas.Image = picture;
+
                     }
 
                     void drawPoint(int x0, int y0, int x1, int y1)
@@ -233,9 +235,9 @@ namespace Lab2_Paint
                         {
                             x_1 = ev.X;
                             y_1 = ev.Y;
-                          
-                                drawPoint(x_0, y_0, x_1, y_1);
-                          
+                            
+                            drawPoint(x_0, y_0, x_1, y_1);
+
                             x_0 = x_1;
                             y_0 = y_1; 
                         }         
@@ -295,34 +297,52 @@ namespace Lab2_Paint
                     Canvas.MouseClick += null;
                     bool drawSegment_ = false;
                     int x_0_ = 0, y_0_ = 0, x_1_, y_1_;
-                    g = Canvas.CreateGraphics();
+                    //g = Canvas.CreateGraphics();
 
+                    void swap_(ref int a, ref int b)
+                    {
+                        int c = a;
+                        a = b;
+                        b = c;
+                    }
+                    g = Canvas.CreateGraphics();
                     void plot_(int x, int y)
                     {
                         Color color = SelectedColor;
-                        g.FillRectangle(new SolidBrush(color), x, y, 2, 2);
+                        g.FillRectangle(new SolidBrush(color), x, y, 1, 1);
+                        //picture.SetPixel(x, y, color);
+                        //Canvas.Image = picture;
                     }
 
                     void drawPoint_(int x0, int y0, int x1, int y1)
                     {
-                        int deltax = Math.Abs(x1 - x0);
-                        int deltay = Math.Abs(y1 - y0);
-                        double error = 0;
-                        double deltaerr = (deltay + 1) / (deltax + 1);
+                        var st = Math.Abs(y1 - y0) > Math.Abs(x1 - x0); 
+
+                        if (st)
+                        {
+                            swap_(ref x0, ref y0); 
+                            swap_(ref x1, ref y1);
+                        }
+
+                        if (x0 > x1)
+                        {
+                            swap_(ref x0, ref x1);
+                            swap_(ref y0, ref y1);
+                        }
+
+                        int dx = x1 - x0;
+                        int dy = Math.Abs(y1 - y0);
+                        int error = dx / 2; 
+                        int ystep = (y0 < y1) ? 1 : -1; 
                         int y = y0;
-                        int diry = y1 - y0;
-                        if (diry > 0)
-                            diry = 1;
-                        if (diry < 0)
-                            diry = -1;
                         for (int x = x0; x <= x1; x++)
                         {
-                            plot_(x, y);
-                            error += deltaerr;
-                            if (error >= 1.0)
+                            plot_(st ? y : x, st ? x : y); 
+                            error -= dy;
+                            if (error < 0)
                             {
-                                y += diry;
-                                error -= 1.0;
+                                y += ystep;
+                                error += dx;
                             }
                         }
                     }
@@ -333,10 +353,9 @@ namespace Lab2_Paint
                         {
                             x_1_ = ev.X;
                             y_1_ = ev.Y;
-                            if (x_1_ >= x_0_)
-                                drawPoint_(x_0_, y_0_, x_1_, y_1_);
-                            else
-                                drawPoint_(x_1_, y_1_, x_0_, y_0_);
+                            
+                            drawPoint_(x_0_, y_0_, x_1_, y_1_);
+                           
                             x_0_ = x_1_;
                             y_0_ = y_1_;
                         }
