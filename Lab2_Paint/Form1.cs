@@ -162,34 +162,61 @@ namespace Lab2_Paint
                     int x_0 = 0, y_0 = 0, x_1, y_1;
                     Graphics g = Canvas.CreateGraphics();
 
-                    void plot (int x, int y, double c)
+                    void swap(ref int a, ref int b)
+                    {
+                        int c = a;
+                        a = b;
+                        b = c;
+                    }
+                    void plot (int x, int y, double c, bool st)
                     {
                         int red = (int)(SelectedColor.R * c);
                         int green = (int)(SelectedColor.G * c);
                         int blue = (int)(SelectedColor.B * c);
 
                         Color color = Color.FromArgb(red,green,blue);
-                        g.FillRectangle(new SolidBrush(color), x, y, 2, 2);
+                        if (st)
+                        {
+                            swap(ref x, ref y);
+                        }
+                        picture.SetPixel(x, y, color);
+                        Canvas.Image = picture;
                     }
 
                     void drawPoint(int x0, int y0, int x1, int y1)
                     {
+                        var st = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
+
+                        if (st)
+                        {
+                            swap(ref x0, ref y0);
+                            swap(ref x1, ref y1);
+                        }
+
+                        if (x0 > x1)
+                        {
+                            swap(ref x0, ref x1);
+                            swap(ref y0, ref y1);
+                        }
+
+                        plot(x0, y0, 1, st);
+                        plot(x1, y1, 1, st);
                         float dx = x1 - x0, dy = y1 - y0;
                         float gradient = dy / dx;
 
-                        if (gradient <= 1)
+                        
                         {
                             float y = y0 + gradient;
                             for (int x = x0 + 1; x <= x1 - 1; x++)
                             {
-                                plot(x, (int)y, 1 - (y - (int)y));
-                                plot(x, (int)y + 1, y - (int)y);
+                                plot(x, (int)y, 1 - (y - (int)y), st);
+                                plot(x, (int)y + 1, y - (int)y, st);
                                 y += gradient;
                             }
                         }
-                        else
+                       /* else
                         {
-                            gradient = dx / dy;
+                            gradient = Math.Abs(dx / dy);
                             float x = x0 + gradient;
                             for (int y = y0 + 1; y <= y1 - 1; y++)
                             {
@@ -197,7 +224,7 @@ namespace Lab2_Paint
                                 plot((int)x + 1, y, x - (int)x);
                                 x += gradient;
                             }
-                        }
+                        }*/
                     }
                     
                     Canvas.MouseDown += (object send, MouseEventArgs ev) =>
@@ -206,10 +233,9 @@ namespace Lab2_Paint
                         {
                             x_1 = ev.X;
                             y_1 = ev.Y;
-                            if (x_1 >= x_0)
+                          
                                 drawPoint(x_0, y_0, x_1, y_1);
-                            else
-                                drawPoint(x_1, y_1, x_0, y_0);
+                          
                             x_0 = x_1;
                             y_0 = y_1; 
                         }         
@@ -323,6 +349,11 @@ namespace Lab2_Paint
                     };
                     break;
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
