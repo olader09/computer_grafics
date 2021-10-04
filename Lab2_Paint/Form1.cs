@@ -314,7 +314,7 @@ namespace Lab2_Paint
                     {
                         int x1_ = 0, y1_ = 1, x2_ = 0, y2_ = 2, x3_ = 0, y3_ = 3;
                         Color c1_ = Color.FromArgb(1,2,3), c2_ = Color.FromArgb(4,5,6), c3_ = Color.FromArgb(7,8,9);
-                        bool firstPoint = true, secondPoint = false, thirdPoint = false;
+                        bool firstPoint = true, secondPoint = false, thirdPoint = false; // для рисования мышью
 
                         void swap(ref int x, ref int y)
                         {
@@ -323,9 +323,10 @@ namespace Lab2_Paint
                             y = a;
                         }
                         
+                        // если третья точка выше параллельной прямой
                         void drawGradientUpToDown(int x1, int y1, Color c1, int x2, int y2, Color c2, int x3, int y3, Color c3)
                         {
-                            if (x2 < x1)
+                            if (x2 < x1) // в решении вторая точка всегда верхняя, поэтому дел
                             {
                                 swap(ref x2, ref x1);
                                 swap(ref y2, ref y1);
