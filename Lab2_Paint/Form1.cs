@@ -21,7 +21,7 @@ namespace Lab2_Paint
         public Form1()
         {
             InitializeComponent();
-            this.Work.Items.AddRange(new object[] { "Floodfill", "Flood fill ps", "Draw line by Wu", "Gradient", "Draw by mouse", "Draw line by Bresenham" });
+            this.Work.Items.AddRange(new object[] { "Floodfill", "Flood fill ps", "Draw line by Wu", "Gradient", "Draw by mouse", "Draw line by Bresenham", "Border" });
             // Заполняем белым цветом при загрузке
             picture = new Bitmap(Canvas.Width, Canvas.Height);
             for (int i = 0; i < Canvas.Width; ++i)
@@ -29,6 +29,7 @@ namespace Lab2_Paint
                     picture.SetPixel(i, j, Color.White);
             Canvas.SizeMode = PictureBoxSizeMode.StretchImage;
             Canvas.Image = picture;
+            // this.listBox1.Items.AddRange(new object[] { "Floodfill", "Flood fill ps", "Draw line by Wu", "Gradient", "Draw by mouse", "Draw line by Bresenham" }); 
         }
 
         // Диалог выбора цвета
@@ -119,7 +120,6 @@ namespace Lab2_Paint
                 return;
 
             Bitmap b = new Bitmap(FFImageName.Text);
-            int bx = 0, by = 0;
 
             // Очередь пикселейй для закраски (исправить)
             // TODO: 
@@ -134,13 +134,13 @@ namespace Lab2_Paint
                     continue;
                 for (int cur = pix_x; cur > 0 && picture.GetPixel(cur, pix_y) == col; --cur)
                 {
-                    picture.SetPixel(cur, pix_y, b.GetPixel((cur % b.Width + b.Width) % b.Width, (pix_y % b.Height + b.Height) % b.Height));
+                    picture.SetPixel(cur, pix_y, b.GetPixel(((b.Width / 2 - (cur - x)) % b.Width + b.Width) % b.Width, (((b.Height / 2 - (y - pix_y)) % b.Height) + b.Height) % b.Height));
                     q.Enqueue((cur, pix_y - 1));
                     q.Enqueue((cur, pix_y + 1));
                 }
                 for (int cur = pix_x + 1; cur < picture.Width && picture.GetPixel(cur, pix_y) == col; ++cur)
                 {
-                    picture.SetPixel(cur, pix_y, b.GetPixel((cur % b.Width + b.Width) % b.Width, (pix_y % b.Height + b.Height) % b.Height));
+                    picture.SetPixel(cur, pix_y, b.GetPixel(((b.Width / 2 - (cur - x)) % b.Width + b.Width) % b.Width, (((b.Height / 2 - (y - pix_y)) % b.Height) + b.Height) % b.Height));
                     q.Enqueue((cur, pix_y - 1));
                     q.Enqueue((cur, pix_y + 1));
                 }
@@ -159,7 +159,7 @@ namespace Lab2_Paint
             // Выводим полученное изображение
             Canvas.Image = picture;
         }
-
+        /*
         private (int, int) GetTopLeft(int x, int y)
         {
             Color c = picture.GetPixel(x, y); 
@@ -189,7 +189,7 @@ namespace Lab2_Paint
                 seen.Add((px, py));
             }
             return (x, y);
-        }
+        }*/
 
         // При выборе режима поведение при нажатии на картинку меняется
         private void Work_SelectedIndexChanged(object sender, EventArgs e)
@@ -199,9 +199,12 @@ namespace Lab2_Paint
                 // ======================================================
                 case 0: // FloodFill
                         // ======================================================
-                        Canvas.MouseDown += null;
-                        // При клике на точку должна происходить заливка области
-                        Canvas.MouseClick += FloodFill;
+                    Canvas.MouseUp += null;
+                    Canvas.MouseDown += null;
+                    Canvas.MouseClick += null;
+                    label2.Text = string.Join("", Work.SelectedIndex);
+                    // При клике на точку должна происходить заливка области
+                    Canvas.MouseDown += new MouseEventHandler( FloodFill);
                     break;
                 // ======================================================
                 case 1: // Floodfill with picture
@@ -209,7 +212,7 @@ namespace Lab2_Paint
                         // То же самое что и  Flood fill, но закрашиваются пиксели
                         // Цветовое расстояние от которых меньше заданного в delta
                         Canvas.MouseDown += null;
-                        Canvas.MouseClick += FloodFillImage;
+                        Canvas.MouseDown += FloodFillImage;
                         break;
                 // ======================================================
                 case 2: // Line by Wu
@@ -661,13 +664,78 @@ namespace Lab2_Paint
 
                         break;
                     }
+
+                case 6:
+                    Canvas.MouseDown += new MouseEventHandler(
+                        (o, ev) =>
+                        {
+                            int x = ev.X, y = ev.Y;
+                            Color col = picture.GetPixel(x, y);
+                            // Если это уже нужный цвет то выходим
+                            if (col == SelectedColor)
+                                return;
+
+                            
+                            while (picture.GetPixel(x, y) == col && ((x + 1 < picture.Width && picture.GetPixel(x + 1, y) == col)
+                                       && (x - 1 >= 0 && picture.GetPixel(x - 1, y) == col)
+                                       && (y + 1 < picture.Height && picture.GetPixel(x, y + 1) == col)
+                                       && (y - 1 >= 0 && picture.GetPixel(x, y - 1) == col)))
+                                    
+                                { ++x; }
+
+                            Console.WriteLine("Border: " + x + " " + y);
+                            // return; 
+
+                            List<(int, int)> Points = new List<(int, int)>();
+                            Stack<(int, int)> st = new Stack<(int, int)>();
+
+                            do
+                            {
+                                //System.Threading.Thread.Sleep(10);
+                                // Console.WriteLine(x + " " + y);
+                                Points.Add((x, y));
+                                st.Push((x, y));
+                            check:
+                                if (CheckPoint(x - 1, y, col, Points))
+                                    --x;
+                                else if (CheckPoint(x, y - 1, col, Points))
+                                    --y;
+                                else if (CheckPoint(x + 1, y, col, Points))
+                                    ++x;
+                                else if (CheckPoint(x, y + 1, col, Points))
+                                    ++y;
+                                else if (st.Count != 0)
+                                {
+                                    (x, y) = st.Pop();
+                                    goto check;
+                                }
+                                else break;  
+                            } while (true);
+
+                            foreach (var p in Points)
+                                picture.SetPixel(p.Item1, p.Item2, SelectedColor);
+
+                            // Выводим полученное изображение
+                            Canvas.Image = picture;
+                        });
+                    break; 
             }
+        }
+
+        private bool CheckPoint(int x, int y, Color col, List<(int, int)> l)
+        {
+           return picture.GetPixel(x, y) == col && !l.Contains((x, y)) && ((x + 1 < picture.Width && picture.GetPixel(x + 1, y) != col && picture.GetPixel(x + 1, y) != SelectedColor)
+                                       || (x - 1 >= 0 && picture.GetPixel(x - 1, y) != col && picture.GetPixel(x - 1, y) != SelectedColor)
+                                       || (y + 1 < picture.Height && picture.GetPixel(x, y + 1) != col && picture.GetPixel(x, y + 1) != SelectedColor)
+                                       || (y - 1 >= 0 && picture.GetPixel(x, y - 1) != col && picture.GetPixel(x, y - 1) != SelectedColor));
+                                    
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
+
     }
 }
 
