@@ -704,6 +704,14 @@ namespace Lab2_Paint
                                     ++x;
                                 else if (CheckPoint(x, y + 1, col, Points))
                                     ++y;
+                                else if (CheckPoint(x + 1, y + 1, col, Points))
+                                { ++x; ++y; }
+                                else if (CheckPoint(x - 1, y - 1, col, Points))
+                                { --x; --y; }
+                                else if (CheckPoint(x + 1, y - 1, col, Points))
+                                { ++x; --y; }
+                                else if (CheckPoint(x - 1, y + 1, col, Points))
+                                { --x; ++y; }
                                 else if (st.Count != 0)
                                 {
                                     (x, y) = st.Pop();
@@ -724,10 +732,10 @@ namespace Lab2_Paint
 
         private bool CheckPoint(int x, int y, Color col, List<(int, int)> l)
         {
-           return picture.GetPixel(x, y) == col && !l.Contains((x, y)) && ((x + 1 < picture.Width && picture.GetPixel(x + 1, y) != col && picture.GetPixel(x + 1, y) != SelectedColor)
-                                       || (x - 1 >= 0 && picture.GetPixel(x - 1, y) != col && picture.GetPixel(x - 1, y) != SelectedColor)
-                                       || (y + 1 < picture.Height && picture.GetPixel(x, y + 1) != col && picture.GetPixel(x, y + 1) != SelectedColor)
-                                       || (y - 1 >= 0 && picture.GetPixel(x, y - 1) != col && picture.GetPixel(x, y - 1) != SelectedColor));
+           return picture.GetPixel(x, y) == col && !l.Contains((x, y)) && ((x + 1 < picture.Width && picture.GetPixel(x + 1, y) != col)
+                                       || (x - 1 >= 0 && picture.GetPixel(x - 1, y) != col)
+                                       || (y + 1 < picture.Height && picture.GetPixel(x, y + 1) != col)
+                                       || (y - 1 >= 0 && picture.GetPixel(x, y - 1) != col));
                                     
         }
 
