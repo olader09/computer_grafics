@@ -63,7 +63,7 @@ namespace L3_Aff
             this.Canvas.Size = new System.Drawing.Size(986, 646);
             this.Canvas.TabIndex = 0;
             this.Canvas.TabStop = false;
-            this.Canvas.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.Canvas.Click += new System.EventHandler(this.Canvas_Click);
             // 
             // DotButton
             // 
@@ -73,6 +73,7 @@ namespace L3_Aff
             this.DotButton.TabIndex = 1;
             this.DotButton.Text = "Dot";
             this.DotButton.UseVisualStyleBackColor = true;
+            this.DotButton.Click += new System.EventHandler(this.DotButton_Click);
             // 
             // LineButton
             // 
@@ -82,6 +83,7 @@ namespace L3_Aff
             this.LineButton.TabIndex = 2;
             this.LineButton.Text = "Line";
             this.LineButton.UseVisualStyleBackColor = true;
+            this.LineButton.Click += new System.EventHandler(this.LineButton_Click);
             // 
             // PolyButton
             // 
@@ -91,6 +93,7 @@ namespace L3_Aff
             this.PolyButton.TabIndex = 3;
             this.PolyButton.Text = "Polygon";
             this.PolyButton.UseVisualStyleBackColor = true;
+            this.PolyButton.Click += new System.EventHandler(this.PolyButton_Click);
             // 
             // FigNames
             // 
@@ -100,6 +103,7 @@ namespace L3_Aff
             this.FigNames.Name = "FigNames";
             this.FigNames.Size = new System.Drawing.Size(374, 384);
             this.FigNames.TabIndex = 4;
+            this.FigNames.SelectedIndexChanged += new System.EventHandler(this.FigNames_SelectedIndexChanged);
             // 
             // FigName
             // 
@@ -110,12 +114,13 @@ namespace L3_Aff
             // 
             // ClearButton
             // 
+            this.ClearButton.BackColor = System.Drawing.SystemColors.Control;
             this.ClearButton.Location = new System.Drawing.Point(238, 12);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(147, 82);
             this.ClearButton.TabIndex = 6;
             this.ClearButton.Text = "Clear";
-            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.UseVisualStyleBackColor = false;
             // 
             // ShiftButton
             // 
@@ -139,7 +144,6 @@ namespace L3_Aff
             this.DYTB.Name = "DYTB";
             this.DYTB.Size = new System.Drawing.Size(100, 26);
             this.DYTB.TabIndex = 9;
-            this.DYTB.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // DXLabel
             // 
@@ -290,7 +294,6 @@ namespace L3_Aff
             this.Controls.Add(this.Canvas);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
