@@ -63,20 +63,20 @@ namespace L3_Aff
             // 
             // Canvas
             // 
-            this.Canvas.Location = new System.Drawing.Point(392, 100);
+            this.Canvas.Location = new System.Drawing.Point(348, 80);
             this.Canvas.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(986, 646);
+            this.Canvas.Size = new System.Drawing.Size(876, 517);
             this.Canvas.TabIndex = 0;
             this.Canvas.TabStop = false;
             this.Canvas.Click += new System.EventHandler(this.Canvas_Click);
             // 
             // DotButton
             // 
-            this.DotButton.Location = new System.Drawing.Point(12, 12);
+            this.DotButton.Location = new System.Drawing.Point(11, 10);
             this.DotButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DotButton.Name = "DotButton";
-            this.DotButton.Size = new System.Drawing.Size(86, 40);
+            this.DotButton.Size = new System.Drawing.Size(76, 32);
             this.DotButton.TabIndex = 1;
             this.DotButton.Text = "Dot";
             this.DotButton.UseVisualStyleBackColor = true;
@@ -84,10 +84,10 @@ namespace L3_Aff
             // 
             // LineButton
             // 
-            this.LineButton.Location = new System.Drawing.Point(12, 54);
+            this.LineButton.Location = new System.Drawing.Point(11, 43);
             this.LineButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LineButton.Name = "LineButton";
-            this.LineButton.Size = new System.Drawing.Size(86, 40);
+            this.LineButton.Size = new System.Drawing.Size(76, 32);
             this.LineButton.TabIndex = 2;
             this.LineButton.Text = "Line";
             this.LineButton.UseVisualStyleBackColor = true;
@@ -95,10 +95,10 @@ namespace L3_Aff
             // 
             // PolyButton
             // 
-            this.PolyButton.Location = new System.Drawing.Point(104, 12);
+            this.PolyButton.Location = new System.Drawing.Point(92, 10);
             this.PolyButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PolyButton.Name = "PolyButton";
-            this.PolyButton.Size = new System.Drawing.Size(128, 82);
+            this.PolyButton.Size = new System.Drawing.Size(114, 66);
             this.PolyButton.TabIndex = 3;
             this.PolyButton.Text = "Polygon";
             this.PolyButton.UseVisualStyleBackColor = true;
@@ -107,29 +107,29 @@ namespace L3_Aff
             // FigNames
             // 
             this.FigNames.FormattingEnabled = true;
-            this.FigNames.ItemHeight = 20;
-            this.FigNames.Location = new System.Drawing.Point(12, 141);
+            this.FigNames.ItemHeight = 16;
+            this.FigNames.Location = new System.Drawing.Point(11, 113);
             this.FigNames.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.FigNames.Name = "FigNames";
-            this.FigNames.Size = new System.Drawing.Size(374, 384);
+            this.FigNames.Size = new System.Drawing.Size(333, 308);
             this.FigNames.TabIndex = 4;
             this.FigNames.SelectedIndexChanged += new System.EventHandler(this.FigNames_SelectedIndexChanged);
             // 
             // FigName
             // 
-            this.FigName.Location = new System.Drawing.Point(12, 100);
+            this.FigName.Location = new System.Drawing.Point(11, 80);
             this.FigName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.FigName.Name = "FigName";
-            this.FigName.Size = new System.Drawing.Size(373, 26);
+            this.FigName.Size = new System.Drawing.Size(332, 22);
             this.FigName.TabIndex = 5;
             // 
             // ClearButton
             // 
             this.ClearButton.BackColor = System.Drawing.SystemColors.Control;
-            this.ClearButton.Location = new System.Drawing.Point(238, 12);
+            this.ClearButton.Location = new System.Drawing.Point(212, 10);
             this.ClearButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ClearButton.Name = "ClearButton";
-            this.ClearButton.Size = new System.Drawing.Size(147, 82);
+            this.ClearButton.Size = new System.Drawing.Size(131, 66);
             this.ClearButton.TabIndex = 6;
             this.ClearButton.Text = "Clear";
             this.ClearButton.UseVisualStyleBackColor = false;
@@ -137,10 +137,10 @@ namespace L3_Aff
             // 
             // ShiftButton
             // 
-            this.ShiftButton.Location = new System.Drawing.Point(392, 12);
+            this.ShiftButton.Location = new System.Drawing.Point(348, 10);
             this.ShiftButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ShiftButton.Name = "ShiftButton";
-            this.ShiftButton.Size = new System.Drawing.Size(83, 82);
+            this.ShiftButton.Size = new System.Drawing.Size(74, 66);
             this.ShiftButton.TabIndex = 7;
             this.ShiftButton.Text = "Shift";
             this.ShiftButton.UseVisualStyleBackColor = true;
@@ -148,44 +148,44 @@ namespace L3_Aff
             // 
             // DXTB
             // 
-            this.DXTB.Location = new System.Drawing.Point(519, 19);
+            this.DXTB.Location = new System.Drawing.Point(461, 15);
             this.DXTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DXTB.Name = "DXTB";
-            this.DXTB.Size = new System.Drawing.Size(59, 26);
+            this.DXTB.Size = new System.Drawing.Size(53, 22);
             this.DXTB.TabIndex = 8;
             // 
             // DYTB
             // 
-            this.DYTB.Location = new System.Drawing.Point(519, 61);
+            this.DYTB.Location = new System.Drawing.Point(461, 49);
             this.DYTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DYTB.Name = "DYTB";
-            this.DYTB.Size = new System.Drawing.Size(59, 26);
+            this.DYTB.Size = new System.Drawing.Size(53, 22);
             this.DYTB.TabIndex = 9;
             // 
             // DXLabel
             // 
             this.DXLabel.AutoSize = true;
-            this.DXLabel.Location = new System.Drawing.Point(488, 22);
+            this.DXLabel.Location = new System.Drawing.Point(434, 18);
             this.DXLabel.Name = "DXLabel";
-            this.DXLabel.Size = new System.Drawing.Size(25, 20);
+            this.DXLabel.Size = new System.Drawing.Size(22, 17);
             this.DXLabel.TabIndex = 10;
             this.DXLabel.Text = "dx";
             // 
             // DYLabel
             // 
             this.DYLabel.AutoSize = true;
-            this.DYLabel.Location = new System.Drawing.Point(488, 64);
+            this.DYLabel.Location = new System.Drawing.Point(434, 51);
             this.DYLabel.Name = "DYLabel";
-            this.DYLabel.Size = new System.Drawing.Size(25, 20);
+            this.DYLabel.Size = new System.Drawing.Size(23, 17);
             this.DYLabel.TabIndex = 11;
             this.DYLabel.Text = "dy";
             // 
             // RotatePointButton
             // 
-            this.RotatePointButton.Location = new System.Drawing.Point(598, 18);
+            this.RotatePointButton.Location = new System.Drawing.Point(532, 14);
             this.RotatePointButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RotatePointButton.Name = "RotatePointButton";
-            this.RotatePointButton.Size = new System.Drawing.Size(177, 35);
+            this.RotatePointButton.Size = new System.Drawing.Size(157, 28);
             this.RotatePointButton.TabIndex = 12;
             this.RotatePointButton.Text = "Rotate around point";
             this.RotatePointButton.UseVisualStyleBackColor = true;
@@ -193,36 +193,36 @@ namespace L3_Aff
             // 
             // RAPTB
             // 
-            this.RAPTB.Location = new System.Drawing.Point(788, 55);
+            this.RAPTB.Location = new System.Drawing.Point(700, 44);
             this.RAPTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RAPTB.Name = "RAPTB";
-            this.RAPTB.Size = new System.Drawing.Size(72, 26);
+            this.RAPTB.Size = new System.Drawing.Size(64, 22);
             this.RAPTB.TabIndex = 13;
             // 
             // RAPLabel
             // 
             this.RAPLabel.AutoSize = true;
-            this.RAPLabel.Location = new System.Drawing.Point(800, 22);
+            this.RAPLabel.Location = new System.Drawing.Point(711, 18);
             this.RAPLabel.Name = "RAPLabel";
-            this.RAPLabel.Size = new System.Drawing.Size(48, 20);
+            this.RAPLabel.Size = new System.Drawing.Size(43, 17);
             this.RAPLabel.TabIndex = 14;
             this.RAPLabel.Text = "angle";
             // 
             // StretchCoefLabel
             // 
             this.StretchCoefLabel.AutoSize = true;
-            this.StretchCoefLabel.Location = new System.Drawing.Point(1088, 22);
+            this.StretchCoefLabel.Location = new System.Drawing.Point(967, 18);
             this.StretchCoefLabel.Name = "StretchCoefLabel";
-            this.StretchCoefLabel.Size = new System.Drawing.Size(81, 20);
+            this.StretchCoefLabel.Size = new System.Drawing.Size(71, 17);
             this.StretchCoefLabel.TabIndex = 15;
             this.StretchCoefLabel.Text = "how much";
             // 
             // StretchButton
             // 
-            this.StretchButton.Location = new System.Drawing.Point(876, 19);
+            this.StretchButton.Location = new System.Drawing.Point(779, 15);
             this.StretchButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StretchButton.Name = "StretchButton";
-            this.StretchButton.Size = new System.Drawing.Size(184, 31);
+            this.StretchButton.Size = new System.Drawing.Size(164, 25);
             this.StretchButton.TabIndex = 16;
             this.StretchButton.Text = "Stretch around point";
             this.StretchButton.UseVisualStyleBackColor = true;
@@ -230,18 +230,18 @@ namespace L3_Aff
             // 
             // StretchKX
             // 
-            this.StretchKX.Location = new System.Drawing.Point(1091, 64);
+            this.StretchKX.Location = new System.Drawing.Point(970, 51);
             this.StretchKX.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StretchKX.Name = "StretchKX";
-            this.StretchKX.Size = new System.Drawing.Size(37, 26);
+            this.StretchKX.Size = new System.Drawing.Size(33, 22);
             this.StretchKX.TabIndex = 17;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1182, 12);
+            this.button1.Location = new System.Drawing.Point(1051, 10);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 40);
+            this.button1.Size = new System.Drawing.Size(89, 32);
             this.button1.TabIndex = 18;
             this.button1.Text = "Rotate line";
             this.button1.UseVisualStyleBackColor = true;
@@ -249,28 +249,28 @@ namespace L3_Aff
             // 
             // LineTB
             // 
-            this.LineTB.Location = new System.Drawing.Point(1289, 19);
+            this.LineTB.Location = new System.Drawing.Point(1146, 15);
             this.LineTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LineTB.Name = "LineTB";
-            this.LineTB.Size = new System.Drawing.Size(77, 26);
+            this.LineTB.Size = new System.Drawing.Size(69, 22);
             this.LineTB.TabIndex = 19;
             // 
             // CollisButton
             // 
-            this.CollisButton.Location = new System.Drawing.Point(1182, 58);
+            this.CollisButton.Location = new System.Drawing.Point(1051, 46);
             this.CollisButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CollisButton.Name = "CollisButton";
-            this.CollisButton.Size = new System.Drawing.Size(184, 36);
+            this.CollisButton.Size = new System.Drawing.Size(164, 29);
             this.CollisButton.TabIndex = 20;
             this.CollisButton.Text = "Find collision";
             this.CollisButton.UseVisualStyleBackColor = true;
             // 
             // PointInsideButton
             // 
-            this.PointInsideButton.Location = new System.Drawing.Point(11, 546);
+            this.PointInsideButton.Location = new System.Drawing.Point(10, 437);
             this.PointInsideButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PointInsideButton.Name = "PointInsideButton";
-            this.PointInsideButton.Size = new System.Drawing.Size(374, 76);
+            this.PointInsideButton.Size = new System.Drawing.Size(332, 61);
             this.PointInsideButton.TabIndex = 21;
             this.PointInsideButton.Text = "Point inside?";
             this.PointInsideButton.UseVisualStyleBackColor = true;
@@ -278,10 +278,10 @@ namespace L3_Aff
             // 
             // LinePointButton
             // 
-            this.LinePointButton.Location = new System.Drawing.Point(11, 628);
+            this.LinePointButton.Location = new System.Drawing.Point(10, 502);
             this.LinePointButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LinePointButton.Name = "LinePointButton";
-            this.LinePointButton.Size = new System.Drawing.Size(374, 72);
+            this.LinePointButton.Size = new System.Drawing.Size(332, 58);
             this.LinePointButton.TabIndex = 22;
             this.LinePointButton.Text = "Point to line";
             this.LinePointButton.UseVisualStyleBackColor = true;
@@ -289,18 +289,18 @@ namespace L3_Aff
             // 
             // PointLineTB
             // 
-            this.PointLineTB.Location = new System.Drawing.Point(12, 706);
+            this.PointLineTB.Location = new System.Drawing.Point(11, 565);
             this.PointLineTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PointLineTB.Name = "PointLineTB";
-            this.PointLineTB.Size = new System.Drawing.Size(372, 26);
+            this.PointLineTB.Size = new System.Drawing.Size(331, 22);
             this.PointLineTB.TabIndex = 23;
             // 
             // RotateCenterButton
             // 
-            this.RotateCenterButton.Location = new System.Drawing.Point(598, 60);
+            this.RotateCenterButton.Location = new System.Drawing.Point(532, 48);
             this.RotateCenterButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RotateCenterButton.Name = "RotateCenterButton";
-            this.RotateCenterButton.Size = new System.Drawing.Size(177, 34);
+            this.RotateCenterButton.Size = new System.Drawing.Size(157, 27);
             this.RotateCenterButton.TabIndex = 24;
             this.RotateCenterButton.Text = "Rotate around center";
             this.RotateCenterButton.UseVisualStyleBackColor = true;
@@ -308,10 +308,10 @@ namespace L3_Aff
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(876, 60);
+            this.button3.Location = new System.Drawing.Point(779, 48);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(184, 31);
+            this.button3.Size = new System.Drawing.Size(164, 25);
             this.button3.TabIndex = 25;
             this.button3.Text = "Stretch around center";
             this.button3.UseVisualStyleBackColor = true;
@@ -319,35 +319,35 @@ namespace L3_Aff
             // 
             // StretchKY
             // 
-            this.StretchKY.Location = new System.Drawing.Point(1135, 64);
+            this.StretchKY.Location = new System.Drawing.Point(1009, 51);
             this.StretchKY.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StretchKY.Name = "StretchKY";
-            this.StretchKY.Size = new System.Drawing.Size(37, 26);
+            this.StretchKY.Size = new System.Drawing.Size(33, 22);
             this.StretchKY.TabIndex = 26;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1100, 40);
+            this.label1.Location = new System.Drawing.Point(978, 32);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(16, 20);
+            this.label1.Size = new System.Drawing.Size(14, 17);
             this.label1.TabIndex = 27;
             this.label1.Text = "x";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1145, 40);
+            this.label2.Location = new System.Drawing.Point(1018, 32);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(16, 20);
+            this.label2.Size = new System.Drawing.Size(15, 17);
             this.label2.TabIndex = 28;
             this.label2.Text = "y";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1378, 744);
+            this.ClientSize = new System.Drawing.Size(1225, 595);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.StretchKY);
@@ -380,6 +380,7 @@ namespace L3_Aff
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
