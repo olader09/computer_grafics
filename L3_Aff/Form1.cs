@@ -11,18 +11,121 @@ using System.Windows.Forms;
 
 namespace L3_Aff
 {
-    public enum Figure {Dot, Line, Polygon}
-    public enum Action { NoAction, CreateFigure, PointInside, PointToLine }
-
+   
     public partial class Form1 : Form
     {
+        public class ChangeMatrix
+        {
+            double[,] matrix;
+
+            public ChangeMatrix()
+            {
+                matrix = new double[3, 3];
+            }
+            double [,] mult_matrix(double[,] a, double[,] b)
+            {
+                double[,] res = new double[a.GetLength(0), b.GetLength(1)];
+
+                for (int i = 0; i < a.GetLength(0); i++)
+                {
+                    for (int j = 0; j < b.GetLength(1); j++)
+                    {
+                        for (int k = 0; k < a.GetLength(1); k++)
+                        {
+                            res[i, j] += a[i, k] * b[k, j];
+                        }
+                    }
+                }
+                return res;
+            }
+            public double[,] ShiftMatrix(int x, int y, int dx, int dy)
+            {
+                matrix = new double[3, 3];
+                matrix[0, 0] = 1;
+                matrix[0, 1] = 0;
+                matrix[0, 2] = 0;
+                matrix[1, 0] = 0;
+                matrix[1, 1] = 1;
+                matrix[1, 2] = 0;
+                matrix[2, 0] = dx;
+                matrix[2, 1] = dy;
+                matrix[2, 2] = 1;
+
+                double[,] beg = new double[1, 3];
+                beg[0,0] = x;
+                beg[0, 1] = y;
+                beg[0, 2] = 1;
+
+                double[,] res = new double[1, 3];
+
+                res = mult_matrix(beg, matrix);
+ 
+                return res;
+            }
+
+            public double[,] StretchAroundCenterMatrix(int x, int y, int kx, int ky)
+            {
+                matrix = new double[3, 3];
+                matrix[0, 0] = 1 / (double)kx;
+                matrix[0, 1] = 0;
+                matrix[0, 2] = 0;
+                matrix[1, 0] = 0;
+                matrix[1, 1] = 1 / (double)ky;
+                matrix[1, 2] = 0;
+                matrix[2, 0] = 0;
+                matrix[2, 1] = 0;
+                matrix[2, 2] = 1;
+                
+                double[,] beg = new double[1, 3];
+                beg[0, 0] = x;
+                beg[0, 1] = y;
+                beg[0, 2] = 1;
+
+                double[,] res = new double[1, 3];
+         
+                res = mult_matrix(beg, matrix);
+
+                return res;
+            }
+
+            public double[,] RotateAroundCenterMatrix(int x, int y, int angle)
+            {
+                matrix = new double[3, 3];
+                matrix[0, 0] = Math.Cos(angle);
+                matrix[0, 1] = Math.Cos(angle); ;
+                matrix[0, 2] = 0;
+                matrix[1, 0] = -Math.Cos(angle);
+                matrix[1, 1] = Math.Cos(angle);
+                matrix[1, 2] = 0;
+                matrix[2, 0] = 0;
+                matrix[2, 1] = 0;
+                matrix[2, 2] = 1;
+
+                double[,] beg = new double[1, 3];
+                beg[0, 0] = x;
+                beg[0, 1] = y;
+                beg[0, 2] = 1;
+
+                double[,] res = new double[1, 3];
+
+                res = mult_matrix(beg, matrix);
+
+                return res;
+            }
+
+        }
+
+
+        public enum Figure { Dot, Line, Polygon }
+        public enum Action { NoAction, CreateFigure }
+
         public Figure f;
         public Action a;
         public int i = 0;
         bool line = false;
         public string selectedFigure; 
 
-        public Dictionary<string,List<Point>> figures;
+        public Dictionary<string, List<Point>> figures;
         public List<Point> currentFigure; 
 
         public void ColoringButton(Button b, Color c)
@@ -86,7 +189,7 @@ namespace L3_Aff
         public Form1()
         {
             InitializeComponent();
-            Graphics g = Canvas.CreateGraphics();
+            Graphics g = Canvas.CreateGraphics(); 
             g.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, Canvas.Width, Canvas.Height));
             ColoringButton(ClearButton, Color.Red);
             FigNames.SelectionMode = SelectionMode.One;
@@ -182,70 +285,9 @@ namespace L3_Aff
                             }
                             break;
                     }
-                    break;
 
-                case Action.PointInside:
-                    {
-                        if (selectedFigure == null || selectedFigure == "")
-                            break; 
-                        Point p = new Point(me.X, me.Y);
-                        (Point, Point) vec = (p, new Point(p.X + 20, p.Y + 20));
-                        int intersections = 0;
-                        bool start = true;
-                        Point one = new Point();  
-                        foreach (var l in figures[selectedFigure])
-                        {
-                            if (start)
-                            {
-                                one = l;
-                                start = false;
-                            }
-                            else
-                            {
-                                if (IntersectsLineVector((l, one), vec))
-                                    ++intersections; 
-                                one = l; 
-                            }
-                        }
-                        if ((intersections / 2) % 2 == 1)
-                            ColoringButton(PointInsideButton, Color.Green);
-                        else
-                            ColoringButton(PointInsideButton, Color.Red); 
-                    }
-                    break;
-
-                case Action.PointToLine:
-                    {
-                        var b = PointToLine(me.Location, (figures[selectedFigure].ElementAt(int.Parse(PointLineTB.Text)),
-                                                          figures[selectedFigure].ElementAt(int.Parse(PointLineTB.Text) + 1)));
-                        if (b == null)
-                            ColoringButton(LinePointButton, Color.Blue); 
-                        else if ((bool)b)
-                            ColoringButton(LinePointButton, Color.Green);
-                        else
-                            ColoringButton(LinePointButton, Color.Red);
-                    }
-                    break;
+                    break; 
             }
-        }
-
-        private bool? PointToLine(Point p, (Point, Point) l)
-        {
-           //  return a2b3 - a3b2, a3b1 - a1b3, a1b2 - a2b1
-
-            int res = p.Y * l.Item2.X - p.X * l.Item2.Y;
-            if (res > 0)
-                return true;
-            else if (res < 0)
-                return false;
-            else return null; 
-        }
-
-        private bool IntersectsLineVector((Point, Point) line, (Point, Point) vector)
-        {
-            bool? b1 = PointToLine(line.Item1, vector);
-            bool? b2 = PointToLine(line.Item2, vector);
-            return b1 == null || b2 == null || (bool)(b1 ^ b2);
         }
 
         private void FigNames_SelectedIndexChanged(object sender, EventArgs e)
@@ -254,17 +296,69 @@ namespace L3_Aff
             RedrawFigures(selectedFigure);
         }
 
-        private void ClearButton_Click(object sender, EventArgs e)
+        private void ShiftButton_Click(object sender, EventArgs e)
         {
-            figures.Clear();
-            FigNames.Items.Clear(); 
-            Graphics g = Canvas.CreateGraphics();
-            g.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, Canvas.Width, Canvas.Height));
+           for (int i = 0; i < figures.Count; i++)
+            {
+                if (figures.ElementAt(i).Value.Count > 2)
+                {
+                    for (int j = 0; j < figures.ElementAt(i).Value.Count; j++)
+                    {
+                        string k = figures.ElementAt(i).Key;
+                        double[,] new_coord = new double[1, 3];
+                        ChangeMatrix matr = new ChangeMatrix();
+                        new_coord = matr.ShiftMatrix(figures.ElementAt(i).Value[j].X, figures.ElementAt(i).Value[j].Y, Int32.Parse(DYTB.Text), Int32.Parse(DXTB.Text));
+                        Point p = new Point((int)new_coord[0, 0], (int)new_coord[0, 1]);
+                        figures[k][j] = p;
+                    }
+                }
+                RedrawFigures(null);
+            }
         }
 
-        private void LinePointButton_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            a = Action.PointToLine; 
+
+        }
+
+        private void button3_Click(object sender, EventArgs e) // stretch around center
+        {
+            for (int i = 0; i < figures.Count; i++)
+            {
+                if (figures.ElementAt(i).Value.Count > 2)
+                {
+                    for (int j = 0; j < figures.ElementAt(i).Value.Count; j++)
+                    {
+                        string k = figures.ElementAt(i).Key;
+                        double[,] new_coord = new double[1, 3];
+                        ChangeMatrix matr = new ChangeMatrix();
+                        new_coord = matr.StretchAroundCenterMatrix(figures.ElementAt(i).Value[j].X, figures.ElementAt(i).Value[j].Y, Int32.Parse(StretchKX.Text), Int32.Parse(StretchKY.Text));
+                        Point p = new Point((int)new_coord[0, 0], (int)new_coord[0,1]);
+                        figures[k][j] = p;
+                    }
+                }
+                RedrawFigures(null);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e) // rotate around center
+        {
+            for (int i = 0; i < figures.Count; i++)
+            {
+                if (figures.ElementAt(i).Value.Count > 2)
+                {
+                    for (int j = 0; j < figures.ElementAt(i).Value.Count; j++)
+                    {
+                        string k = figures.ElementAt(i).Key;
+                        double[,] new_coord = new double[1, 3];
+                        ChangeMatrix matr = new ChangeMatrix();
+                        new_coord = matr.RotateAroundCenterMatrix(figures.ElementAt(i).Value[j].X, figures.ElementAt(i).Value[j].Y, Int32.Parse(RAPTB.Text));
+                        Point p = new Point((int)new_coord[0, 0], (int)new_coord[0, 1]);
+                        figures[k][j] = p;
+                    }
+                }
+                RedrawFigures(null);
+            }
         }
     }
 }
