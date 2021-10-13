@@ -62,6 +62,57 @@ namespace L3_Aff
  
                 return res;
             }
+
+            public double[,] StretchAroundCenterMatrix(int x, int y, int kx, int ky)
+            {
+                matrix = new double[3, 3];
+                matrix[0, 0] = 1 / (double)kx;
+                matrix[0, 1] = 0;
+                matrix[0, 2] = 0;
+                matrix[1, 0] = 0;
+                matrix[1, 1] = 1 / (double)ky;
+                matrix[1, 2] = 0;
+                matrix[2, 0] = 0;
+                matrix[2, 1] = 0;
+                matrix[2, 2] = 1;
+                
+                double[,] beg = new double[1, 3];
+                beg[0, 0] = x;
+                beg[0, 1] = y;
+                beg[0, 2] = 1;
+
+                double[,] res = new double[1, 3];
+         
+                res = mult_matrix(beg, matrix);
+
+                return res;
+            }
+
+            public double[,] RotateAroundCenterMatrix(int x, int y, int angle)
+            {
+                matrix = new double[3, 3];
+                matrix[0, 0] = Math.Cos(angle);
+                matrix[0, 1] = Math.Cos(angle); ;
+                matrix[0, 2] = 0;
+                matrix[1, 0] = -Math.Cos(angle);
+                matrix[1, 1] = Math.Cos(angle);
+                matrix[1, 2] = 0;
+                matrix[2, 0] = 0;
+                matrix[2, 1] = 0;
+                matrix[2, 2] = 1;
+
+                double[,] beg = new double[1, 3];
+                beg[0, 0] = x;
+                beg[0, 1] = y;
+                beg[0, 2] = 1;
+
+                double[,] res = new double[1, 3];
+
+                res = mult_matrix(beg, matrix);
+
+                return res;
+            }
+
         }
 
 
@@ -268,6 +319,46 @@ namespace L3_Aff
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e) // stretch around center
+        {
+            for (int i = 0; i < figures.Count; i++)
+            {
+                if (figures.ElementAt(i).Value.Count > 2)
+                {
+                    for (int j = 0; j < figures.ElementAt(i).Value.Count; j++)
+                    {
+                        string k = figures.ElementAt(i).Key;
+                        double[,] new_coord = new double[1, 3];
+                        ChangeMatrix matr = new ChangeMatrix();
+                        new_coord = matr.StretchAroundCenterMatrix(figures.ElementAt(i).Value[j].X, figures.ElementAt(i).Value[j].Y, Int32.Parse(StretchKX.Text), Int32.Parse(StretchKY.Text));
+                        Point p = new Point((int)new_coord[0, 0], (int)new_coord[0,1]);
+                        figures[k][j] = p;
+                    }
+                }
+                RedrawFigures(null);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e) // rotate around center
+        {
+            for (int i = 0; i < figures.Count; i++)
+            {
+                if (figures.ElementAt(i).Value.Count > 2)
+                {
+                    for (int j = 0; j < figures.ElementAt(i).Value.Count; j++)
+                    {
+                        string k = figures.ElementAt(i).Key;
+                        double[,] new_coord = new double[1, 3];
+                        ChangeMatrix matr = new ChangeMatrix();
+                        new_coord = matr.RotateAroundCenterMatrix(figures.ElementAt(i).Value[j].X, figures.ElementAt(i).Value[j].Y, Int32.Parse(RAPTB.Text));
+                        Point p = new Point((int)new_coord[0, 0], (int)new_coord[0, 1]);
+                        figures[k][j] = p;
+                    }
+                }
+                RedrawFigures(null);
+            }
         }
     }
 }

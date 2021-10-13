@@ -46,7 +46,7 @@ namespace L3_Aff
             this.RAPLabel = new System.Windows.Forms.Label();
             this.StretchCoefLabel = new System.Windows.Forms.Label();
             this.StretchButton = new System.Windows.Forms.Button();
-            this.StretchTB = new System.Windows.Forms.TextBox();
+            this.StretchKX = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.LineTB = new System.Windows.Forms.TextBox();
             this.CollisButton = new System.Windows.Forms.Button();
@@ -55,6 +55,9 @@ namespace L3_Aff
             this.PointLineTB = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.StretchKY = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -222,13 +225,13 @@ namespace L3_Aff
             this.StretchButton.Text = "Stretch around point";
             this.StretchButton.UseVisualStyleBackColor = true;
             // 
-            // StretchTB
+            // StretchKX
             // 
-            this.StretchTB.Location = new System.Drawing.Point(956, 37);
-            this.StretchTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.StretchTB.Name = "StretchTB";
-            this.StretchTB.Size = new System.Drawing.Size(89, 22);
-            this.StretchTB.TabIndex = 17;
+            this.StretchKX.Location = new System.Drawing.Point(970, 51);
+            this.StretchKX.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.StretchKX.Name = "StretchKX";
+            this.StretchKX.Size = new System.Drawing.Size(33, 22);
+            this.StretchKX.TabIndex = 17;
             // 
             // button1
             // 
@@ -296,6 +299,7 @@ namespace L3_Aff
             this.button2.TabIndex = 24;
             this.button2.Text = "Rotate around center";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -306,12 +310,42 @@ namespace L3_Aff
             this.button3.TabIndex = 25;
             this.button3.Text = "Stretch around center";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // StretchKY
+            // 
+            this.StretchKY.Location = new System.Drawing.Point(1009, 51);
+            this.StretchKY.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.StretchKY.Name = "StretchKY";
+            this.StretchKY.Size = new System.Drawing.Size(33, 22);
+            this.StretchKY.TabIndex = 26;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(978, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(14, 17);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "x";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(1018, 32);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(15, 17);
+            this.label2.TabIndex = 28;
+            this.label2.Text = "y";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1225, 595);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.StretchKY);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.PointLineTB);
@@ -320,7 +354,7 @@ namespace L3_Aff
             this.Controls.Add(this.CollisButton);
             this.Controls.Add(this.LineTB);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.StretchTB);
+            this.Controls.Add(this.StretchKX);
             this.Controls.Add(this.StretchButton);
             this.Controls.Add(this.StretchCoefLabel);
             this.Controls.Add(this.RAPLabel);
@@ -366,7 +400,7 @@ namespace L3_Aff
         private System.Windows.Forms.Label RAPLabel;
         private System.Windows.Forms.Label StretchCoefLabel;
         private System.Windows.Forms.Button StretchButton;
-        private System.Windows.Forms.TextBox StretchTB;
+        private System.Windows.Forms.TextBox StretchKX;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox LineTB;
         private System.Windows.Forms.Button CollisButton;
@@ -375,6 +409,9 @@ namespace L3_Aff
         private System.Windows.Forms.TextBox PointLineTB;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox StretchKY;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
