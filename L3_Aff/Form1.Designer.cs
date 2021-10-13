@@ -121,6 +121,7 @@ namespace L3_Aff
             this.ClearButton.TabIndex = 6;
             this.ClearButton.Text = "Clear";
             this.ClearButton.UseVisualStyleBackColor = false;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
             // ShiftButton
             // 
@@ -246,6 +247,7 @@ namespace L3_Aff
             this.PointInsideButton.TabIndex = 21;
             this.PointInsideButton.Text = "Point inside?";
             this.PointInsideButton.UseVisualStyleBackColor = true;
+            this.PointInsideButton.Click += new System.EventHandler(this.PointInsideButton_Click);
             // 
             // LinePointButton
             // 
@@ -255,6 +257,7 @@ namespace L3_Aff
             this.LinePointButton.TabIndex = 22;
             this.LinePointButton.Text = "Point to line";
             this.LinePointButton.UseVisualStyleBackColor = true;
+            this.LinePointButton.Click += new System.EventHandler(this.LinePointButton_Click);
             // 
             // PointLineTB
             // 

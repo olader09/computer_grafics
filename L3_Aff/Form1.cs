@@ -11,14 +11,8 @@ using System.Windows.Forms;
 
 namespace L3_Aff
 {
-    public class ChangeMatrix
-    {
-        double[,] matrix; 
-    }
-
-
     public enum Figure {Dot, Line, Polygon}
-    public enum Action { NoAction, CreateFigure }
+    public enum Action { NoAction, CreateFigure, PointInside, PointToLine }
 
     public partial class Form1 : Form
     {
@@ -92,7 +86,7 @@ namespace L3_Aff
         public Form1()
         {
             InitializeComponent();
-            Graphics g = Canvas.CreateGraphics(); 
+            Graphics g = Canvas.CreateGraphics();
             g.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, Canvas.Width, Canvas.Height));
             ColoringButton(ClearButton, Color.Red);
             FigNames.SelectionMode = SelectionMode.One;
@@ -188,15 +182,89 @@ namespace L3_Aff
                             }
                             break;
                     }
+                    break;
 
-                    break; 
+                case Action.PointInside:
+                    {
+                        if (selectedFigure == null || selectedFigure == "")
+                            break; 
+                        Point p = new Point(me.X, me.Y);
+                        (Point, Point) vec = (p, new Point(p.X + 20, p.Y + 20));
+                        int intersections = 0;
+                        bool start = true;
+                        Point one = new Point();  
+                        foreach (var l in figures[selectedFigure])
+                        {
+                            if (start)
+                            {
+                                one = l;
+                                start = false;
+                            }
+                            else
+                            {
+                                if (IntersectsLineVector((l, one), vec))
+                                    ++intersections; 
+                                one = l; 
+                            }
+                        }
+                        if ((intersections / 2) % 2 == 1)
+                            ColoringButton(PointInsideButton, Color.Green);
+                        else
+                            ColoringButton(PointInsideButton, Color.Red); 
+                    }
+                    break;
+
+                case Action.PointToLine:
+                    {
+                        var b = PointToLine(me.Location, (figures[selectedFigure].ElementAt(int.Parse(PointLineTB.Text)),
+                                                          figures[selectedFigure].ElementAt(int.Parse(PointLineTB.Text) + 1)));
+                        if (b == null)
+                            ColoringButton(LinePointButton, Color.Blue); 
+                        else if ((bool)b)
+                            ColoringButton(LinePointButton, Color.Green);
+                        else
+                            ColoringButton(LinePointButton, Color.Red);
+                    }
+                    break;
             }
+        }
+
+        private bool? PointToLine(Point p, (Point, Point) l)
+        {
+           //  return a2b3 - a3b2, a3b1 - a1b3, a1b2 - a2b1
+
+            int res = p.Y * l.Item2.X - p.X * l.Item2.Y;
+            if (res > 0)
+                return true;
+            else if (res < 0)
+                return false;
+            else return null; 
+        }
+
+        private bool IntersectsLineVector((Point, Point) line, (Point, Point) vector)
+        {
+            bool? b1 = PointToLine(line.Item1, vector);
+            bool? b2 = PointToLine(line.Item2, vector);
+            return b1 == null || b2 == null || (bool)(b1 ^ b2);
         }
 
         private void FigNames_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedFigure = (string)FigNames.SelectedItem;
             RedrawFigures(selectedFigure);
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            figures.Clear();
+            FigNames.Items.Clear(); 
+            Graphics g = Canvas.CreateGraphics();
+            g.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, Canvas.Width, Canvas.Height));
+        }
+
+        private void LinePointButton_Click(object sender, EventArgs e)
+        {
+            a = Action.PointToLine; 
         }
     }
 }
