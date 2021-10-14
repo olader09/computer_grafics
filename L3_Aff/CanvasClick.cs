@@ -64,6 +64,37 @@ namespace L3_Aff
                 case Action.PointInside:
                     {
                         if (selectedFigure == null || selectedFigure == "")
+                            break; 
+
+                        double angle_sum = 0.0;
+                        Point p = me.Location; 
+                        for (int i = 1; i < figures[selectedFigure].Count; ++i)
+                        {
+                            Point p1 = figures[selectedFigure].ElementAt(i - 1);
+                            Point p2 = figures[selectedFigure].ElementAt(i);
+
+                            var new_p1 = new Point(p1.X - p.X, p1.Y - p.Y);
+                            var new_p2 = new Point(p2.X - p.X, p2.Y - p.Y);
+
+                            double fi = Math.Acos((new_p1.X * new_p2.X + new_p1.Y * new_p2.Y)
+                                                               /
+                                                (Length(p, p1) * Length(p, p2))) * Math.Sign(new_p1.X * new_p2.Y - new_p1.X * new_p1.Y);
+
+                            angle_sum += fi; 
+                        }
+
+                        if (Math.Abs(angle_sum) <= double.Epsilon * 250)
+                            ColoringButton(PointInsideButton, Color.Green);
+                        else
+                            ColoringButton(PointInsideButton, Color.Red);
+                    }
+                    break;
+
+
+                /* Deprecated ==============================================
+                case Action.PointInside:
+                    {
+                        if (selectedFigure == null || selectedFigure == "")
                             break;
                         Point p = new Point(me.X, me.Y);
                         (Point, Point) vec = (p, new Point(p.X + 20, p.Y + 20));
@@ -89,7 +120,7 @@ namespace L3_Aff
                         else
                             ColoringButton(PointInsideButton, Color.Red);
                     }
-                    break;
+                    break;*/
 
                 case Action.PointToLine:
                     {
@@ -115,6 +146,23 @@ namespace L3_Aff
                     {
                         around = (me.X, me.Y, true);
                         Rotate();
+                    }
+                    break;
+
+                case Action.FindCollision:
+                    {
+                        if (!line)
+                        {
+                            line = true;
+                            l.Item1 = me.Location; 
+                        }
+                        else
+                        {
+                            line = false;
+                            a = Action.NoAction;
+                            l.Item2 = me.Location;
+                            // IntersectsLineLine(); 
+                        }
                     }
                     break; 
             }

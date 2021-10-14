@@ -50,6 +50,11 @@ namespace L3_Aff
             RedrawFigures(selectedFigure);
         }
 
+        private double Length(Point p1, Point p2)
+        {
+            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+        }
+
         private (double, double) GetCenterOfFigure(List<Point> figure)
         {
             double x = 0.0, y = 0.0;
@@ -60,6 +65,10 @@ namespace L3_Aff
             }
             return (x / figure.Count, y / figure.Count);
         }
-    }
 
+        /*public (bool, Point) IntersectsLineLine((Point, Point) l1, (Point, Point) l2)
+        {
+            
+        }*/
+    }
 }
