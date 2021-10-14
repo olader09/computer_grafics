@@ -29,7 +29,19 @@ namespace L3_Aff
         {
             //  return a2b3 - a3b2, a3b1 - a1b3, a1b2 - a2b1
 
-            int res = p.Y * l.Item2.X - p.X * l.Item2.Y;
+            //int res = p.Y * l.Item2.X - p.X * l.Item2.Y;
+            Point A = ToFromWorldCoordinates(l.Item1);
+            Point B = ToFromWorldCoordinates(l.Item2);
+            Point C = ToFromWorldCoordinates(p);
+
+            int ax = B.X - A.X;
+            int ay = B.Y - A.Y;
+
+            int bx = C.X - B.X;
+            int by = C.Y - B.Y;
+
+            int res = ax * by - ay * bx;
+
             if (res > 0)
                 return true;
             else if (res < 0)

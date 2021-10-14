@@ -124,8 +124,10 @@ namespace L3_Aff
 
                 case Action.PointToLine:
                     {
-                        var b = PointToLine(me.Location, (figures[selectedFigure].ElementAt(int.Parse(PointLineTB.Text)),
-                                                          figures[selectedFigure].ElementAt(int.Parse(PointLineTB.Text) + 1)));
+                        //var b = PointToLine(me.Location, (figures[selectedFigure].ElementAt(int.Parse(PointLineTB.Text)),
+                        //                                figures[selectedFigure].ElementAt(int.Parse(PointLineTB.Text) + 1)));
+                        var b = PointToLine(me.Location, (figures[selectedFigure].ElementAt(0),
+                                                          figures[selectedFigure].ElementAt(1)));
                         if (b == null)
                             ColoringButton(LinePointButton, Color.Blue);
                         else if ((bool)b)
