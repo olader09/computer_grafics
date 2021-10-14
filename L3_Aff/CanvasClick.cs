@@ -110,6 +110,13 @@ namespace L3_Aff
                         Stretch();
                     }
                     break;
+
+                case Action.RotatePoint:
+                    {
+                        around = (me.X, me.Y, true);
+                        Rotate();
+                    }
+                    break; 
             }
         }
 

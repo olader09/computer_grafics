@@ -85,7 +85,7 @@ namespace L3_Aff
                 new_coord = matr.RotateAroundCenterMatrix(new_coord[0, 0], new_coord[0, 1], int.Parse(RAPTB.Text));
                 new_coord = matr.ShiftMatrix(new_coord[0, 0], new_coord[0, 1], center.Item1, center.Item2);
                 Point p = new Point((int)new_coord[0, 0], (int)new_coord[0, 1]);
-                new_list.Add(p);
+                new_list.Add(ToFromWorldCoordinates(p));
             }
 
             figures[selectedFigure] = new_list;
@@ -119,7 +119,7 @@ namespace L3_Aff
 
         private void RotatePointButton_Click(object sender, EventArgs e)
         {
-
+            a = Action.RotatePoint; 
         }
 
         private void StretchButton_Click(object sender, EventArgs e)

@@ -14,10 +14,8 @@ namespace L3_Aff
    
     public partial class Form1 : Form
     {
-       
-
         public enum Figure { Dot, Line, Polygon }
-        public enum Action { NoAction, CreateFigure, PointToLine, PointInside, StretchPoint }
+        public enum Action { NoAction, CreateFigure, PointToLine, PointInside, StretchPoint, RotatePoint }
 
         public Figure f;
         public Action a;
