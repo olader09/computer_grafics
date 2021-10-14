@@ -78,15 +78,15 @@ namespace L3_Aff
 
                             double fi = Math.Acos((new_p1.X * new_p2.X + new_p1.Y * new_p2.Y)
                                                                /
-                                                (Length(p, p1) * Length(p, p2))) * Math.Sign(new_p1.X * new_p2.Y - new_p1.X * new_p1.Y);
+                                                (Length(p, p1) * Length(p, p2))) * Math.Sign(new_p1.X * new_p2.Y - new_p2.X * new_p1.Y);
 
                             angle_sum += fi; 
                         }
 
-                        if (Math.Abs(angle_sum) <= double.Epsilon * 250)
-                            ColoringButton(PointInsideButton, Color.Green);
-                        else
+                        if (Math.Abs(angle_sum) <= 10e-10)
                             ColoringButton(PointInsideButton, Color.Red);
+                        else
+                            ColoringButton(PointInsideButton, Color.Green);
                     }
                     break;
 
