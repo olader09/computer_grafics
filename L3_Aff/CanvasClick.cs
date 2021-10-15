@@ -161,9 +161,17 @@ namespace L3_Aff
                         else
                         {
                             line = false;
-                            a = Action.NoAction;
                             l.Item2 = me.Location;
-                            // IntersectsLineLine(); 
+                            var g = Canvas.CreateGraphics();
+                            g.DrawLine(new Pen(Color.Blue), l.Item1, l.Item2);
+                            var res = IntersectsLineLine((figures[selectedFigure].ElementAt(0), figures[selectedFigure].ElementAt(1)), l);
+                            if (res.Item1)
+                            {
+                                g.DrawEllipse(new Pen(Color.Green), res.Item2.X - 5, res.Item2.Y - 5, 10, 10);
+                                ColoringButton(CollisButton, Color.Green);
+                            }
+                            else
+                                ColoringButton(CollisButton, Color.Red);
                         }
                     }
                     break; 

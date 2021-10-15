@@ -78,9 +78,21 @@ namespace L3_Aff
             return (x / figure.Count, y / figure.Count);
         }
 
-        /*public (bool, Point) IntersectsLineLine((Point, Point) l1, (Point, Point) l2)
+        public (bool, Point) IntersectsLineLine((Point, Point) l1, (Point, Point) l2)
         {
-            
-        }*/
+            double p0x = l1.Item1.X, p0y = l1.Item1.Y, p1x = l1.Item2.X, p1y = l1.Item2.Y,
+                   p2x = l2.Item1.X, p2y = l2.Item1.Y, p3x = l2.Item2.X, p3y = l2.Item2.Y;
+
+            double s1x = p1x - p0x, s1y = p1y - p0y, s2x = p3x - p2x, s2y = p3y - p2y;
+
+            double s = (-s1y * (p0x - p2x) + s1x * (p0y - p2y)) / (-s2x * s1y + s1x * s2y),
+                   t = (s2x * (p0y - p2y) - s2y * (p0x - p2x)) / (-s2x * s1y + s1x * s2y);
+
+            if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
+                return (true, new Point((int)(p0x + (t * s1x)), (int)(p0y + (t * s1y))));
+            else
+                return (false, new Point());
+
+        }
     }
 }
