@@ -15,7 +15,14 @@ namespace L3_Aff
     public partial class Form1 : Form
     {
         public enum Figure { Dot, Line, Polygon }
-        public enum Action { NoAction, CreateFigure, PointToLine, PointInside, StretchPoint, RotatePoint, FindCollision }
+        public enum Action { NoAction, 
+                             CreateFigure, 
+                             PointToLine, 
+                             PointInside, 
+                             StretchPoint, 
+                             RotatePoint, 
+                             FindCollision,
+                             PolygonUnion }
 
         public Figure f;
         public Action a;
@@ -23,7 +30,8 @@ namespace L3_Aff
         bool line = false;
         (int, int, bool) around; 
         public string selectedFigure;
-        public (Point, Point) l; 
+        public (Point, Point) l;
+        public string polygon1, polygon2; 
 
         public Dictionary<string, List<Point>> figures;
         public List<Point> currentFigure; 
@@ -47,6 +55,12 @@ namespace L3_Aff
         private void CollisButton_Click(object sender, EventArgs e)
         {
             a = Action.FindCollision; 
+        }
+
+        private void PolyUnionButton_Click(object sender, EventArgs e)
+        {
+            a = Action.PolygonUnion;
+            polygon1 = selectedFigure; 
         }
     }
 }

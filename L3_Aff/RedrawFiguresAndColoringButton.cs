@@ -35,14 +35,14 @@ namespace L3_Aff
             b.ForeColor = Color.White;
         }
 
-        public void RedrawFigures(string selectedName)
+        public void RedrawFigures(params string[] selectedName)
         {
             Graphics g = Canvas.CreateGraphics();
             g.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, Canvas.Width, Canvas.Height));
             Pen pen = new Pen(Color.Black);
             foreach (var fig in figures)
             {
-                if (fig.Key == selectedName)
+                if (selectedName != null && selectedName.Contains(fig.Key))
                     pen.Color = Color.Red;
                 else
                     pen.Color = Color.Black;

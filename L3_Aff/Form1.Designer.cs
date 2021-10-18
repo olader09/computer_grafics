@@ -58,6 +58,7 @@ namespace L3_Aff
             this.StretchKY = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.PolyUnionButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -282,7 +283,7 @@ namespace L3_Aff
             this.LinePointButton.Location = new System.Drawing.Point(11, 628);
             this.LinePointButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LinePointButton.Name = "LinePointButton";
-            this.LinePointButton.Size = new System.Drawing.Size(374, 72);
+            this.LinePointButton.Size = new System.Drawing.Size(191, 72);
             this.LinePointButton.TabIndex = 22;
             this.LinePointButton.Text = "Point to line";
             this.LinePointButton.UseVisualStyleBackColor = true;
@@ -344,11 +345,22 @@ namespace L3_Aff
             this.label2.TabIndex = 28;
             this.label2.Text = "y";
             // 
+            // PolyUnionButton
+            // 
+            this.PolyUnionButton.Location = new System.Drawing.Point(208, 628);
+            this.PolyUnionButton.Name = "PolyUnionButton";
+            this.PolyUnionButton.Size = new System.Drawing.Size(176, 72);
+            this.PolyUnionButton.TabIndex = 29;
+            this.PolyUnionButton.Text = "Polygon union";
+            this.PolyUnionButton.UseVisualStyleBackColor = true;
+            this.PolyUnionButton.Click += new System.EventHandler(this.PolyUnionButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1378, 744);
+            this.Controls.Add(this.PolyUnionButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.StretchKY);
@@ -419,6 +431,7 @@ namespace L3_Aff
         private System.Windows.Forms.TextBox StretchKY;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button PolyUnionButton;
     }
 }
 
