@@ -214,7 +214,9 @@ namespace L3_Aff
                 count += x.Value.Count; 
             }
             count = 0;
-            foreach (var x in to_add2)
+            var li = to_add2.Select(x => (x.Key, x.Value)).ToList();
+            li.Sort((x, y) => x.Key.CompareTo(y.Key)); 
+            foreach (var x in li)
             {
                 AddVertices(p2, (x.Key + count, x.Value));
                 count += x.Value.Count;
