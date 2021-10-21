@@ -70,6 +70,9 @@
     <Compile Include="Shift_Rotate_Stretch.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="CanvasClick.resx">
+      <DependentUpon>CanvasClick.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
