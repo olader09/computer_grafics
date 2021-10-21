@@ -13,10 +13,6 @@ namespace L3_Aff
 {
     public partial class Form1 : Form
     {
-        private PictureBox Canvas;
-        private Button DrawFractalButton;
-        private TextBox textBox1;
-        private Label textFileLabel;
 
         private void Canvas_Click(object sender, EventArgs e)
         {
@@ -181,62 +177,6 @@ namespace L3_Aff
                     }
                     break; 
             }
-        }
-
-        private void InitializeComponent()
-        {
-            this.Canvas = new System.Windows.Forms.PictureBox();
-            this.DrawFractalButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textFileLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // Canvas
-            // 
-            this.Canvas.Location = new System.Drawing.Point(12, 116);
-            this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(1060, 590);
-            this.Canvas.TabIndex = 0;
-            this.Canvas.TabStop = false;
-            // 
-            // DrawFractalButton
-            // 
-            this.DrawFractalButton.Location = new System.Drawing.Point(12, 12);
-            this.DrawFractalButton.Name = "DrawFractalButton";
-            this.DrawFractalButton.Size = new System.Drawing.Size(91, 98);
-            this.DrawFractalButton.TabIndex = 1;
-            this.DrawFractalButton.Text = "Draw fractal";
-            this.DrawFractalButton.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(174, 12);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(158, 26);
-            this.textBox1.TabIndex = 2;
-            // 
-            // textFileLabel
-            // 
-            this.textFileLabel.AutoSize = true;
-            this.textFileLabel.Location = new System.Drawing.Point(109, 15);
-            this.textFileLabel.Name = "textFileLabel";
-            this.textFileLabel.Size = new System.Drawing.Size(59, 20);
-            this.textFileLabel.TabIndex = 3;
-            this.textFileLabel.Text = "text file";
-            // 
-            // Form1
-            // 
-            this.ClientSize = new System.Drawing.Size(1084, 718);
-            this.Controls.Add(this.textFileLabel);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.DrawFractalButton);
-            this.Controls.Add(this.Canvas);
-            this.Name = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
         }
     }
 }
