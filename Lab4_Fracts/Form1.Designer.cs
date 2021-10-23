@@ -38,14 +38,19 @@ namespace Lab4_Fracts
             this.GenerationsLabel = new System.Windows.Forms.Label();
             this.Randoms = new System.Windows.Forms.TextBox();
             this.RandomsLabel = new System.Windows.Forms.Label();
+            this.ClearButton = new System.Windows.Forms.Button();
+            this.StretchButton = new System.Windows.Forms.Button();
+            this.StretchTB = new System.Windows.Forms.TextBox();
+            this.ShiftButton = new System.Windows.Forms.Button();
+            this.ShiftTB = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
             // Canvas
             // 
-            this.Canvas.Location = new System.Drawing.Point(12, 123);
+            this.Canvas.Location = new System.Drawing.Point(168, 123);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(1108, 554);
+            this.Canvas.Size = new System.Drawing.Size(1156, 642);
             this.Canvas.TabIndex = 1;
             this.Canvas.TabStop = false;
             // 
@@ -91,7 +96,7 @@ namespace Lab4_Fracts
             this.Generations.Name = "Generations";
             this.Generations.Size = new System.Drawing.Size(100, 26);
             this.Generations.TabIndex = 6;
-            this.Generations.Text = "7";
+            this.Generations.Text = "4";
             // 
             // GenerationsLabel
             // 
@@ -119,11 +124,62 @@ namespace Lab4_Fracts
             this.RandomsLabel.TabIndex = 9;
             this.RandomsLabel.Text = "rand";
             // 
+            // ClearButton
+            // 
+            this.ClearButton.Location = new System.Drawing.Point(12, 123);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(149, 60);
+            this.ClearButton.TabIndex = 10;
+            this.ClearButton.Text = "Clear";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
+            // 
+            // StretchButton
+            // 
+            this.StretchButton.Location = new System.Drawing.Point(12, 189);
+            this.StretchButton.Name = "StretchButton";
+            this.StretchButton.Size = new System.Drawing.Size(149, 60);
+            this.StretchButton.TabIndex = 11;
+            this.StretchButton.Text = "Stretch";
+            this.StretchButton.UseVisualStyleBackColor = true;
+            this.StretchButton.Click += new System.EventHandler(this.StretchButton_Click);
+            // 
+            // StretchTB
+            // 
+            this.StretchTB.Location = new System.Drawing.Point(13, 256);
+            this.StretchTB.Name = "StretchTB";
+            this.StretchTB.Size = new System.Drawing.Size(148, 26);
+            this.StretchTB.TabIndex = 12;
+            this.StretchTB.Text = "0,5 0,5";
+            // 
+            // ShiftButton
+            // 
+            this.ShiftButton.Location = new System.Drawing.Point(13, 288);
+            this.ShiftButton.Name = "ShiftButton";
+            this.ShiftButton.Size = new System.Drawing.Size(148, 55);
+            this.ShiftButton.TabIndex = 13;
+            this.ShiftButton.Text = "Shift";
+            this.ShiftButton.UseVisualStyleBackColor = true;
+            this.ShiftButton.Click += new System.EventHandler(this.ShiftButton_Click);
+            // 
+            // ShiftTB
+            // 
+            this.ShiftTB.Location = new System.Drawing.Point(13, 349);
+            this.ShiftTB.Name = "ShiftTB";
+            this.ShiftTB.Size = new System.Drawing.Size(148, 26);
+            this.ShiftTB.TabIndex = 14;
+            this.ShiftTB.Text = "50 50";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1132, 689);
+            this.ClientSize = new System.Drawing.Size(1336, 777);
+            this.Controls.Add(this.ShiftTB);
+            this.Controls.Add(this.ShiftButton);
+            this.Controls.Add(this.StretchTB);
+            this.Controls.Add(this.StretchButton);
+            this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.RandomsLabel);
             this.Controls.Add(this.Randoms);
             this.Controls.Add(this.GenerationsLabel);
@@ -152,6 +208,11 @@ namespace Lab4_Fracts
         private System.Windows.Forms.Label GenerationsLabel;
         private System.Windows.Forms.TextBox Randoms;
         private System.Windows.Forms.Label RandomsLabel;
+        private System.Windows.Forms.Button ClearButton;
+        private System.Windows.Forms.Button StretchButton;
+        private System.Windows.Forms.TextBox StretchTB;
+        private System.Windows.Forms.Button ShiftButton;
+        private System.Windows.Forms.TextBox ShiftTB;
     }
 }
 

@@ -8,13 +8,93 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Text.RegularExpressions; 
+using System.Text.RegularExpressions;
+using System.Drawing.Drawing2D;
 
 namespace Lab4_Fracts
 {
     public partial class Form1 : Form
     {
-        public LSystem Lsys; 
+        #region Forms and buttons
+        public Form1()
+        {
+            InitializeComponent();
+            ColoringButton(ClearButton, Color.Red);
+            Clear();
+        }
+
+        public void ColoringButton(Button b, Color c)
+        {
+            Bitmap bmp = new Bitmap(b.Width, b.Height);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                Rectangle r = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                using (LinearGradientBrush br = new LinearGradientBrush(
+                                                    r,
+                                                    c,
+                                                    Color.FromArgb(c.R - 20 < 0 ? 0 : c.R - 20,
+                                                                   c.G - 20 < 0 ? 0 : c.G - 20,
+                                                                   c.B - 20 < 0 ? 0 : c.B - 20),
+                                                    LinearGradientMode.Vertical))
+                {
+                    g.FillRectangle(br, r);
+                }
+            }
+            b.BackgroundImage = bmp;
+            b.ForeColor = Color.White;
+        }
+
+
+        private void BrouseLSystemFileButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Text Files(*.txt)|*.txt";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                LSystemFile.Text = open.FileName;
+            }
+        }
+
+        private void Clear()
+        {
+            var g = Canvas.CreateGraphics();
+            g.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, Canvas.Width, Canvas.Height));
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+
+        #endregion
+
+        #region L Systems
+
+        public LSystem Lsys;
+        public List<SimpleLine> fract;
+
+        public class SimpleLine
+        {
+            public (double, double) p1, p2;
+            public SimpleLine((double, double) point1, (double, double) point2)
+            {
+                p1 = point1;
+                p2 = point2;
+            }
+        }
+
+        public class Line
+        {
+            public (double, double) start, fin;
+            public double st_th, end_th;
+            public (Color, Color) gradient; 
+        }
+
+        public void DrawLine(Line line)
+        {
+            var g = Canvas.CreateGraphics();
+            // Make thick line ()EEEE====---o
+        }
 
         public class LSystem
         {
@@ -36,41 +116,84 @@ namespace Lab4_Fracts
                 result = axiom; 
                 for (int i = 0; i < generations; ++i)
                 {
-                    foreach (var rule in rules)
+                    string temp = "";
+                    foreach (var ch in result)
                     {
-                        Regex.Replace(axiom, "" + rule.Item1, rule.Item2);
+                        if (rules.Any(x => x.Item1 == ch))
+                        {
+                            // result = Regex.Replace(result, "" + rule.Item1, rule.Item2);
+                            temp += rules.Find(x => x.Item1 == ch).Item2; 
+                        }
+                        else
+                        {
+                            temp += ch; 
+                        }
                     }
+                    result = temp; 
                 }
                 Console.WriteLine(result); 
             }
         }
 
-        public void Draw(Position start)
+        public double ToRadians(double deg) => (deg % 360) * Math.PI / 180;
+
+        public int ToY(double y) => Canvas.Height - (int)y; 
+
+        public void Draw(Position pos, bool rand)
         {
 
             var g = Canvas.CreateGraphics();
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            // g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             /*if (start.curGen == start.generations)
                 return; */
             Stack<Position> stack = new Stack<Position>();
+            fract = new List<SimpleLine>();
+            Random r = new Random();
+            Color c1 = Lsys.colors.Item1;
+            Color c2 = Lsys.colors.Item2;
+            int red = (int)((c2.R - c1.R) / (double)Lsys.generations / 2);
+            int green = (int)((c2.G - c1.G) / (double)Lsys.generations / 2);
+            int blue = (int)((c2.B - c1.B) / (double)Lsys.generations / 2);
 
             foreach (var symbol in Lsys.result)
             {
                 switch (symbol)
                 {
                     case 'F':
-                        g.DrawLine(new Pen(Color.Black),
-                            new Point((int)start.x, Canvas.Height - (int)start.y),
-                            new Point((int)(start.x + Lsys.lineLength * Math.Cos(Lsys.angle)), Canvas.Height - (int)(start.y + Lsys.lineLength * Math.Sin(Lsys.angle))));
+                    case 'A':
+                    case 'B':
+                        /*g.DrawLine(new Pen(Color.Black),
+                            new Point((int)pos.x, Canvas.Height - (int)pos.y),
+                            new Point((int)(pos.x + Lsys.lineLength * Math.Cos(Lsys.angle)), Canvas.Height - (int)(start.y + Lsys.lineLength * Math.Sin(Lsys.angle))));
+                       */
+                        double len = Lsys.lineLength / Lsys.generations;
+                        Position p2 = new Position();
+                        p2.angle = pos.angle;
+                        p2.x = pos.x + (len * Math.Cos(ToRadians(pos.angle)));
+                        p2.y = pos.y + (len * Math.Sin(ToRadians(pos.angle)));         
+                        g.DrawLine(new Pen(Color.FromArgb(c1.R + stack.Count * red,
+                                                          c1.G + stack.Count * green,
+                                                          c1.B + stack.Count * blue)), 
+                            new Point((int)pos.x, ToY(pos.y)), 
+                            new Point((int)p2.x, ToY(p2.y)));
+
+                        fract.Add(new SimpleLine((pos.x, pos.y), (p2.x, p2.y))); 
+                        pos = p2; 
                         break;
                     case 'X':
                         break;
-                    case '-':
-                        start.angle -= 20;
-                        break;
                     case '+':
-                        start.angle += 20;
+                        pos.angle -= rand ? r.NextDouble() * Lsys.angle : Lsys.angle;
                         break;
+                    case '-':
+                        pos.angle += rand ? r.NextDouble() * Lsys.angle : Lsys.angle;
+                        break;
+                    case '[':
+                        stack.Push(pos);
+                        break;
+                    case ']':
+                        pos = stack.Pop();
+                        break; 
                 }
             }
         }
@@ -82,20 +205,7 @@ namespace Lab4_Fracts
             public double thickness; 
             // public int generations, curGen; 
         }
-        public Form1()
-        {
-            InitializeComponent();
-        }
-
-        private void BrouseLSystemFileButton_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Text Files(*.txt)|*.txt";
-            if (open.ShowDialog() == DialogResult.OK)
-            {
-                LSystemFile.Text = open.FileName;
-            }
-        }
+        
 
         private void DrawLSystemButton_Click(object sender, EventArgs e)
         {
@@ -105,13 +215,13 @@ namespace Lab4_Fracts
             system.axiom = sets[0];
             system.angle = double.Parse(sets[1]);
             system.startAngle = double.Parse(sets[2]);
-            system.startPoint = (Canvas.Width / 2, 0);
+            system.startPoint = (Canvas.Width / 2, Canvas.Height / 2);
             system.startThickness = 20;
             system.colors = (Color.Brown, Color.Green);
             system.generations = int.Parse(Generations.Text);
             var d = Randoms.Text.Split(new char[] { ' ', ';', ',' }).Select(x => double.Parse(x));
             system.randomRange = (d.ElementAt(0), d.ElementAt(1));
-            system.lineLength = 50;
+            system.lineLength = 75;
             system.rules = new List<(char, string)>(); 
             foreach (var line in text.Skip(1))
             {
@@ -124,7 +234,58 @@ namespace Lab4_Fracts
             p.x = Lsys.startPoint.Item1;
             p.y = Lsys.startPoint.Item2;
             p.angle = Lsys.startAngle;
-            Draw(p);
+            Draw(p, true);
         }
+
+        private void RedrawFract()
+        {
+            var g = Canvas.CreateGraphics();
+            foreach (var line in fract)
+                g.DrawLine(new Pen(Color.Black),
+                    new Point((int)line.p1.Item1, ToY(line.p1.Item2)),
+                    new Point((int)line.p2.Item1, ToY(line.p2.Item2))); 
+        }
+
+        private void StretchLine(SimpleLine line, double x, double y)
+        {
+            line.p1.Item1 *= x;
+            line.p1.Item2 *= y;
+
+            line.p2.Item1 *= x;
+            line.p2.Item2 *= y;
+        }
+
+        private void ShiftLine(SimpleLine line, double x, double y)
+        {
+            line.p1.Item1 += x;
+            line.p1.Item2 += y;
+
+            line.p2.Item1 += x;
+            line.p2.Item2 += y;
+        }
+
+        private void StretchButton_Click(object sender, EventArgs e)
+        {
+            var w = StretchTB.Text.Split(' ');
+            double x = double.Parse(w[0]);
+            double y = double.Parse(w[1]);
+            for (int i = 0; i < fract.Count; ++i)
+                StretchLine(fract[i], x, y);
+            Clear(); 
+            RedrawFract(); 
+        }
+
+        private void ShiftButton_Click(object sender, EventArgs e)
+        {
+            var w = ShiftTB.Text.Split(' ');
+            double x = double.Parse(w[0]);
+            double y = double.Parse(w[1]);
+            for (int i = 0; i < fract.Count; ++i)
+                ShiftLine(fract[i], x, y);
+            Clear();
+            RedrawFract();
+        }
+
+        #endregion
     }
 }
