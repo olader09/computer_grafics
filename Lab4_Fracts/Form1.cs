@@ -94,6 +94,7 @@ namespace Lab4_Fracts
         {
             var g = Canvas.CreateGraphics();
             // Make thick line ()EEEE====---o
+            
         }
 
         public class LSystem
@@ -287,5 +288,16 @@ namespace Lab4_Fracts
         }
 
         #endregion
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BezCur_Click(object sender, EventArgs e)
+        {
+            Form2 frm2 = new Form2();
+            frm2.Show();
+        }
     }
 }
