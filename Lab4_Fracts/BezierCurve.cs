@@ -15,8 +15,12 @@ namespace Lab4_Fracts
 {
     public partial class Form2 : Form
     {
-        private Button button1;
-        bool isDraw = false;
+        private Button button1,
+                       button2;
+
+        bool shift = false,
+             isDraw = false;
+
         List<Point> lst = new List<Point>();
         public PictureBox Main;
         Graphics g;
@@ -29,112 +33,108 @@ namespace Lab4_Fracts
         public Form2()
         {
             InitializeComponent();
+            g = Main.CreateGraphics();
         }
 
         private void Main_Click(object sender, MouseEventArgs ev)
         {
-
-            g = Main.CreateGraphics();
-
-            if (lst.Count < 4)
+            if (!shift)
             {
-                switch (lst.Count)
+                if (lst.Count < 4)
                 {
-                    case 0:
+                    switch (lst.Count)
+                    {
+                        case 0:
+                            {
+                                lst.Add(new Point(ev.X, ev.Y));
+                                g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
+                                break;
+                            }
+                        case 1:
+                            {
+                                lst.Add(new Point(ev.X, ev.Y));
+                                g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
+                                g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
+                                break;
+                            }
+                        case 2:
+                            {
+                                lst.Add(new Point(ev.X, ev.Y));
+                                g.Clear(DefaultBackColor);
+
+                                g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[2].X - 3, lst[2].Y - 3, 6, 6);
+
+                                g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
+                                g.DrawLine(new Pen(Color.Black), lst[1], lst[2]);
+
+                                drawBezierOfThreePoint(lst[0], lst[1], lst[2]);
+                                break;
+                            }
+                        case 3:
+                            {
+                                lst.Add(new Point(ev.X, ev.Y));
+                                g.Clear(DefaultBackColor);
+
+                                g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[2].X - 3, lst[2].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[3].X - 3, lst[3].Y - 3, 6, 6);
+
+                                g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
+                                g.DrawLine(new Pen(Color.Black), lst[1], lst[2]);
+                                g.DrawLine(new Pen(Color.Black), lst[2], lst[3]);
+
+                                drawBezierOfFourPoint(lst[0], lst[1], lst[2], lst[3]);
+                                break;
+                            }
+                    }
+                }
+                else
+                {
+                    if (lst.Count % 2 == 0)
+                    {
+                        lst.Add(new Point(ev.X, ev.Y));
+                        g.Clear(DefaultBackColor);
+
+                        for (int i = 0; i < lst.Count; i++)
+                            g.DrawEllipse(new Pen(Color.Black), lst[i].X - 3, lst[i].Y - 3, 6, 6);
+                    }
+                    else
+                    {
+                        lst.Add(new Point(ev.X, ev.Y));
+                        for (int i = 0; i + 3 < lst.Count; i += 2)
                         {
-                            lst.Add(new Point(ev.X, ev.Y));
-                            g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
-                            break;
+                            int r_i_x = (lst[i].X + lst[i + 1].X) / 2;
+                            int r_i_y = (lst[i].Y + lst[i + 1].Y) / 2;
+
+                            int r_ii_x = (lst[i + 2].X + lst[i + 3].X) / 2;
+                            int r_ii_y = (lst[i + 2].Y + lst[i + 3].Y) / 2;
+
+                            g.DrawLine(new Pen(Color.Black), lst[i], lst[i + 1]);
+                            g.DrawLine(new Pen(Color.Black), lst[i + 2], lst[i + 3]);
+
+                            g.DrawEllipse(new Pen(Color.Red), r_i_x - 2, r_i_y - 2, 4, 4);
+                            g.DrawEllipse(new Pen(Color.Red), r_ii_x - 2, r_ii_y - 2, 4, 4);
+
+                            g.DrawEllipse(new Pen(Color.Black), lst[lst.Count - 1].X - 3, lst[lst.Count - 1].Y - 3, 6, 6);
+                            drawBezierOfFourPoint(new Point(r_i_x, r_i_y), lst[i + 1], lst[i + 2], new Point(r_ii_x, r_ii_y));
                         }
-                    case 1:
-                        {
-                            lst.Add(new Point(ev.X, ev.Y));
-                            g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
-                            g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
-                            break;
-                        }
-                    case 2:
-                        {
-                            lst.Add(new Point(ev.X, ev.Y));
-                            g.Clear(DefaultBackColor);
-
-                            g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
-                            g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
-                            g.DrawEllipse(new Pen(Color.Black), lst[2].X - 3, lst[2].Y - 3, 6, 6);
-
-                            g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
-                            g.DrawLine(new Pen(Color.Black), lst[1], lst[2]);
-
-                            drawBezierOfThreePoint(lst[0], lst[1], lst[2]);
-                            break;
-                        }
-                    case 3:
-                        {
-                            lst.Add(new Point(ev.X, ev.Y));
-                            g.Clear(DefaultBackColor);
-
-                            g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
-                            g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
-                            g.DrawEllipse(new Pen(Color.Black), lst[2].X - 3, lst[2].Y - 3, 6, 6);
-                            g.DrawEllipse(new Pen(Color.Black), lst[3].X - 3, lst[3].Y - 3, 6, 6);
-
-                            g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
-                            g.DrawLine(new Pen(Color.Black), lst[1], lst[2]);
-                            g.DrawLine(new Pen(Color.Black), lst[2], lst[3]);
-
-                            drawBezierOfFourPoint(lst[0], lst[1], lst[2], lst[3]);
-                            break;
-                        }
+                    }
                 }
             }
             else
             {
-                if (lst.Count % 2 == 0)
-                {
-                    lst.Add(new Point(ev.X, ev.Y));
-                    g.Clear(DefaultBackColor);
-
-                    for (int i = 0; i < lst.Count; i++)
-                        g.DrawEllipse(new Pen(Color.Black), lst[i].X - 3, lst[i].Y - 3, 6, 6);
-                }
-                else 
-                {
-                    lst.Add(new Point(ev.X, ev.Y));
-                    for (int i = 0; i + 3 < lst.Count; i+=2)
+                for (int i = 0; i < lst.Count; i++)
+                    if (Math.Abs(lst[i].X - ev.X) < 15 && Math.Abs(lst[i].Y - ev.Y) < 15)
                     {
-                        int r_i_x = (lst[i].X + lst[i + 1].X) / 2;
-                        int r_i_y = (lst[i].Y + lst[i + 1].Y) / 2;
-
-                        int r_ii_x = (lst[i + 2].X + lst[i + 3].X) / 2;
-                        int r_ii_y = (lst[i + 2].Y + lst[i + 3].Y) / 2;
-
-                        g.DrawLine(new Pen(Color.Black), lst[i], lst[i + 1]);
-                        g.DrawLine(new Pen(Color.Black), lst[i + 2], lst[i + 3]);
-
-                        g.DrawEllipse(new Pen(Color.Red), r_i_x-2, r_i_y-2, 4, 4);
-                        g.DrawEllipse(new Pen(Color.Red), r_ii_x-2, r_ii_y-2, 4, 4);
-
-                        g.DrawEllipse(new Pen(Color.Black), lst[lst.Count - 1].X - 3, lst[lst.Count - 1].Y - 3, 6, 6);
-                        drawBezierOfFourPoint(new Point(r_i_x, r_i_y), lst[i + 1], lst[i + 2], new Point(r_ii_x, r_ii_y));
+                        isDraw = true;
+                        lst[i] = new Point(ev.X, ev.Y);
                     }
-                }
             }
-            
-            //case 4:
-            //  {
-            //    if (Math.Abs(p0.X - ev.X) < 50 && Math.Abs(p0.Y - ev.Y) < 50)
-            //  {
-            //    isDraw = true;
-            //}
-            //break;
-            //}
-
-
         }
 
-  
-
-        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -147,37 +147,125 @@ namespace Lab4_Fracts
             //isDraw = false;
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (!shift)
+            {
+                ColoringButton(button2, Color.Green);
+                shift = true;
+            }
+            else
+            {
+                ColoringButton(button2, Color.Red);
+                shift = false;
+            }
+        }
+
         private void Main_MouseMove(object sender, MouseEventArgs ev)
         {
             while (isDraw)
             {
-                //g.DrawEllipse(new Pen(DefaultBackColor), p0.X - 3, p0.Y - 3, 6, 6);
-                /*
-                g.Clear(DefaultBackColor);
+                if (lst.Count <= 4)
+                {
+                    switch (lst.Count)
+                    {
+                        case 1:
+                            {
+                                g.Clear(DefaultBackColor);
 
-                p0 = new Point(ev.X, ev.Y);
+                                g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
+                                isDraw = false;
+                                break;
+                            }
+                        case 2:
+                            {
+                                g.Clear(DefaultBackColor);
 
-                g.DrawEllipse(new Pen(Color.Black), p0.X - 3, p0.Y - 3, 6, 6);
-                g.DrawEllipse(new Pen(Color.Black), p1.X - 3, p1.Y - 3, 6, 6);
-                g.DrawEllipse(new Pen(Color.Black), p2.X - 3, p2.Y - 3, 6, 6);
-                g.DrawEllipse(new Pen(Color.Black), p3.X - 3, p3.Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
 
-                g.DrawLine(new Pen(Color.Black), p0, p1);
-                g.DrawLine(new Pen(Color.Black), p1, p2);
-                g.DrawLine(new Pen(Color.Black), p2, p3);
+                                g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
+                                isDraw = false;
+                                break;
+                            }
+                        case 3:
+                            {
+                                g.Clear(DefaultBackColor);
 
-                
+                                g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[2].X - 3, lst[2].Y - 3, 6, 6);
 
+                                g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
+                                g.DrawLine(new Pen(Color.Black), lst[1], lst[2]);
 
-                isDraw = false;
-                */
+                                drawBezierOfThreePoint(lst[0], lst[1], lst[2]);
+                                isDraw = false;
+                                break;
+                            }
+                        case 4:
+                            {
+                                g.Clear(DefaultBackColor);
+
+                                g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[2].X - 3, lst[2].Y - 3, 6, 6);
+                                g.DrawEllipse(new Pen(Color.Black), lst[3].X - 3, lst[3].Y - 3, 6, 6);
+
+                                g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
+                                g.DrawLine(new Pen(Color.Black), lst[1], lst[2]);
+                                g.DrawLine(new Pen(Color.Black), lst[2], lst[3]);
+
+                                drawBezierOfFourPoint(lst[0], lst[1], lst[2], lst[3]);
+                                isDraw = false;
+                                break;
+                            }
+                    }
+                }
+                else
+                {
+                    if (lst.Count % 2 != 0)
+                    {
+                        g.Clear(DefaultBackColor);
+
+                        for (int i = 0; i < lst.Count; i++)
+                            g.DrawEllipse(new Pen(Color.Black), lst[i].X - 3, lst[i].Y - 3, 6, 6);
+                        isDraw = false;
+                    }
+                    else
+                    {
+                        g.Clear(DefaultBackColor);
+                        for (int i = 0; i + 3 < lst.Count; i += 2)
+                        {
+                            for (int k = 0; k < lst.Count; k++)
+                                g.DrawEllipse(new Pen(Color.Black), lst[k].X - 3, lst[k].Y - 3, 6, 6);
+
+                            int r_i_x = (lst[i].X + lst[i + 1].X) / 2;
+                            int r_i_y = (lst[i].Y + lst[i + 1].Y) / 2;
+
+                            int r_ii_x = (lst[i + 2].X + lst[i + 3].X) / 2;
+                            int r_ii_y = (lst[i + 2].Y + lst[i + 3].Y) / 2;
+
+                            g.DrawLine(new Pen(Color.Black), lst[i], lst[i + 1]);
+                            g.DrawLine(new Pen(Color.Black), lst[i + 2], lst[i + 3]);
+
+                            g.DrawEllipse(new Pen(Color.Red), r_i_x - 2, r_i_y - 2, 4, 4);
+                            g.DrawEllipse(new Pen(Color.Red), r_ii_x - 2, r_ii_y - 2, 4, 4);
+                            
+                            drawBezierOfFourPoint(new Point(r_i_x, r_i_y), lst[i + 1], lst[i + 2], new Point(r_ii_x, r_ii_y));
+                        }
+                        isDraw = false;
+                    }
+                }
             }
         }
 
+        #region Init and helpfunc
         private void InitializeComponent()
         {
             this.Main = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Main)).BeginInit();
             this.SuspendLayout();
             // 
@@ -194,17 +282,28 @@ namespace Lab4_Fracts
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(717, 372);
+            this.button1.Location = new System.Drawing.Point(698, 363);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(102, 40);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Clear";
+            this.button1.Text = "Очистить";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(568, 363);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(106, 40);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Двигать";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form2
             // 
             this.ClientSize = new System.Drawing.Size(812, 424);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Main);
             this.Name = "Form2";
@@ -251,5 +350,27 @@ namespace Lab4_Fracts
                 t += 0.001;
             }
         }
+
+        public void ColoringButton(Button b, Color c)
+        {
+            Bitmap bmp = new Bitmap(b.Width, b.Height);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                Rectangle r = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                using (LinearGradientBrush br = new LinearGradientBrush(
+                                                    r,
+                                                    c,
+                                                    Color.FromArgb(c.R - 20 < 0 ? 0 : c.R - 20,
+                                                                   c.G - 20 < 0 ? 0 : c.G - 20,
+                                                                   c.B - 20 < 0 ? 0 : c.B - 20),
+                                                    LinearGradientMode.Vertical))
+                {
+                    g.FillRectangle(br, r);
+                }
+            }
+            b.BackgroundImage = bmp;
+            b.ForeColor = Color.White;
+        }
+        #endregion
     }
 }
