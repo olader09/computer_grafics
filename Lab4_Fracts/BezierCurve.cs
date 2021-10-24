@@ -15,14 +15,11 @@ namespace Lab4_Fracts
 {
     public partial class Form2 : Form
     {
-        Point p0 = new Point(0, 0), 
-              p1 = new Point(0, 0), 
-              p2 = new Point(0, 0), 
-              p3 = new Point(0, 0);
         private Button button1;
-        int j = 0;
         bool isDraw = false;
         List<Point> lst = new List<Point>();
+        public PictureBox Main;
+        Graphics g;
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -135,8 +132,7 @@ namespace Lab4_Fracts
 
         }
 
-        public PictureBox Main;
-        Graphics g;
+  
 
         
 
@@ -156,6 +152,7 @@ namespace Lab4_Fracts
             while (isDraw)
             {
                 //g.DrawEllipse(new Pen(DefaultBackColor), p0.X - 3, p0.Y - 3, 6, 6);
+                /*
                 g.Clear(DefaultBackColor);
 
                 p0 = new Point(ev.X, ev.Y);
@@ -173,6 +170,7 @@ namespace Lab4_Fracts
 
 
                 isDraw = false;
+                */
             }
         }
 
