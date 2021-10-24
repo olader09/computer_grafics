@@ -22,6 +22,7 @@ namespace Lab4_Fracts
         private Button button1;
         int j = 0;
         bool isDraw = false;
+        List<Point> lst = new List<Point>();
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -38,58 +39,100 @@ namespace Lab4_Fracts
 
             g = Main.CreateGraphics();
 
-            switch (j)
+            if (lst.Count < 4)
             {
-                case 0:
-                    {
-                        p0 = new Point(ev.X, ev.Y);
-                        g.DrawEllipse(new Pen(Color.Black), p0.X - 3, p0.Y - 3, 6, 6);
-                        j++;
-                        break;
-                    }
-                case 1:
-                    {
-                        p1 = new Point(ev.X, ev.Y);
-                        g.DrawEllipse(new Pen(Color.Black), p1.X - 3, p1.Y - 3, 6, 6);
-                        g.DrawLine(new Pen(Color.Black), p0, p1);
-                        j++;
-                        break;
-                    }
-                case 2:
-                    {
-                        p2 = new Point(ev.X, ev.Y);
-                        g.DrawEllipse(new Pen(Color.Black), p2.X - 3, p2.Y - 3, 6, 6);
-                        g.DrawLine(new Pen(Color.Black), p1, p2);
-                        j++;
-                        break;
-                    }
-                case 3:
-                    {
-                        p3 = new Point(ev.X, ev.Y);
-                        g.DrawEllipse(new Pen(Color.Black), p3.X - 3, p3.Y - 3, 6, 6);
-                        g.DrawLine(new Pen(Color.Black), p2, p3);
-                        j++;
-
-                        double q = 0.0;
-                        for (int t = 0; t <= 1000; t++)
+                switch (lst.Count)
+                {
+                    case 0:
                         {
-
-                            Point cur = getPoint(p0, p1, p2, p3, q);
-                            g.DrawEllipse(new Pen(Color.Black), cur.X, cur.Y, 1, 1);
-                            q += 0.001;
+                            lst.Add(new Point(ev.X, ev.Y));
+                            g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
+                            break;
                         }
-                        break;
-                    }
-                case 4:
-                    {
-                        if (Math.Abs(p0.X - ev.X) < 50 && Math.Abs(p0.Y - ev.Y) < 50)
+                    case 1:
                         {
-                            isDraw = true;
+                            lst.Add(new Point(ev.X, ev.Y));
+                            g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
+                            g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
+                            break;
                         }
-                        break;
-                    }
+                    case 2:
+                        {
+                            lst.Add(new Point(ev.X, ev.Y));
+                            g.Clear(DefaultBackColor);
 
+                            g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
+                            g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
+                            g.DrawEllipse(new Pen(Color.Black), lst[2].X - 3, lst[2].Y - 3, 6, 6);
+
+                            g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
+                            g.DrawLine(new Pen(Color.Black), lst[1], lst[2]);
+
+                            drawBezierOfThreePoint(lst[0], lst[1], lst[2]);
+                            break;
+                        }
+                    case 3:
+                        {
+                            lst.Add(new Point(ev.X, ev.Y));
+                            g.Clear(DefaultBackColor);
+
+                            g.DrawEllipse(new Pen(Color.Black), lst[0].X - 3, lst[0].Y - 3, 6, 6);
+                            g.DrawEllipse(new Pen(Color.Black), lst[1].X - 3, lst[1].Y - 3, 6, 6);
+                            g.DrawEllipse(new Pen(Color.Black), lst[2].X - 3, lst[2].Y - 3, 6, 6);
+                            g.DrawEllipse(new Pen(Color.Black), lst[3].X - 3, lst[3].Y - 3, 6, 6);
+
+                            g.DrawLine(new Pen(Color.Black), lst[0], lst[1]);
+                            g.DrawLine(new Pen(Color.Black), lst[1], lst[2]);
+                            g.DrawLine(new Pen(Color.Black), lst[2], lst[3]);
+
+                            drawBezierOfFourPoint(lst[0], lst[1], lst[2], lst[3]);
+                            break;
+                        }
+                }
             }
+            else
+            {
+                if (lst.Count % 2 == 0)
+                {
+                    lst.Add(new Point(ev.X, ev.Y));
+                    g.Clear(DefaultBackColor);
+
+                    for (int i = 0; i < lst.Count; i++)
+                        g.DrawEllipse(new Pen(Color.Black), lst[i].X - 3, lst[i].Y - 3, 6, 6);
+                }
+                else 
+                {
+                    lst.Add(new Point(ev.X, ev.Y));
+                    for (int i = 0; i + 3 < lst.Count; i+=2)
+                    {
+                        int r_i_x = (lst[i].X + lst[i + 1].X) / 2;
+                        int r_i_y = (lst[i].Y + lst[i + 1].Y) / 2;
+
+                        int r_ii_x = (lst[i + 2].X + lst[i + 3].X) / 2;
+                        int r_ii_y = (lst[i + 2].Y + lst[i + 3].Y) / 2;
+
+                        g.DrawLine(new Pen(Color.Black), lst[i], lst[i + 1]);
+                        g.DrawLine(new Pen(Color.Black), lst[i + 2], lst[i + 3]);
+
+                        g.DrawEllipse(new Pen(Color.Red), r_i_x-2, r_i_y-2, 4, 4);
+                        g.DrawEllipse(new Pen(Color.Red), r_ii_x-2, r_ii_y-2, 4, 4);
+
+                        g.DrawEllipse(new Pen(Color.Black), lst[lst.Count - 1].X - 3, lst[lst.Count - 1].Y - 3, 6, 6);
+                        drawBezierOfFourPoint(new Point(r_i_x, r_i_y), lst[i + 1], lst[i + 2], new Point(r_ii_x, r_ii_y));
+                    }
+                }
+            }
+            
+            //case 4:
+            //  {
+            //    if (Math.Abs(p0.X - ev.X) < 50 && Math.Abs(p0.Y - ev.Y) < 50)
+            //  {
+            //    isDraw = true;
+            //}
+            //break;
+            //}
+
+
         }
 
         public PictureBox Main;
@@ -100,7 +143,7 @@ namespace Lab4_Fracts
         private void button1_Click(object sender, EventArgs e)
         {
             g.Clear(DefaultBackColor);
-            j = 0;
+            lst.Clear();
         }
 
         private void Main_MouseUp(object sender, MouseEventArgs e)
@@ -126,14 +169,7 @@ namespace Lab4_Fracts
                 g.DrawLine(new Pen(Color.Black), p1, p2);
                 g.DrawLine(new Pen(Color.Black), p2, p3);
 
-                double q = 0.0;
-                for (int t = 0; t <= 1000; t++)
-                {
-
-                    Point cur = getPoint(p0, p1, p2, p3, q);
-                    g.DrawEllipse(new Pen(Color.Black), cur.X, cur.Y, 1, 1);
-                    q += 0.001;
-                }
+                
 
 
                 isDraw = false;
@@ -180,12 +216,42 @@ namespace Lab4_Fracts
 
         }
 
-        Point getPoint(Point p0, Point p1, Point p2, Point p3, double t)
+        Point getPointOf4(Point p0, Point p1, Point p2, Point p3, double t)
         {
             double x = p0.X * Math.Pow(1 - t, 3) + 3 * p1.X * Math.Pow(1 - t, 2) * t + 3 * p2.X * (1 - t) * Math.Pow(t, 2) + p3.X * Math.Pow(t, 3);
             double y = p0.Y * Math.Pow(1 - t, 3) + 3 * p1.Y * Math.Pow(1 - t, 2) * t + 3 * p2.Y * (1 - t) * Math.Pow(t, 2) + p3.Y * Math.Pow(t, 3);
             return new Point((int)x,  (int)y);
         }
-     
+
+        void drawBezierOfFourPoint(Point p0, Point p1, Point p2, Point p3)
+        {
+            double t = 0.0;
+            for (int q = 0; q<= 1000; q++)
+            {
+
+                Point cur = getPointOf4(p0, p1, p2, p3, t);
+                g.DrawEllipse(new Pen(Color.Black), cur.X, cur.Y, 1, 1);
+                t += 0.001;
+            }
+        }
+
+        Point getPointOf3(Point p0, Point p1, Point p2, double t)
+        {
+            double x = p0.X * Math.Pow(1 - t, 2) + 2 * p1.X * (1 - t) * t + p2.X * Math.Pow(t, 2);
+            double y = p0.Y * Math.Pow(1 - t, 2) + 2 * p1.Y * (1 - t) * t + p2.Y * Math.Pow(t, 2);
+            return new Point((int)x, (int)y);
+        }
+
+        void drawBezierOfThreePoint(Point p0, Point p1, Point p2)
+        {
+            double t = 0.0;
+            for (int q = 0; q <= 1000; q++)
+            {
+
+                Point cur = getPointOf3(p0, p1, p2, t);
+                g.DrawEllipse(new Pen(Color.Black), cur.X, cur.Y, 1, 1);
+                t += 0.001;
+            }
+        }
     }
 }
