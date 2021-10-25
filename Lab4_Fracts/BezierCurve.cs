@@ -24,7 +24,9 @@ namespace Lab4_Fracts
         private List<Point> list = new List<Point>();
         public PictureBox Main;
         private Graphics g;
-        private int selectedIndex = -1; 
+        private Button DeletePointButton;
+        private int selectedIndex = -1;
+        private bool delete = false; 
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -34,7 +36,8 @@ namespace Lab4_Fracts
         public Form2()
         {
             InitializeComponent();
-            g = Main.CreateGraphics(); 
+            g = Main.CreateGraphics();
+            ColoringButton(button1, Color.Red);
         }
 
         private void DrawBezierWithLines(List<Point> lst)
@@ -179,6 +182,18 @@ namespace Lab4_Fracts
 
         private void Main_Click(object sender, MouseEventArgs ev)
         {
+            if (delete)
+            {
+                for (int i = 0; i < list.Count; i++)
+                    if (Math.Abs(list[i].X - ev.X) < 5 && Math.Abs(list[i].Y - ev.Y) < 5)
+                    {
+                        list.RemoveAt(i);
+                        DrawBezierGraph(list);
+                        break;
+                    }
+                return; 
+            }
+
             if (!shift)
             {
                 list.Add(new Point(ev.X, ev.Y));
@@ -226,7 +241,8 @@ namespace Lab4_Fracts
             }
             else
             {
-                ColoringButton(button2, Color.Red);
+                button2.BackgroundImage = null;
+                button2.ForeColor = Color.Black; 
                 shift = false;
             }
         }
@@ -337,6 +353,7 @@ namespace Lab4_Fracts
             this.Main = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.DeletePointButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Main)).BeginInit();
             this.SuspendLayout();
             // 
@@ -348,8 +365,6 @@ namespace Lab4_Fracts
             this.Main.TabIndex = 0;
             this.Main.TabStop = false;
             this.Main.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Main_Click);
-            // this.Main.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Main_MouseMove);
-            // this.Main.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Main_MouseUp);
             // 
             // button1
             // 
@@ -371,9 +386,20 @@ namespace Lab4_Fracts
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // DeletePointButton
+            // 
+            this.DeletePointButton.Location = new System.Drawing.Point(445, 363);
+            this.DeletePointButton.Name = "DeletePointButton";
+            this.DeletePointButton.Size = new System.Drawing.Size(105, 40);
+            this.DeletePointButton.TabIndex = 3;
+            this.DeletePointButton.Text = "Удалить";
+            this.DeletePointButton.UseVisualStyleBackColor = true;
+            this.DeletePointButton.Click += new System.EventHandler(this.DeletePointButton_Click);
+            // 
             // Form2
             // 
             this.ClientSize = new System.Drawing.Size(812, 424);
+            this.Controls.Add(this.DeletePointButton);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Main);
@@ -419,6 +445,21 @@ namespace Lab4_Fracts
                 Point cur = getPointOf3(p0, p1, p2, t);
                 g.DrawEllipse(new Pen(Color.Black), cur.X, cur.Y, 1, 1);
                 t += 0.001;
+            }
+        }
+
+        private void DeletePointButton_Click(object sender, EventArgs e)
+        {
+            if (!delete)
+            {
+                delete = true;
+                ColoringButton(DeletePointButton, Color.Red);
+            }
+            else
+            {
+                delete = false;
+                DeletePointButton.BackgroundImage = null;
+                DeletePointButton.ForeColor = Color.Black; 
             }
         }
 

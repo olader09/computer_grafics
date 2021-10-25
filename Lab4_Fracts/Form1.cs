@@ -94,7 +94,6 @@ namespace Lab4_Fracts
         {
             var g = Canvas.CreateGraphics();
             // Make thick line ()EEEE====---o
-            
         }
 
         public class LSystem
@@ -235,7 +234,7 @@ namespace Lab4_Fracts
             p.x = Lsys.startPoint.Item1;
             p.y = Lsys.startPoint.Item2;
             p.angle = Lsys.startAngle;
-            Draw(p, true);
+            Draw(p, false);
         }
 
         private void RedrawFract()
