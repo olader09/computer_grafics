@@ -24,6 +24,7 @@ namespace Lab4_Fracts
         List<Point> lst = new List<Point>();
         public PictureBox Main;
         Graphics g;
+        int selectedIndex = -1;  
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -33,7 +34,7 @@ namespace Lab4_Fracts
         public Form2()
         {
             InitializeComponent();
-            g = Main.CreateGraphics();
+            g = Main.CreateGraphics(); 
         }
 
         private void Main_Click(object sender, MouseEventArgs ev)
@@ -126,12 +127,23 @@ namespace Lab4_Fracts
             }
             else
             {
-                for (int i = 0; i < lst.Count; i++)
-                    if (Math.Abs(lst[i].X - ev.X) < 15 && Math.Abs(lst[i].Y - ev.Y) < 15)
-                    {
-                        isDraw = true;
-                        lst[i] = new Point(ev.X, ev.Y);
-                    }
+                if (selectedIndex == -1)
+                {
+                    for (int i = 0; i < lst.Count; i++)
+                        if (Math.Abs(lst[i].X - ev.X) < 5 && Math.Abs(lst[i].Y - ev.Y) < 5)
+                        {
+                            selectedIndex = i;
+                            g.DrawEllipse(new Pen(Color.Green), lst[i].X - 3, lst[i].Y - 3, 6, 6);
+                            // isDraw = true;
+                            // lst[i] = new Point(ev.X, ev.Y);
+                        }
+                }
+                else
+                {
+                    lst[selectedIndex] = new Point(ev.X, ev.Y);
+                    isDraw = true;
+                    selectedIndex = -1; 
+                }
             }
         }
 
