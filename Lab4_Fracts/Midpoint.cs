@@ -25,6 +25,7 @@ namespace Lab4_Fracts
         private List<Point> mountain = new List<Point>();
         private double coef = 0.95; 
         private Queue<(Point, Point)> queue = new Queue<(Point, Point)>();
+        private Button ClearButton;
         private int to_go = 1; 
 
         public Form3()
@@ -38,6 +39,7 @@ namespace Lab4_Fracts
             this.Picture = new System.Windows.Forms.PictureBox();
             this.RandomTB = new System.Windows.Forms.TextBox();
             this.RandTB = new System.Windows.Forms.Label();
+            this.ClearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Picture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,6 +55,7 @@ namespace Lab4_Fracts
             // 
             // Picture
             // 
+            this.Picture.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.Picture.Location = new System.Drawing.Point(13, 13);
             this.Picture.Name = "Picture";
             this.Picture.Size = new System.Drawing.Size(1046, 537);
@@ -64,7 +67,7 @@ namespace Lab4_Fracts
             // 
             this.RandomTB.Location = new System.Drawing.Point(212, 623);
             this.RandomTB.Name = "RandomTB";
-            this.RandomTB.Size = new System.Drawing.Size(189, 26);
+            this.RandomTB.Size = new System.Drawing.Size(189, 22);
             this.RandomTB.TabIndex = 2;
             this.RandomTB.Text = "25";
             // 
@@ -73,13 +76,24 @@ namespace Lab4_Fracts
             this.RandTB.AutoSize = true;
             this.RandTB.Location = new System.Drawing.Point(211, 600);
             this.RandTB.Name = "RandTB";
-            this.RandTB.Size = new System.Drawing.Size(196, 20);
+            this.RandTB.Size = new System.Drawing.Size(174, 17);
             this.RandTB.TabIndex = 3;
             this.RandTB.Text = "Randomness in percent %";
+            // 
+            // ClearButton
+            // 
+            this.ClearButton.Location = new System.Drawing.Point(437, 551);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(193, 94);
+            this.ClearButton.TabIndex = 4;
+            this.ClearButton.Text = "Clear";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
             // Form3
             // 
             this.ClientSize = new System.Drawing.Size(1071, 662);
+            this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.RandTB);
             this.Controls.Add(this.RandomTB);
             this.Controls.Add(this.Picture);
@@ -135,6 +149,19 @@ namespace Lab4_Fracts
             to_go *= 2;
             coef = Math.Pow(coef, 1 + coef); 
             RedrawMount(); 
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            var g = Picture.CreateGraphics();
+            g.FillRectangle(new SolidBrush(Color.White), 0, 0, Picture.Width, Picture.Height);
+            coef = 0.95;
+            to_go = 1;
+            line = false;
+            sharping = false;
+            mountain = new List<Point>();
+            queue = new Queue<(Point, Point)>();
+
         }
     }
 }
