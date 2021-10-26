@@ -44,41 +44,45 @@ namespace Lab4_Fracts
             this.ShiftButton = new System.Windows.Forms.Button();
             this.ShiftTB = new System.Windows.Forms.TextBox();
             this.BezCur = new System.Windows.Forms.Button();
+            this.TreeCB = new System.Windows.Forms.CheckBox();
+            this.ThicknessButton = new System.Windows.Forms.Button();
+            this.ThicknessTB = new System.Windows.Forms.TextBox();
+            this.MidDpButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
             // Canvas
             // 
-            this.Canvas.Location = new System.Drawing.Point(149, 98);
+            this.Canvas.Location = new System.Drawing.Point(168, 122);
             this.Canvas.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(1028, 514);
+            this.Canvas.Size = new System.Drawing.Size(1156, 642);
             this.Canvas.TabIndex = 1;
             this.Canvas.TabStop = false;
             // 
             // LSystemFile
             // 
-            this.LSystemFile.Location = new System.Drawing.Point(11, 52);
+            this.LSystemFile.Location = new System.Drawing.Point(12, 65);
             this.LSystemFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LSystemFile.Name = "LSystemFile";
-            this.LSystemFile.Size = new System.Drawing.Size(133, 22);
+            this.LSystemFile.Size = new System.Drawing.Size(149, 26);
             this.LSystemFile.TabIndex = 2;
             // 
             // LSystemFileLabel
             // 
             this.LSystemFileLabel.AutoSize = true;
-            this.LSystemFileLabel.Location = new System.Drawing.Point(21, 75);
+            this.LSystemFileLabel.Location = new System.Drawing.Point(24, 94);
             this.LSystemFileLabel.Name = "LSystemFileLabel";
-            this.LSystemFileLabel.Size = new System.Drawing.Size(112, 17);
+            this.LSystemFileLabel.Size = new System.Drawing.Size(125, 20);
             this.LSystemFileLabel.TabIndex = 3;
             this.LSystemFileLabel.Text = "File for L-system";
             // 
             // BrouseLSystemFileButton
             // 
-            this.BrouseLSystemFileButton.Location = new System.Drawing.Point(11, 10);
+            this.BrouseLSystemFileButton.Location = new System.Drawing.Point(12, 12);
             this.BrouseLSystemFileButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BrouseLSystemFileButton.Name = "BrouseLSystemFileButton";
-            this.BrouseLSystemFileButton.Size = new System.Drawing.Size(132, 38);
+            this.BrouseLSystemFileButton.Size = new System.Drawing.Size(148, 48);
             this.BrouseLSystemFileButton.TabIndex = 4;
             this.BrouseLSystemFileButton.Text = "Brouse file";
             this.BrouseLSystemFileButton.UseVisualStyleBackColor = true;
@@ -86,10 +90,10 @@ namespace Lab4_Fracts
             // 
             // DrawLSystemButton
             // 
-            this.DrawLSystemButton.Location = new System.Drawing.Point(149, 10);
+            this.DrawLSystemButton.Location = new System.Drawing.Point(168, 12);
             this.DrawLSystemButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DrawLSystemButton.Name = "DrawLSystemButton";
-            this.DrawLSystemButton.Size = new System.Drawing.Size(89, 82);
+            this.DrawLSystemButton.Size = new System.Drawing.Size(100, 102);
             this.DrawLSystemButton.TabIndex = 5;
             this.DrawLSystemButton.Text = "Draw L-system";
             this.DrawLSystemButton.UseVisualStyleBackColor = true;
@@ -97,46 +101,46 @@ namespace Lab4_Fracts
             // 
             // Generations
             // 
-            this.Generations.Location = new System.Drawing.Point(288, 10);
+            this.Generations.Location = new System.Drawing.Point(324, 12);
             this.Generations.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Generations.Name = "Generations";
-            this.Generations.Size = new System.Drawing.Size(89, 22);
+            this.Generations.Size = new System.Drawing.Size(100, 26);
             this.Generations.TabIndex = 6;
             this.Generations.Text = "4";
             // 
             // GenerationsLabel
             // 
             this.GenerationsLabel.AutoSize = true;
-            this.GenerationsLabel.Location = new System.Drawing.Point(244, 12);
+            this.GenerationsLabel.Location = new System.Drawing.Point(274, 15);
             this.GenerationsLabel.Name = "GenerationsLabel";
-            this.GenerationsLabel.Size = new System.Drawing.Size(39, 17);
+            this.GenerationsLabel.Size = new System.Drawing.Size(44, 20);
             this.GenerationsLabel.TabIndex = 7;
             this.GenerationsLabel.Text = "gens";
             // 
             // Randoms
             // 
-            this.Randoms.Location = new System.Drawing.Point(288, 36);
+            this.Randoms.Location = new System.Drawing.Point(324, 45);
             this.Randoms.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Randoms.Name = "Randoms";
-            this.Randoms.Size = new System.Drawing.Size(89, 22);
+            this.Randoms.Size = new System.Drawing.Size(100, 26);
             this.Randoms.TabIndex = 8;
             this.Randoms.Text = "-10 10";
             // 
             // RandomsLabel
             // 
             this.RandomsLabel.AutoSize = true;
-            this.RandomsLabel.Location = new System.Drawing.Point(246, 38);
+            this.RandomsLabel.Location = new System.Drawing.Point(277, 48);
             this.RandomsLabel.Name = "RandomsLabel";
-            this.RandomsLabel.Size = new System.Drawing.Size(37, 17);
+            this.RandomsLabel.Size = new System.Drawing.Size(41, 20);
             this.RandomsLabel.TabIndex = 9;
             this.RandomsLabel.Text = "rand";
             // 
             // ClearButton
             // 
-            this.ClearButton.Location = new System.Drawing.Point(11, 98);
+            this.ClearButton.Location = new System.Drawing.Point(12, 122);
             this.ClearButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ClearButton.Name = "ClearButton";
-            this.ClearButton.Size = new System.Drawing.Size(132, 48);
+            this.ClearButton.Size = new System.Drawing.Size(148, 60);
             this.ClearButton.TabIndex = 10;
             this.ClearButton.Text = "Clear";
             this.ClearButton.UseVisualStyleBackColor = true;
@@ -144,10 +148,10 @@ namespace Lab4_Fracts
             // 
             // StretchButton
             // 
-            this.StretchButton.Location = new System.Drawing.Point(11, 151);
+            this.StretchButton.Location = new System.Drawing.Point(12, 189);
             this.StretchButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StretchButton.Name = "StretchButton";
-            this.StretchButton.Size = new System.Drawing.Size(132, 48);
+            this.StretchButton.Size = new System.Drawing.Size(148, 60);
             this.StretchButton.TabIndex = 11;
             this.StretchButton.Text = "Stretch";
             this.StretchButton.UseVisualStyleBackColor = true;
@@ -155,19 +159,19 @@ namespace Lab4_Fracts
             // 
             // StretchTB
             // 
-            this.StretchTB.Location = new System.Drawing.Point(12, 205);
+            this.StretchTB.Location = new System.Drawing.Point(14, 256);
             this.StretchTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StretchTB.Name = "StretchTB";
-            this.StretchTB.Size = new System.Drawing.Size(132, 22);
+            this.StretchTB.Size = new System.Drawing.Size(148, 26);
             this.StretchTB.TabIndex = 12;
             this.StretchTB.Text = "0,5 0,5";
             // 
             // ShiftButton
             // 
-            this.ShiftButton.Location = new System.Drawing.Point(12, 230);
+            this.ShiftButton.Location = new System.Drawing.Point(14, 288);
             this.ShiftButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ShiftButton.Name = "ShiftButton";
-            this.ShiftButton.Size = new System.Drawing.Size(132, 44);
+            this.ShiftButton.Size = new System.Drawing.Size(148, 55);
             this.ShiftButton.TabIndex = 13;
             this.ShiftButton.Text = "Shift";
             this.ShiftButton.UseVisualStyleBackColor = true;
@@ -175,28 +179,71 @@ namespace Lab4_Fracts
             // 
             // ShiftTB
             // 
-            this.ShiftTB.Location = new System.Drawing.Point(12, 279);
+            this.ShiftTB.Location = new System.Drawing.Point(14, 349);
             this.ShiftTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ShiftTB.Name = "ShiftTB";
-            this.ShiftTB.Size = new System.Drawing.Size(132, 22);
+            this.ShiftTB.Size = new System.Drawing.Size(148, 26);
             this.ShiftTB.TabIndex = 14;
             this.ShiftTB.Text = "50 50";
             // 
             // BezCur
             // 
-            this.BezCur.Location = new System.Drawing.Point(424, 24);
+            this.BezCur.Location = new System.Drawing.Point(447, 11);
+            this.BezCur.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BezCur.Name = "BezCur";
-            this.BezCur.Size = new System.Drawing.Size(152, 23);
+            this.BezCur.Size = new System.Drawing.Size(229, 103);
             this.BezCur.TabIndex = 15;
-            this.BezCur.Text = "Прямые Безье";
+            this.BezCur.Text = "Bezier curves";
             this.BezCur.UseVisualStyleBackColor = true;
             this.BezCur.Click += new System.EventHandler(this.BezCur_Click);
             // 
+            // TreeCB
+            // 
+            this.TreeCB.AutoSize = true;
+            this.TreeCB.Location = new System.Drawing.Point(324, 76);
+            this.TreeCB.Name = "TreeCB";
+            this.TreeCB.Size = new System.Drawing.Size(67, 24);
+            this.TreeCB.TabIndex = 16;
+            this.TreeCB.Text = "Tree";
+            this.TreeCB.UseVisualStyleBackColor = true;
+            // 
+            // ThicknessButton
+            // 
+            this.ThicknessButton.Location = new System.Drawing.Point(13, 381);
+            this.ThicknessButton.Name = "ThicknessButton";
+            this.ThicknessButton.Size = new System.Drawing.Size(148, 57);
+            this.ThicknessButton.TabIndex = 17;
+            this.ThicknessButton.Text = "Thickness";
+            this.ThicknessButton.UseVisualStyleBackColor = true;
+            this.ThicknessButton.Click += new System.EventHandler(this.ThicknessButton_Click);
+            // 
+            // ThicknessTB
+            // 
+            this.ThicknessTB.Location = new System.Drawing.Point(12, 445);
+            this.ThicknessTB.Name = "ThicknessTB";
+            this.ThicknessTB.Size = new System.Drawing.Size(148, 26);
+            this.ThicknessTB.TabIndex = 18;
+            this.ThicknessTB.Text = "0,5";
+            // 
+            // MidDpButton
+            // 
+            this.MidDpButton.Location = new System.Drawing.Point(698, 13);
+            this.MidDpButton.Name = "MidDpButton";
+            this.MidDpButton.Size = new System.Drawing.Size(232, 101);
+            this.MidDpButton.TabIndex = 19;
+            this.MidDpButton.Text = "Midpoint Displacement";
+            this.MidDpButton.UseVisualStyleBackColor = true;
+            this.MidDpButton.Click += new System.EventHandler(this.MidDpButton_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1188, 622);
+            this.ClientSize = new System.Drawing.Size(1336, 778);
+            this.Controls.Add(this.MidDpButton);
+            this.Controls.Add(this.ThicknessTB);
+            this.Controls.Add(this.ThicknessButton);
+            this.Controls.Add(this.TreeCB);
             this.Controls.Add(this.BezCur);
             this.Controls.Add(this.ShiftTB);
             this.Controls.Add(this.ShiftButton);
@@ -239,6 +286,10 @@ namespace Lab4_Fracts
         private System.Windows.Forms.Button ShiftButton;
         private System.Windows.Forms.TextBox ShiftTB;
         private System.Windows.Forms.Button BezCur;
+        private System.Windows.Forms.CheckBox TreeCB;
+        private System.Windows.Forms.Button ThicknessButton;
+        private System.Windows.Forms.TextBox ThicknessTB;
+        private System.Windows.Forms.Button MidDpButton;
     }
 }
 

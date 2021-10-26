@@ -76,24 +76,24 @@ namespace Lab4_Fracts
         public class SimpleLine
         {
             public (double, double) p1, p2;
+            public Color c;
+            public int thickness;
+
             public SimpleLine((double, double) point1, (double, double) point2)
             {
                 p1 = point1;
                 p2 = point2;
+                c = Color.Black;
+                thickness = 1; 
             }
-        }
 
-        public class Line
-        {
-            public (double, double) start, fin;
-            public double st_th, end_th;
-            public (Color, Color) gradient; 
-        }
-
-        public void DrawLine(Line line)
-        {
-            var g = Canvas.CreateGraphics();
-            // Make thick line ()EEEE====---o
+            public SimpleLine((double, double) point1, (double, double) point2, Color col, int th)
+            {
+                p1 = point1;
+                p2 = point2;
+                c = col;
+                thickness = th; 
+            }
         }
 
         public class LSystem
@@ -131,15 +131,33 @@ namespace Lab4_Fracts
                     }
                     result = temp; 
                 }
-                Console.WriteLine(result); 
+                // Console.WriteLine(result); 
             }
         }
 
         public double ToRadians(double deg) => (deg % 360) * Math.PI / 180;
 
-        public int ToY(double y) => Canvas.Height - (int)y; 
+        public int ToY(double y) => Canvas.Height - (int)y;
 
-        public void Draw(Position pos, bool rand)
+        public int GetBranchGens(string str)
+        {
+            int i = 1;
+            Stack<bool> stack = new Stack<bool>();
+            foreach (var c in str)
+            {
+                if (c == '[')
+                {
+                    stack.Push(true);
+                    if (stack.Count + 1 > i)
+                        i = stack.Count + 1;
+                }
+                else if (c == ']')
+                    stack.Pop();
+            }
+            return i;
+        }
+
+        public void Draw(Position pos, bool rand = false, bool tree = false)
         {
 
             var g = Canvas.CreateGraphics();
@@ -151,9 +169,12 @@ namespace Lab4_Fracts
             Random r = new Random();
             Color c1 = Lsys.colors.Item1;
             Color c2 = Lsys.colors.Item2;
-            int red = (int)((c2.R - c1.R) / (double)Lsys.generations / 2);
-            int green = (int)((c2.G - c1.G) / (double)Lsys.generations / 2);
-            int blue = (int)((c2.B - c1.B) / (double)Lsys.generations / 2);
+            int gens = GetBranchGens(Lsys.result); 
+            double red = (c2.R - c1.R) / (double)gens;
+            double green = (c2.G - c1.G) / (double)gens;
+            double blue = (c2.B - c1.B) / (double)gens;
+            double thickness = (Lsys.startThickness - 1) / (double)gens;
+            double length = (Lsys.lineLength - 5) / (double)gens; 
 
             foreach (var symbol in Lsys.result)
             {
@@ -166,19 +187,37 @@ namespace Lab4_Fracts
                             new Point((int)pos.x, Canvas.Height - (int)pos.y),
                             new Point((int)(pos.x + Lsys.lineLength * Math.Cos(Lsys.angle)), Canvas.Height - (int)(start.y + Lsys.lineLength * Math.Sin(Lsys.angle))));
                        */
-                        double len = Lsys.lineLength / Lsys.generations;
-                        Position p2 = new Position();
-                        p2.angle = pos.angle;
-                        p2.x = pos.x + (len * Math.Cos(ToRadians(pos.angle)));
-                        p2.y = pos.y + (len * Math.Sin(ToRadians(pos.angle)));         
-                        g.DrawLine(new Pen(Color.FromArgb(c1.R + stack.Count * red,
-                                                          c1.G + stack.Count * green,
-                                                          c1.B + stack.Count * blue)), 
-                            new Point((int)pos.x, ToY(pos.y)), 
-                            new Point((int)p2.x, ToY(p2.y)));
-
-                        fract.Add(new SimpleLine((pos.x, pos.y), (p2.x, p2.y))); 
-                        pos = p2; 
+                        
+                        if (tree)
+                        {
+                            // double len = Lsys.lineLength / Lsys.generations;
+                            Position p2 = new Position();
+                            p2.angle = pos.angle;
+                            Color c = Color.FromArgb((int)(c1.R + stack.Count * red),
+                                                     (int)(c1.G + stack.Count * green),
+                                                     (int)(c1.B + stack.Count * blue));
+                            int thick = (int)(Lsys.startThickness - stack.Count * thickness);
+                            p2.x = pos.x + ((Lsys.lineLength - (length * stack.Count)) * Math.Cos(ToRadians(pos.angle)));
+                            p2.y = pos.y + ((Lsys.lineLength - (length * stack.Count)) * Math.Sin(ToRadians(pos.angle)));
+                            g.DrawLine(new Pen(c, thick),
+                                       new Point((int)pos.x, ToY(pos.y)),
+                                       new Point((int)p2.x, ToY(p2.y)));
+                            fract.Add(new SimpleLine((pos.x, pos.y), (p2.x, p2.y), c, thick));
+                            pos = p2;
+                        }
+                        else
+                        {
+                            double len = Lsys.lineLength / Lsys.generations;
+                            Position p2 = new Position();
+                            p2.angle = pos.angle;
+                            p2.x = pos.x + (len * Math.Cos(ToRadians(pos.angle)));
+                            p2.y = pos.y + (len * Math.Sin(ToRadians(pos.angle)));
+                            g.DrawLine(new Pen(Color.Black), 
+                                       new Point((int)pos.x, ToY(pos.y)),
+                                       new Point((int)p2.x, ToY(p2.y)));
+                            fract.Add(new SimpleLine((pos.x, pos.y), (p2.x, p2.y)));
+                            pos = p2;
+                        }
                         break;
                     case 'X':
                         break;
@@ -234,14 +273,17 @@ namespace Lab4_Fracts
             p.x = Lsys.startPoint.Item1;
             p.y = Lsys.startPoint.Item2;
             p.angle = Lsys.startAngle;
-            Draw(p, false);
+            if (TreeCB.Checked)
+                Draw(p, false, false);
+            else
+                Draw(p, true, true); 
         }
 
         private void RedrawFract()
         {
             var g = Canvas.CreateGraphics();
             foreach (var line in fract)
-                g.DrawLine(new Pen(Color.Black),
+                g.DrawLine(new Pen(line.c, line.thickness),
                     new Point((int)line.p1.Item1, ToY(line.p1.Item2)),
                     new Point((int)line.p2.Item1, ToY(line.p2.Item2))); 
         }
@@ -253,6 +295,9 @@ namespace Lab4_Fracts
 
             line.p2.Item1 *= x;
             line.p2.Item2 *= y;
+
+            //if (line.thickness > 1)
+              //  line.thickness = (int)(line.thickness / x); 
         }
 
         private void ShiftLine(SimpleLine line, double x, double y)
@@ -297,6 +342,21 @@ namespace Lab4_Fracts
         {
             Form2 frm2 = new Form2();
             frm2.Show();
+        }
+
+        private void ThicknessButton_Click(object sender, EventArgs e)
+        {
+            foreach (var line in fract)
+                if (line.thickness > 1)
+                    line.thickness = (int)(line.thickness / double.Parse(ThicknessTB.Text));
+            Clear(); 
+            RedrawFract();
+        }
+
+        private void MidDpButton_Click(object sender, EventArgs e)
+        {
+            Form3 frm3 = new Form3();
+            frm3.Show();
         }
     }
 }
