@@ -23,9 +23,14 @@ namespace Lab4_Fracts
         private TextBox RandomTB;
         private Label RandTB;
         private List<Point> mountain = new List<Point>();
-        private double coef = 1.0; 
+        private double coef = 0.95; 
         private Queue<(Point, Point)> queue = new Queue<(Point, Point)>();
         private int to_go = 1; 
+
+        public Form3()
+        {
+            InitializeComponent(); 
+        }
 
         private void InitializeComponent()
         {
@@ -92,12 +97,17 @@ namespace Lab4_Fracts
             if (!sharping)
             {
                 if (!line)
+                {
                     mountain.Add(me.Location);
+                    line = true; 
+                }
                 else
                 {
                     mountain.Add(me.Location);
                     sharping = true;
                     queue.Enqueue((mountain.ElementAt(0), mountain.ElementAt(1)));
+                    var g = Picture.CreateGraphics();
+                    g.DrawLine(new Pen(Color.Black), mountain.ElementAt(0), mountain.ElementAt(1));
                 }
             }
         }
@@ -117,12 +127,13 @@ namespace Lab4_Fracts
             {
                 var line = queue.Dequeue();
                 Point mid = new Point((line.Item1.X + line.Item2.X) / 2, (line.Item1.Y + line.Item2.Y) / 2);
-                mid.Y = (int)(mid.Y * (1 + r.NextDouble() * double.Parse(RandomTB.Text) * coef));
+                mid.Y = (int)(mid.Y * (1 + (((r.NextDouble() * double.Parse(RandomTB.Text)) - (double.Parse(RandomTB.Text) / 2)) / 100) * coef));
                 queue.Enqueue((line.Item1, mid));
                 queue.Enqueue((mid, line.Item2)); 
             }
+            Console.WriteLine(coef);
             to_go *= 2;
-            coef *= 0.95; 
+            coef = Math.Pow(coef, 1 + coef); 
             RedrawMount(); 
         }
     }
