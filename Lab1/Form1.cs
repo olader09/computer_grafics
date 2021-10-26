@@ -350,22 +350,22 @@ namespace Lab1
                         switch (hi)
                         {
                             case 0:
-                                r = (int)v; b = t; g = p;
+                                r = (int)v; g = t; b = p;
                                 break;
                             case 1:
-                                r = q; b = (int)v; g = p;
+                                r = q; g = (int)v; b = p;
                                 break;
                             case 2:
-                                r = p; b = (int)v; g = t;
+                                r = p; g = (int)v; b = t;
                                 break;
                             case 3:
-                                r = p; b = q; g = (int)v;
+                                r = p; g = q; b = (int)v;
                                 break;
                             case 4:
-                                r = t; b = p; g = (int)v;
+                                r = t; g = p; b = (int)v;
                                 break;
                             case 5:
-                                r = (int)v; b = p; g = q;
+                                r = (int)v; g = p; b = q;
                                 break;
                         }
 
@@ -400,6 +400,7 @@ namespace Lab1
                 }
             PictureBox1.Image = HSVtoRGB(hsv);
         }
+
 
         private void VBar_Scroll(object sender, EventArgs e)
         {
