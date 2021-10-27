@@ -7,16 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Math;
 
 namespace Lab6_Figures3D
 {
     public partial class Form1 : Form
     {
-        public Dictionary<string, Figure> figures = new Dictionary<string, Figure>(); 
+        public List<Figure> figures = new List<Figure>();
+        public int selectedFigure = -1;
+        public void Next() => selectedFigure = selectedFigure == figures.Count - 1 ? 0 : (selectedFigure + 1); 
 
         public Form1()
         {
             InitializeComponent();
+            Camera camera = new Camera(new Point3D(-1, 0, 0), new Point3D(1, 0, 0)); 
+        }
+
+        public void ShowFigures(Camera cam)
+        {
+
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs ke)
@@ -25,6 +34,132 @@ namespace Lab6_Figures3D
             {
 
             };
+        }
+    }
+
+    public static class Matrix
+    {
+        // FOR MULTIPLICATION FROM LEFT SIDE:
+        // [x, y, z, 1] * [change matrix] => result
+
+        public static double[,] IdentityMatrix()
+        {
+            return new double[4, 4]
+            {
+                { 1, 0, 0, 0 },
+                { 0, 1, 0, 0 },
+                { 0, 0, 1, 0 },
+                { 0, 0, 0, 1 }
+            };
+        }
+
+        public static double[,] ScaleMatrix(double dx, double dy, double dz)
+        {
+            return new double[4, 4] { {     dx,     0,     0,     0 },
+                                      {     0,     dy,     0,     0 },
+                                      {     0,      0,    dz,     0 },
+                                      {     0,      0,     0,     1 } };
+        }
+
+        public static double[,] ShiftMatrix(double dx, double dy, double dz)
+        { 
+            return new double[4, 4] { {     1,     0,     0,     0 },
+                                      {     0,     1,     0,     0 },
+                                      {     0,     0,     1,     0 },
+                                      {    dx,    dy,    dz,     1 } };
+        }
+
+        public static double DegreesToRadians(double degrees) => degrees * (Math.PI / 180);
+
+        // Angle in degrees
+        public static double[,] RotateX(double angle)
+        {
+            double rad = DegreesToRadians(angle);
+            return new double[4, 4] {
+                { 1,       0,           0,        0 },
+                { 0,    Cos(rad),    Sin(rad),    0 },
+                { 0,   -Sin(rad),    Cos(rad),    0 },
+                { 0,       0,           0,        1 }
+            };
+        }
+
+        // Angle in degrees
+        public static double[,] RotateY(double angle)
+        {
+            double rad = DegreesToRadians(angle);
+            return new double[4, 4] {
+                { Cos(rad),   0,  -Sin(rad),   0 },
+                {    0,       1,      0,       0 },
+                { Sin(rad),   0,   Cos(rad),   0 },
+                {    0,       0,      0,       1 }
+            };
+        }
+
+        // Angle in degrees
+        public static double[,] RotateZ(double angle)
+        {
+            double rad = DegreesToRadians(angle);
+            return new double[4, 4] {
+                {  Cos(rad),    Sin(rad),    0,    0 },
+                { -Sin(rad),    Cos(rad),    0,    0 },
+                {     0,           0,        1,    0 },
+                {     0,           0,        0,    1 }
+            };
+        }
+
+        public static double[,] MultMatrix(double[,] a, double[,] b)
+        {
+            double[,] res = new double[a.GetLength(0), b.GetLength(1)];
+
+            for (int i = 0; i < a.GetLength(0); i++)
+            {
+                for (int j = 0; j < b.GetLength(1); j++)
+                {
+                    for (int k = 0; k < a.GetLength(1); k++)
+                    {
+                        res[i, j] += a[i, k] * b[k, j];
+                    }
+                }
+            }
+            return res;
+        }
+
+        /*public static double[] Rotate(double[] vector)
+        {
+
+        }*/
+    }
+
+    public class Camera
+    {
+        public Point3D Location { get; set; }
+        public Point3D View { get; set; }
+        // public (double, double, double) Angle;
+
+        public double Width { get; init; }
+        public double Height { get; init; }
+
+        public Camera(Point3D location, Point3D view)
+        {
+            Location = location;
+            View = view;
+            Width = 2;
+            Height = 1; 
+        }
+
+        public void Shift(Point3D where)
+        {
+            Location += where; 
+        }
+
+        public void Rotate(Line3D axis, double angle)
+        {
+
+        }
+
+        public void Rotate(string axis, double angle)
+        {
+
         }
     }
 
@@ -39,6 +174,11 @@ namespace Lab6_Figures3D
             X = x;
             Y = y;
             Z = z;
+        }
+
+        public static Point3D operator +(Point3D one, Point3D other)
+        {
+            return new Point3D(one.X + other.X, one.Y + other.Y, one.Z + other.Z);
         }
     }
 

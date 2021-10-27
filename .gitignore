@@ -11,11 +11,11 @@
 # Lab2_Paint/obj
 # Lab2_Paint/.vs
 # .vs
-# *.suo
+*.suo
 # *.cache 
 # *.vs
 # *.pdb
-# *.sqlite
+*.sqlite
 # *.log
 
 
