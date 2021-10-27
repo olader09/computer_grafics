@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab3_Aff_2D", "..\L3_Aff\La
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4_Fracts", "..\Lab4_Fracts\Lab4_Fracts.csproj", "{B7E55453-1442-4195-B036-B113C150F57D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab6_Figures3D", "..\Lab6_Figures3D\Lab6_Figures3D.csproj", "{4CA65AC8-9F5A-4FD9-A4F7-63DCC2F4C84F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B7E55453-1442-4195-B036-B113C150F57D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7E55453-1442-4195-B036-B113C150F57D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7E55453-1442-4195-B036-B113C150F57D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CA65AC8-9F5A-4FD9-A4F7-63DCC2F4C84F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CA65AC8-9F5A-4FD9-A4F7-63DCC2F4C84F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CA65AC8-9F5A-4FD9-A4F7-63DCC2F4C84F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CA65AC8-9F5A-4FD9-A4F7-63DCC2F4C84F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
