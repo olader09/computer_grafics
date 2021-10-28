@@ -38,39 +38,4 @@ namespace Lab6_Figures3D
             };
         }
     }
-
-    
-
-    public class Camera
-    {
-        public Point3D Location { get; set; }
-        public Point3D View { get; set; }
-        // public (double, double, double) Angle;
-
-        public double Width { get; init; }
-        public double Height { get; init; }
-
-        public Camera(Point3D location, Point3D view)
-        {
-            Location = location;
-            View = view;
-            Width = 2;
-            Height = 1; 
-        }
-
-        public void Shift(Point3D where)
-        {
-            Location += where; 
-        }
-
-        public void Rotate(Line3D axis, double angle)
-        {
-
-        }
-
-        public void Rotate(string axis, double angle)
-        {
-
-        }
-    }
 }

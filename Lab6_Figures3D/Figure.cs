@@ -125,12 +125,18 @@ namespace Lab6_Figures3D
     // Line in 3D
     public class Line3D
     {
-
+        // public double 
     }
 
     // Surface like line but in 3D
     public class Flat3D
     {
         public double X, Y, Z, A; 
+    }
+
+    // Flat with coordinates
+    public class CFlat3D: Flat3D
+    {
+        public Edge3D I, J; 
     }
 }

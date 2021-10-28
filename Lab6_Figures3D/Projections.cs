@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Math; 
+using static System.Math;
+using static Lab6_Figures3D.Methods; 
 
 namespace Lab6_Figures3D
 {
     public static class Projection
     {
-        public static double DeltaX3D(Point3D p1, Point3D p2) => Abs(p1.X - p2.X);
-        public static double DeltaY3D(Point3D p1, Point3D p2) => Abs(p1.Y - p2.Y);
-        public static double DeltaZ3D(Point3D p1, Point3D p2) => Abs(p1.Z - p2.Z);
-
-        public static double Point3DDistance(Point3D p1, Point3D p2)
+        public static Point3D ProjectionPointToLine3D(Point3D point, Line3D line)
         {
-            return Sqrt(Pow(DeltaX3D(p1, p2), 2) + Pow(DeltaY3D(p1, p2), 2) + Pow(DeltaZ3D(p1, p2), 2));
+            throw new NotImplementedException("TODO");
         }
 
         public static Point3D ParallelPoint(Point3D point, Flat3D flat)
@@ -48,9 +45,10 @@ namespace Lab6_Figures3D
             return cameraProjection + difference * coef; 
         }
 
-        public static (Point2D, Point2D) ParallelEdge(Edge3D edge, Flat3D flat)
+        public static (Point2D, Point2D) ParallelEdge(Edge3D edge, CFlat3D flat)
         {
-            return new Edge2D(ParallelPoint(edge.P1), ParallelPoint(edge.P2)); 
+            throw new NotImplementedException("TODO");
+            // return new Edge2D(ParallelPoint(edge.P1), ParallelPoint(edge.P2)); 
         }
     }
 }
