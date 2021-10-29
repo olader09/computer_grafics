@@ -107,25 +107,13 @@ namespace Lab6_Figures3D
 
     public class Figure3D
     {
-        public List<Point3D> Points
-        {
-            get { return Points; }
-            set { Points.Clear(); Points.AddRange(value); }
-        }
+        public List<Point3D> Points = new();
 
         // Indexes in list of Points
-        public List<(int, int)> Lines
-        {
-            get { return Lines; }
-            set { Lines.Clear(); Lines.AddRange(value); }
-        }
+        public List<(int, int)> Lines = new();
 
         // Contains planes as list of points 
-        public List<List<int>> Planes
-        {
-            get { return Planes; }
-            set { Planes.Clear(); Planes.AddRange(value); } 
-        }
+        public List<List<int>> Planes = new();
 
         // In world coordinates 
         public Point3D Center { get; set; }
@@ -141,6 +129,45 @@ namespace Lab6_Figures3D
         public Figure3D(List<Point3D> points, List<(int, int)> lines, List<List<int>> planes): this(points, lines)
         {
             Planes = planes; 
+        }
+    }
+
+    public class Figure2D
+    {
+        public List<Point2D> Points
+        {
+            get { return Points; }
+            set { Points = new(value); }
+        }
+
+        // Indexes in list of Points
+        public List<(int, int)> Lines
+        {
+            get { return Lines; }
+            set { Lines = new(value); }
+        }
+
+        // Contains planes as list of points 
+        public List<List<int>> Planes
+        {
+            get { return Planes; }
+            set { Planes = new(value); }
+        }
+
+        // In world coordinates 
+        public Point2D Center { get; set; }
+
+        public Figure2D() { }
+
+        public Figure2D(List<Point2D> points, List<(int, int)> lines)
+        {
+            Points = points;
+            Lines = lines;
+        }
+
+        public Figure2D(List<Point2D> points, List<(int, int)> lines, List<List<int>> planes) : this(points, lines)
+        {
+            Planes = planes;
         }
     }
 
@@ -178,8 +205,8 @@ namespace Lab6_Figures3D
     }
 
     // Flat with coordinates
-    public class CFlat3D: Flat3D
+    /*public class CFlat3D: Flat3D
     {
         public Edge3D I, J; 
-    }
+    }*/
 }

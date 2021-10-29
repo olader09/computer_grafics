@@ -40,6 +40,7 @@ namespace Lab6_Figures3D
             this.Canvas.Size = new System.Drawing.Size(1048, 617);
             this.Canvas.TabIndex = 0;
             this.Canvas.TabStop = false;
+            this.Canvas.Click += new System.EventHandler(this.Canvas_Click);
             // 
             // Form1
             // 

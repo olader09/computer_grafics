@@ -49,5 +49,12 @@ namespace Lab6_Figures3D
                 return new_p.Z / vec.Z;
             else return 0; 
         }
+
+        public static double GetUnitScale(Edge3D vector, Point3D point)
+        {
+            var nf = NormalFlat(LineBy2Points(vector.P1, vector.P2), point);
+            var p = Projections.ParallelPoint(vector.P1, nf);
+            return GetDistanceInUnits(vector, p); 
+        }
     }
 }

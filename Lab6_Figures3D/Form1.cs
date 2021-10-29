@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Math;
 
 namespace Lab6_Figures3D
 {
@@ -15,20 +14,51 @@ namespace Lab6_Figures3D
     {
         public List<Figure3D> figures = new List<Figure3D>();
         public int selectedFigure = -1;
-        public void Next() => selectedFigure = selectedFigure == figures.Count - 1 ? 0 : (selectedFigure + 1); 
+        public void Next() => selectedFigure = selectedFigure == figures.Count - 1 ? 0 : (selectedFigure + 1);
+        public Graphics g;
 
         public Form1()
         {
             InitializeComponent();
-            Camera camera = new Camera(new Point3D(-1, 0, 0), new Point3D(1, 0, 0)); 
+            g = Canvas.CreateGraphics(); 
+            var size = (800, 400); 
+            Camera camera = new Camera();
+            figures.Add(new F4());
+
+
+            var fs = camera.GetFigures(figures);
+            var res = new List<Figure2D>(); 
+            foreach (var f in fs)
+            {
+                var newF = f; 
+                // Scaling to real screen
+                newF.Points = newF.Points.Select(p => new Point2D(p.X / camera.Width * size.Item1, p.Y / camera.Height * size.Item2)).ToList();
+                res.Add(newF);
+            }
+            ShowFigures(res);
         }
 
-        public void ShowFigures(Camera cam)
+        public Point From3D(Point2D p)
         {
-
+            return new Point(
+                (int)(p.X + (Canvas.Width / 2.0)), 
+                (int)(Canvas.Height / 2.0 - p.Y)
+                ); 
         }
 
-        public void ShowFigure() { }
+        public void ShowF(Figure2D f)
+        {
+            foreach (var l in f.Lines)
+            {
+                g.DrawLine(new Pen(Color.Black), From3D(f.Points[l.Item1]), From3D(f.Points[l.Item2]));
+            }
+        }
+
+        public void ShowFigures(List<Figure2D> list)
+        {
+            foreach (var f in list)
+                ShowF(f); 
+        }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs ke)
         {
@@ -36,6 +66,11 @@ namespace Lab6_Figures3D
             {
 
             };
+        }
+
+        private void Canvas_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

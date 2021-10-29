@@ -8,7 +8,7 @@ using static Lab6_Figures3D.Methods;
 
 namespace Lab6_Figures3D
 {
-    public static class Projection
+    public static class Projections
     {
         public static Point3D ProjectionPointToLine3D(Point3D point, Line3D line)
         {
@@ -46,10 +46,10 @@ namespace Lab6_Figures3D
             return pointProjection + difference * coef; 
         }
 
-        public static (Point2D, Point2D) ParallelEdge(Edge3D edge, CFlat3D flat)
+        /*public static (Point2D, Point2D) ParallelEdge(Edge3D edge, CFlat3D flat)
         {
             throw new NotImplementedException("TODO");
             // return new Edge2D(ParallelPoint(edge.P1), ParallelPoint(edge.P2)); 
-        }
+        }*/
     }
 }

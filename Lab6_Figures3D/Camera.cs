@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lab6_Figures3D
 {
+    public enum ProjectionType { Parallel, Central }
+
     class Camera
     {
         // Location is camera center
@@ -35,8 +37,10 @@ namespace Lab6_Figures3D
         public Point3D Location, View, I, J; 
         // public (double, double, double) Angle;
 
-        public double Width { get; init; }
-        public double Height { get; init; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+
+        public ProjectionType Projection { get; set; }
 
         public Camera(Point3D location, Point3D view, Point3D i, Point3D j)
         {
@@ -83,6 +87,12 @@ namespace Lab6_Figures3D
 
         }
 
+        public Flat3D GetScreenFlat()
+        {
+            var nv = Location - View; 
+            return new Flat3D(nv.X, nv.Y, nv.Z, (-View.X * nv.X) + (-View.Y * nv.Y) + (-View.Z * nv.Z)); 
+        }
+
         // We assume that point is already on screen flat
         // So to get I and J coordinates we hawe to use trigonometric
         // Let us draw a line from our point to View point
@@ -99,9 +109,31 @@ namespace Lab6_Figures3D
         // 
         // Let us do it with helper method ProjectionPointLine3D
         //
-        public (double, double) GetIJCoordinates(Point3D point)
+        public Point2D GetIJCoordinates(Point3D point)
         {
-            throw new NotImplementedException("TODO");
+            var screen = GetScreenFlat(); 
+            Point3D onScreen = Projection switch
+            {
+                ProjectionType.Parallel => Projections.ParallelPoint(point, screen),
+                ProjectionType.Central => Projections.CentralPoint(point, screen, Location), 
+            };
+
+            var i = Methods.GetUnitScale(new Edge3D(View, I), point);
+            var j = Methods.GetUnitScale(new Edge3D(View, J), point);
+            return new Point2D(i, j);
         }
+
+        public Figure2D GetFigure2D(Figure3D f)
+        {
+            var f2d = new Figure2D();
+            f2d.Points = f.Points.Select(p => GetIJCoordinates(p)).ToList();
+            f2d.Lines = f.Lines;
+            f2d.Planes = f.Planes;
+            return f2d; 
+        }
+
+        // Main method for displaying results
+        public List<Figure2D> GetFigures(List<Figure3D> figs) => figs.Select(x => GetFigure2D(x)).ToList();
+
     }
 }
