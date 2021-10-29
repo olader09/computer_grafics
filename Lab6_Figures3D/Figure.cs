@@ -19,6 +19,13 @@ namespace Lab6_Figures3D
             Z = z;
         }
 
+        public Point3D(Point3D other)
+        {
+            X = other.X;
+            Y = other.Y;
+            Z = other.Z;
+        }
+
         public static Point3D operator +(Point3D one, Point3D other)
         {
             return new Point3D(one.X + other.X, one.Y + other.Y, one.Z + other.Z);
@@ -100,18 +107,40 @@ namespace Lab6_Figures3D
 
     public class Figure3D
     {
-        public List<Point3D> Points;
-        public List<Edge3D> Lines;
-        public List<Plane3D> Planes;
+        public List<Point3D> Points
+        {
+            get { return Points; }
+            set { Points.Clear(); Points.AddRange(value); }
+        }
+
+        // Indexes in list of Points
+        public List<(int, int)> Lines
+        {
+            get { return Lines; }
+            set { Lines.Clear(); Lines.AddRange(value); }
+        }
+
+        // Contains planes as list of points 
+        public List<List<int>> Planes
+        {
+            get { return Planes; }
+            set { Planes.Clear(); Planes.AddRange(value); } 
+        }
 
         // In world coordinates 
         public Point3D Center { get; set; }
 
         public Figure3D() { }
 
-        public Figure3D(List<Edge3D> lines)
+        public Figure3D(List<Point3D> points, List<(int, int)> lines)
         {
-            Lines = new List<Edge3D>(lines);
+            Points = points;
+            Lines = lines; 
+        }
+
+        public Figure3D(List<Point3D> points, List<(int, int)> lines, List<List<int>> planes): this(points, lines)
+        {
+            Planes = planes; 
         }
     }
 
@@ -125,13 +154,27 @@ namespace Lab6_Figures3D
     // Line in 3D
     public class Line3D
     {
-        // public double 
+        public Line2D LX, LY, LZ;  
+        public Line3D(Line2D lx, Line2D ly, Line2D lz)
+        {
+            LX = lx;
+            LY = ly;
+            LZ = lz; 
+        }
     }
 
     // Surface like line but in 3D
     public class Flat3D
     {
         public double X, Y, Z, A; 
+
+        public Flat3D(double x, double y, double z, double a)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            A = a; 
+        }
     }
 
     // Flat with coordinates

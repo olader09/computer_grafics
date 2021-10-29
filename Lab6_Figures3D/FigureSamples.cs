@@ -22,19 +22,22 @@ namespace Lab6_Figures3D
 
             Points = new List<Point3D>() { p1, p2, p3, p4 };
 
-            Lines = new List<Edge3D>() {
-                new Edge3D(p1, p2),
-                new Edge3D(p1, p3),
-                new Edge3D(p1, p4),
-                new Edge3D(p2, p1),
-                new Edge3D(p2, p3),
-                new Edge3D(p2, p4),
-                new Edge3D(p3, p1),
-                new Edge3D(p3, p2),
-                new Edge3D(p3, p4),
-                new Edge3D(p4, p1),
-                new Edge3D(p4, p2),
-                new Edge3D(p4, p3),
+            Lines = new List<(int, int)>() 
+            {
+                (0, 1),
+                (0, 2),
+                (0, 3),
+                (1, 2),
+                (1, 3), 
+                (2, 3), 
+            };
+
+            Planes = new List<List<int>>()
+            {
+                new() { 0, 1, 2 },
+                new() { 0, 2, 3 }, 
+                new() { 1, 2, 3 }, 
+                new() { 0, 1, 3 },
             };
 
             Center = new Point3D(

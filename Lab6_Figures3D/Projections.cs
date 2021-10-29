@@ -12,7 +12,8 @@ namespace Lab6_Figures3D
     {
         public static Point3D ProjectionPointToLine3D(Point3D point, Line3D line)
         {
-            throw new NotImplementedException("TODO");
+            Flat3D flat = NormalFlat(line, point);
+            return ParallelPoint(new Point3D(line.LX.B, line.LY.B, line.LZ.B), flat);
         }
 
         public static Point3D ParallelPoint(Point3D point, Flat3D flat)
@@ -25,7 +26,7 @@ namespace Lab6_Figures3D
             eqY.K *= flat.Y; eqY.B *= flat.Y;
             eqZ.K *= flat.Z; eqZ.B *= flat.Z;
             var Tcoef = eqX.K + eqY.K + eqZ.K;
-            var A = eqX.B + eqY.B + eqZ.B;
+            var A = eqX.B + eqY.B + eqZ.B + flat.A;
             var T = -A / Tcoef;
 
             return new Point3D(eqX.K * T + eqX.B, eqY.K * T + eqY.B, eqZ.K * T + eqZ.B);
@@ -40,9 +41,9 @@ namespace Lab6_Figures3D
             var pointDist = Point3DDistance(point, pointProjection);
 
             var difference = cameraProjection - pointProjection;
-            var coef = cameraDist / pointDist;
+            var coef = pointDist / (cameraDist + pointDist);
 
-            return cameraProjection + difference * coef; 
+            return pointProjection + difference * coef; 
         }
 
         public static (Point2D, Point2D) ParallelEdge(Edge3D edge, CFlat3D flat)

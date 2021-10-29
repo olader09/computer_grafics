@@ -64,8 +64,8 @@ namespace Lab6_Figures3D
 
             Location = new(0, 0, 5);
             View = new(0, 0, 4);
-            I = new(0, 1, 4);
-            J = new(1, 0, 4);
+            I = new(1, 0, 4);
+            J = new(0, 1, 4);
         }
 
         public void Shift(Point3D where)
