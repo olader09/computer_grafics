@@ -40,6 +40,11 @@ namespace Lab6_Figures3D
         {
             return new Point3D(p.X * d, p.Y * d, p.Z * d); 
         }
+
+        public static Point3D operator /(Point3D p, double d)
+        {
+            return new Point3D(p.X / d, p.Y / d, p.Z / d);
+        }
     }
 
     public struct Point2D
@@ -60,7 +65,7 @@ namespace Lab6_Figures3D
     }
 
     // Side of a Figure3D
-    public class Plane3D
+    /*public class Plane3D
     {
         public List<Point3D> Value { get; set; }
 
@@ -78,7 +83,7 @@ namespace Lab6_Figures3D
         {
             Value = new List<Point2D>(list);
         }
-    }
+    }*/
 
     // Edge3D of Figure3D
     public class Edge3D
@@ -107,67 +112,65 @@ namespace Lab6_Figures3D
 
     public class Figure3D
     {
-        public List<Point3D> Points = new();
+        public List<Point3D> Points;
 
         // Indexes in list of Points
-        public List<(int, int)> Lines = new();
+        public List<(int, int)> Lines;
 
         // Contains planes as list of points 
-        public List<List<int>> Planes = new();
+        public List<List<int>> Planes;
 
         // In world coordinates 
         public Point3D Center { get; set; }
 
-        public Figure3D() { }
+        public Figure3D() 
+        {
+            Points = new();
+            Lines = new();
+            Planes = new(); 
+        }
 
         public Figure3D(List<Point3D> points, List<(int, int)> lines)
         {
-            Points = points;
-            Lines = lines; 
+            Points = new(points);
+            Lines = new(lines); 
         }
 
         public Figure3D(List<Point3D> points, List<(int, int)> lines, List<List<int>> planes): this(points, lines)
         {
-            Planes = planes; 
+            Planes = new(planes); 
         }
     }
 
     public class Figure2D
     {
-        public List<Point2D> Points
-        {
-            get { return Points; }
-            set { Points = new(value); }
-        }
+        public List<Point2D> Points;
 
         // Indexes in list of Points
-        public List<(int, int)> Lines
-        {
-            get { return Lines; }
-            set { Lines = new(value); }
-        }
+        public List<(int, int)> Lines;
 
         // Contains planes as list of points 
-        public List<List<int>> Planes
-        {
-            get { return Planes; }
-            set { Planes = new(value); }
-        }
+        public List<List<int>> Planes;
 
         // In world coordinates 
         public Point2D Center { get; set; }
 
-        public Figure2D() { }
+        public Figure2D()
+        {
+            Points = new();
+            Lines = new();
+            Planes = new();
+        }
 
         public Figure2D(List<Point2D> points, List<(int, int)> lines)
         {
-            Points = points;
-            Lines = lines;
+            Points = new(points);
+            Lines = new(lines);
         }
 
         public Figure2D(List<Point2D> points, List<(int, int)> lines, List<List<int>> planes) : this(points, lines)
         {
-            Planes = planes;
+            Planes = new(planes);
         }
     }
 

@@ -22,11 +22,14 @@ namespace Lab6_Figures3D
             var eqX = new Line2D(normalVector[0], point.X);
             var eqY = new Line2D(normalVector[1], point.Y);
             var eqZ = new Line2D(normalVector[2], point.Z);
-            eqX.K *= flat.X; eqX.B *= flat.X;
-            eqY.K *= flat.Y; eqY.B *= flat.Y;
-            eqZ.K *= flat.Z; eqZ.B *= flat.Z;
-            var Tcoef = eqX.K + eqY.K + eqZ.K;
-            var A = eqX.B + eqY.B + eqZ.B + flat.A;
+            var new_eqX = new Line2D(eqX.K, eqX.B);
+            var new_eqY = new Line2D(eqY.K, eqY.B);
+            var new_eqZ = new Line2D(eqZ.K, eqZ.B);
+            new_eqX.K *= flat.X; new_eqX.B *= flat.X;
+            new_eqY.K *= flat.Y; new_eqY.B *= flat.Y;
+            new_eqZ.K *= flat.Z; new_eqZ.B *= flat.Z;
+            var Tcoef = new_eqX.K + new_eqY.K + new_eqZ.K;
+            var A = new_eqX.B + new_eqY.B + new_eqZ.B + flat.A;
             var T = -A / Tcoef;
 
             return new Point3D(eqX.K * T + eqX.B, eqY.K * T + eqY.B, eqZ.K * T + eqZ.B);

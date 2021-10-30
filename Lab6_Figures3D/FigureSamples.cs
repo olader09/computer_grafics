@@ -6,6 +6,52 @@ using System.Threading.Tasks;
 
 namespace Lab6_Figures3D
 {
+
+    public class Coord : Figure3D
+    {
+        public Coord()
+        {
+            var O = new Point3D(0, 0, 0);
+            var X = new Point3D(10, 0, 0);
+            var Y = new Point3D(0, 10, 0);
+            var Z = new Point3D(0, 0, 10);
+            Points.AddRange(new List<Point3D>() { O, X, Y, Z });
+            Lines = new()
+            {
+                (0, 1),
+                (0, 2), 
+                (0, 3),
+            };
+        }
+    }
+
+    public class Grid : Figure3D
+    {
+        public Grid()
+        {
+            var i = 0;
+            for (int x = -7; x < 8; ++x)
+            {
+                var p1 = new Point3D(x, -7, 0);
+                var p2 = new Point3D(x, 7, 0);
+                Points.Add(p1);
+                Points.Add(p2);
+                Lines.Add((i, i + 1));
+                i += 2;
+            }
+
+            for (int y = -7; y < 8; ++y)
+            {
+                var p1 = new Point3D(-7, y, 0);
+                var p2 = new Point3D(7, y, 0);
+                Points.Add(p1);
+                Points.Add(p2);
+                Lines.Add((i, i + 1));
+                i += 2;
+            }
+        }
+    }
+
     public class F4 : Figure3D
     {
         public F4()

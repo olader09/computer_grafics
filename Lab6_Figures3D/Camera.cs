@@ -37,9 +37,11 @@ namespace Lab6_Figures3D
         public Point3D Location, View, I, J; 
         // public (double, double, double) Angle;
 
+        // Scale in unit vectors I and J respectively of camera screen
         public double Width { get; set; }
         public double Height { get; set; }
 
+        // Parallel or Central
         public ProjectionType Projection { get; set; }
 
         public Camera(Point3D location, Point3D view, Point3D i, Point3D j)
@@ -66,10 +68,10 @@ namespace Lab6_Figures3D
             //  /
             // Z
 
-            Location = new(0, 0, 5);
-            View = new(0, 0, 4);
-            I = new(1, 0, 4);
-            J = new(0, 1, 4);
+            Location = new(0, 0, 3);
+            View = new(0, 0, 2);
+            I = new(1, 0, 2);
+            J = new(0, 1, 2);
         }
 
         public void Shift(Point3D where)
@@ -87,6 +89,10 @@ namespace Lab6_Figures3D
 
         }
 
+        /// <summary>
+        /// Getting flat on which screen lays by 3 points: (View, I, J)
+        /// </summary>
+        /// <returns>Flat of screen</returns>
         public Flat3D GetScreenFlat()
         {
             var nv = Location - View; 
@@ -118,21 +124,36 @@ namespace Lab6_Figures3D
                 ProjectionType.Central => Projections.CentralPoint(point, screen, Location), 
             };
 
-            var i = Methods.GetUnitScale(new Edge3D(View, I), point);
-            var j = Methods.GetUnitScale(new Edge3D(View, J), point);
+            var i = Methods.GetUnitScale(new Edge3D(View, I), onScreen);
+            var j = Methods.GetUnitScale(new Edge3D(View, J), onScreen);
             return new Point2D(i, j);
         }
 
+        /// <summary>
+        /// Getting figure in unit vectors I and J coordinates on screen flat
+        /// </summary>
+        /// <param name="f">Figure in 3D</param>
+        /// <returns>Projection of f to screen flat in unit vectors</returns>
         public Figure2D GetFigure2D(Figure3D f)
         {
             var f2d = new Figure2D();
-            f2d.Points = f.Points.Select(p => GetIJCoordinates(p)).ToList();
+            Console.WriteLine(f.Points.Count);
+            var l = new List<Point2D>();
+            foreach (var p in f.Points)
+            {
+                l.Add(GetIJCoordinates(p));
+            }
+            f2d.Points = l; // f.Points.Select(p => GetIJCoordinates(p)).ToList();
             f2d.Lines = f.Lines;
             f2d.Planes = f.Planes;
             return f2d; 
         }
 
-        // Main method for displaying results
+        /// <summary>
+        /// Main method for displaying figures, each is projectod onto screen flat
+        /// </summary>
+        /// <param name="figs">List of figures in 3D</param>
+        /// <returns>List of figures on screen flat in unit vectors</returns>
         public List<Figure2D> GetFigures(List<Figure3D> figs) => figs.Select(x => GetFigure2D(x)).ToList();
 
     }
