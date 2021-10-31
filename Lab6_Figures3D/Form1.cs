@@ -12,9 +12,11 @@ namespace Lab6_Figures3D
 {
     public partial class Form1 : Form
     {
-        public List<Figure3D> figures = new List<Figure3D>();
+        public int i = 1; 
+        public Dictionary<string, Figure3D> figures;
+        public Figure3D currentFigure;
         public int selectedFigure = -1;
-        public void Next() => selectedFigure = selectedFigure == figures.Count - 1 ? 0 : (selectedFigure + 1);
+        // public void Next() => selectedFigure = selectedFigure == figures.Count - 1 ? 0 : (selectedFigure + 1);
         public Graphics g;
         Camera camera = new Camera();
 
@@ -28,11 +30,11 @@ namespace Lab6_Figures3D
             ScreenWidth.DecimalPlaces = ScreenHeight.DecimalPlaces = Focus.DecimalPlaces = 1;
             ScreenWidth.Increment = ScreenHeight.Increment = Focus.Increment = 0.1m;
             camera.Resolution = (Canvas.Width, Canvas.Height); 
-            figures.Add(new F4());
+            //figures.Add(new F4());
 
             // var r = Projections.ParallelPoint(new Point3D(1, 2, -1), new Flat3D(3, -1, 2, -27));
-            figures.Add(new Coord());
-            figures.Add(new Grid());
+            figures.Add("Coord", new Coord());
+            figures.Add("Grid", new Grid());
 
             //RedrawObjects();
             /*var pp = new Point3D(1, 1, 1);
@@ -43,10 +45,10 @@ namespace Lab6_Figures3D
             var p2 = Projections.ParallelPoint(pp, new Flat3D(0, 0, 1, -2.25));*/
         }
 
-        public void RedrawObjects()
+        public void RedrawObjects(string selectedFigure = "")
         {
             g.Clear(DefaultBackColor);
-            var fs = camera.GetFigures(figures);
+            var fs = camera.GetFigures(figures.Values.ToList());
             var res = new List<Figure2D>();
             foreach (var f in fs)
             {
@@ -169,6 +171,16 @@ namespace Lab6_Figures3D
         private void Focus_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void PointGB_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddFigureButton_Click(object sender, EventArgs e)
+        {
+            figures.Add("New figure " + i++, new F4());
         }
     }
 }
