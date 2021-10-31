@@ -35,6 +35,10 @@ namespace Lab6_Figures3D
             this.SceneFiguresList = new System.Windows.Forms.ListBox();
             this.AddFigureButton = new System.Windows.Forms.Button();
             this.CameraGroup = new System.Windows.Forms.GroupBox();
+            this.Focus = new System.Windows.Forms.NumericUpDown();
+            this.ScreenHeight = new System.Windows.Forms.NumericUpDown();
+            this.ScreenWidth = new System.Windows.Forms.NumericUpDown();
+            this.ProjectionButton = new System.Windows.Forms.Button();
             this.MoveDownButton = new System.Windows.Forms.Button();
             this.MoveUpButton = new System.Windows.Forms.Button();
             this.TurnDownButton = new System.Windows.Forms.Button();
@@ -44,13 +48,12 @@ namespace Lab6_Figures3D
             this.ForwardButton = new System.Windows.Forms.Button();
             this.BackwardButton = new System.Windows.Forms.Button();
             this.FocusLabel = new System.Windows.Forms.Label();
-            this.Focus = new System.Windows.Forms.DomainUpDown();
             this.ScreenParamsLabel = new System.Windows.Forms.Label();
-            this.ScreenHeight = new System.Windows.Forms.DomainUpDown();
-            this.ScreenWidth = new System.Windows.Forms.DomainUpDown();
-            this.ProjectionButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.CameraGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Focus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ScreenHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ScreenWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // Canvas
@@ -99,6 +102,9 @@ namespace Lab6_Figures3D
             // 
             // CameraGroup
             // 
+            this.CameraGroup.Controls.Add(this.Focus);
+            this.CameraGroup.Controls.Add(this.ScreenHeight);
+            this.CameraGroup.Controls.Add(this.ScreenWidth);
             this.CameraGroup.Controls.Add(this.ProjectionButton);
             this.CameraGroup.Controls.Add(this.MoveDownButton);
             this.CameraGroup.Controls.Add(this.MoveUpButton);
@@ -109,16 +115,47 @@ namespace Lab6_Figures3D
             this.CameraGroup.Controls.Add(this.ForwardButton);
             this.CameraGroup.Controls.Add(this.BackwardButton);
             this.CameraGroup.Controls.Add(this.FocusLabel);
-            this.CameraGroup.Controls.Add(this.Focus);
             this.CameraGroup.Controls.Add(this.ScreenParamsLabel);
-            this.CameraGroup.Controls.Add(this.ScreenHeight);
-            this.CameraGroup.Controls.Add(this.ScreenWidth);
             this.CameraGroup.Location = new System.Drawing.Point(13, 338);
             this.CameraGroup.Name = "CameraGroup";
             this.CameraGroup.Size = new System.Drawing.Size(300, 352);
             this.CameraGroup.TabIndex = 6;
             this.CameraGroup.TabStop = false;
             this.CameraGroup.Text = "Camera";
+            // 
+            // Focus
+            // 
+            this.Focus.Location = new System.Drawing.Point(151, 69);
+            this.Focus.Name = "Focus";
+            this.Focus.Size = new System.Drawing.Size(142, 31);
+            this.Focus.TabIndex = 16;
+            this.Focus.ValueChanged += new System.EventHandler(this.Focus_ValueChanged);
+            // 
+            // ScreenHeight
+            // 
+            this.ScreenHeight.Location = new System.Drawing.Point(227, 31);
+            this.ScreenHeight.Name = "ScreenHeight";
+            this.ScreenHeight.Size = new System.Drawing.Size(66, 31);
+            this.ScreenHeight.TabIndex = 15;
+            this.ScreenHeight.ValueChanged += new System.EventHandler(this.ScreenHeight_ValueChanged);
+            // 
+            // ScreenWidth
+            // 
+            this.ScreenWidth.Location = new System.Drawing.Point(151, 31);
+            this.ScreenWidth.Name = "ScreenWidth";
+            this.ScreenWidth.Size = new System.Drawing.Size(68, 31);
+            this.ScreenWidth.TabIndex = 14;
+            this.ScreenWidth.ValueChanged += new System.EventHandler(this.ScreenWidth_ValueChanged);
+            // 
+            // ProjectionButton
+            // 
+            this.ProjectionButton.Location = new System.Drawing.Point(7, 296);
+            this.ProjectionButton.Name = "ProjectionButton";
+            this.ProjectionButton.Size = new System.Drawing.Size(286, 50);
+            this.ProjectionButton.TabIndex = 13;
+            this.ProjectionButton.Text = "Projection type : Parallel";
+            this.ProjectionButton.UseVisualStyleBackColor = true;
+            this.ProjectionButton.Click += new System.EventHandler(this.ProjectionButton_Click);
             // 
             // MoveDownButton
             // 
@@ -205,14 +242,6 @@ namespace Lab6_Figures3D
             this.FocusLabel.TabIndex = 4;
             this.FocusLabel.Text = "Focal length";
             // 
-            // Focus
-            // 
-            this.Focus.Location = new System.Drawing.Point(151, 68);
-            this.Focus.Name = "Focus";
-            this.Focus.Size = new System.Drawing.Size(143, 31);
-            this.Focus.TabIndex = 3;
-            this.Focus.Text = "1";
-            // 
             // ScreenParamsLabel
             // 
             this.ScreenParamsLabel.AutoSize = true;
@@ -221,32 +250,6 @@ namespace Lab6_Figures3D
             this.ScreenParamsLabel.Size = new System.Drawing.Size(128, 25);
             this.ScreenParamsLabel.TabIndex = 2;
             this.ScreenParamsLabel.Text = "Screen params";
-            // 
-            // ScreenHeight
-            // 
-            this.ScreenHeight.Location = new System.Drawing.Point(225, 30);
-            this.ScreenHeight.Name = "ScreenHeight";
-            this.ScreenHeight.Size = new System.Drawing.Size(69, 31);
-            this.ScreenHeight.TabIndex = 1;
-            this.ScreenHeight.Text = "1";
-            // 
-            // ScreenWidth
-            // 
-            this.ScreenWidth.Location = new System.Drawing.Point(151, 30);
-            this.ScreenWidth.Name = "ScreenWidth";
-            this.ScreenWidth.Size = new System.Drawing.Size(68, 31);
-            this.ScreenWidth.TabIndex = 0;
-            this.ScreenWidth.Text = "2";
-            // 
-            // ProjectionButton
-            // 
-            this.ProjectionButton.Location = new System.Drawing.Point(7, 296);
-            this.ProjectionButton.Name = "ProjectionButton";
-            this.ProjectionButton.Size = new System.Drawing.Size(286, 50);
-            this.ProjectionButton.TabIndex = 13;
-            this.ProjectionButton.Text = "Projection type : Parallel";
-            this.ProjectionButton.UseVisualStyleBackColor = true;
-            this.ProjectionButton.Click += new System.EventHandler(this.ProjectionButton_Click);
             // 
             // Form1
             // 
@@ -265,6 +268,9 @@ namespace Lab6_Figures3D
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             this.CameraGroup.ResumeLayout(false);
             this.CameraGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Focus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ScreenHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ScreenWidth)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -277,10 +283,7 @@ namespace Lab6_Figures3D
         private System.Windows.Forms.ListBox SceneFiguresList;
         private System.Windows.Forms.Button AddFigureButton;
         private System.Windows.Forms.GroupBox CameraGroup;
-        private System.Windows.Forms.DomainUpDown ScreenHeight;
-        private System.Windows.Forms.DomainUpDown ScreenWidth;
         private System.Windows.Forms.Label FocusLabel;
-        private System.Windows.Forms.DomainUpDown Focus;
         private System.Windows.Forms.Label ScreenParamsLabel;
         private System.Windows.Forms.Button TurnDownButton;
         private System.Windows.Forms.Button TurnUpButton;
@@ -291,6 +294,9 @@ namespace Lab6_Figures3D
         private System.Windows.Forms.Button MoveDownButton;
         private System.Windows.Forms.Button MoveUpButton;
         private System.Windows.Forms.Button ProjectionButton;
+        private System.Windows.Forms.NumericUpDown Focus;
+        private System.Windows.Forms.NumericUpDown ScreenHeight;
+        private System.Windows.Forms.NumericUpDown ScreenWidth;
     }
 }
 

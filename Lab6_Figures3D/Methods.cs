@@ -18,7 +18,7 @@ namespace Lab6_Figures3D
             return Sqrt(Pow(DeltaX3D(p1, p2), 2) + Pow(DeltaY3D(p1, p2), 2) + Pow(DeltaZ3D(p1, p2), 2));
         }
 
-        public static Line3D LineBy2Points(Point3D point, Point3D vector)
+        public static Line3D LineByPointAndVector(Point3D point, Point3D vector)
         {
             var p = new double[3] { point.X, point.Y, point.Z };
             var v = new double[3] { vector.X, vector.Y, vector.Z }; 
@@ -33,10 +33,10 @@ namespace Lab6_Figures3D
         }
 
         // We assume that point lays on vector line
-        public static double GetDistanceInUnits(Edge3D vector, Point3D point)
+        public static double GetDistanceInUnits(Edge3D edge, Point3D point)
         {
-            var vecStart = vector.P1;
-            var vecEnd = vector.P2;
+            var vecStart = edge.P1;
+            var vecEnd = edge.P2;
 
             var vec = vecEnd - vecStart;
             var new_p = point - vecStart;
@@ -50,11 +50,11 @@ namespace Lab6_Figures3D
             else return 0; 
         }
 
-        public static double GetUnitScale(Edge3D vector, Point3D point)
+        public static double GetUnitScale(Edge3D edge, Point3D point)
         {
-            var nf = NormalFlat(LineBy2Points(vector.P1, vector.P2), point);
-            var p = Projections.ParallelPoint(vector.P1, nf);
-            return GetDistanceInUnits(vector, p); 
+            var nf = NormalFlat(LineByPointAndVector(edge.P1, (edge.P2 - edge.P1)), point);
+            var p = Projections.ParallelPoint(edge.P1, nf);
+            return GetDistanceInUnits(edge, p); 
         }
     }
 }

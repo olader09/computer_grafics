@@ -17,19 +17,30 @@ namespace Lab6_Figures3D
         public void Next() => selectedFigure = selectedFigure == figures.Count - 1 ? 0 : (selectedFigure + 1);
         public Graphics g;
         Camera camera = new Camera();
-        public (int, int) size = (800, 400);
 
         public Form1()
         {
             InitializeComponent();
             g = Canvas.CreateGraphics();
+            ScreenWidth.Value = 2;
+            ScreenHeight.Value = 1;
+            Focus.Value = 1; 
+            ScreenWidth.DecimalPlaces = ScreenHeight.DecimalPlaces = Focus.DecimalPlaces = 1;
+            ScreenWidth.Increment = ScreenHeight.Increment = Focus.Increment = 0.1m;
+            camera.Resolution = (Canvas.Width, Canvas.Height); 
             figures.Add(new F4());
 
             // var r = Projections.ParallelPoint(new Point3D(1, 2, -1), new Flat3D(3, -1, 2, -27));
             figures.Add(new Coord());
             figures.Add(new Grid());
 
-            RedrawObjects();
+            //RedrawObjects();
+            /*var pp = new Point3D(1, 1, 1);
+            var old = camera.GetIJCoordinates(pp);
+            BackwardButton_Click(new object(), new EventArgs());
+            var new_ = camera.GetIJCoordinates(pp); */
+            /*var p1 = Projections.ParallelPoint(pp, new Flat3D(0, 0, 1, -2));
+            var p2 = Projections.ParallelPoint(pp, new Flat3D(0, 0, 1, -2.25));*/
         }
 
         public void RedrawObjects()
@@ -45,7 +56,7 @@ namespace Lab6_Figures3D
                 newF.Points = new List<Point2D>();
                 foreach (var p in f.Points)
                 {
-                    var newP = new Point2D(p.X * size.Item1, p.Y * size.Item2);
+                    var newP = camera.ToRealScreen(p);
                     newF.Points.Add(newP);
                 }
                 // Scaling to real screen
@@ -83,7 +94,7 @@ namespace Lab6_Figures3D
         {
             switch (ke.KeyChar)
             {
-                case 'R':
+                case 'r':
                     RedrawObjects();
                     break; 
             };
@@ -93,19 +104,11 @@ namespace Lab6_Figures3D
         {
         }
 
-        private void CameraMove(Point3D vector)
-        {
-            camera.Location += vector;
-            camera.View += vector;
-            camera.I += vector;
-            camera.J += vector;
-        }
-
         private void ForwardButton_Click(object sender, EventArgs e)
         {
             var vector = camera.View - camera.Location;
             vector /= 4;
-            CameraMove(vector);
+            camera.Shift(vector);
             RedrawObjects(); 
         }
 
@@ -113,7 +116,7 @@ namespace Lab6_Figures3D
         {
             var vector = camera.Location - camera.View;
             vector /= 4;
-            CameraMove(vector);
+            camera.Shift(vector);
             RedrawObjects();
         }
 
@@ -121,15 +124,15 @@ namespace Lab6_Figures3D
         {
             var vector = camera.J - camera.View;
             vector /= 4;
-            CameraMove(vector);
+            camera.Shift(vector);
             RedrawObjects();
         }
 
         private void MoveDownButton_Click(object sender, EventArgs e)
         {
-            var vector = camera.I - camera.View;
+            var vector = camera.View - camera.J;
             vector /= 4;
-            CameraMove(vector);
+            camera.Shift(vector);
             RedrawObjects();
         }
 
@@ -140,15 +143,32 @@ namespace Lab6_Figures3D
                 case ProjectionType.Parallel:
                     camera.Projection = ProjectionType.Central;
                     ProjectionButton.Text = "Projection type : Central";
-                    RedrawObjects();
                     break;
 
                 case ProjectionType.Central:
                     camera.Projection = ProjectionType.Parallel;
                     ProjectionButton.Text = "Projection type : Parallel";
-                    RedrawObjects();
                     break;
             }
+
+            RedrawObjects();
+        }
+
+        private void ScreenWidth_ValueChanged(object sender, EventArgs e)
+        {
+            camera.Width = (double)ScreenWidth.Value;
+            RedrawObjects(); 
+        }
+
+        private void ScreenHeight_ValueChanged(object sender, EventArgs e)
+        {
+            camera.Height = (double)ScreenHeight.Value;
+            RedrawObjects();
+        }
+
+        private void Focus_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

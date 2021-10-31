@@ -45,6 +45,11 @@ namespace Lab6_Figures3D
         {
             return new Point3D(p.X / d, p.Y / d, p.Z / d);
         }
+
+        public static Point3D operator -(Point3D p)
+        {
+            return new Point3D(-p.X, -p.Y, -p.Z);
+        }
     }
 
     public struct Point2D

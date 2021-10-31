@@ -33,13 +33,15 @@ namespace Lab6_Figures3D
         // With our unit vectors I and J 
         //
         // To get this I and J coordinates see GetIJCoordinates method below
+        // ScI and ScJ are scale points to scale unit vectors by ScI/ScJ - View
 
-        public Point3D Location, View, I, J; 
-        // public (double, double, double) Angle;
-
+        public Point3D Location, View, I, J, ScF;
+         
         // Scale in unit vectors I and J respectively of camera screen
+
         public double Width { get; set; }
         public double Height { get; set; }
+        public (double, double) Resolution { get; set; }
 
         // Parallel or Central
         public ProjectionType Projection { get; set; }
@@ -50,8 +52,10 @@ namespace Lab6_Figures3D
             View = view;
             I = i;
             J = j;
-            Width = 4;
-            Height = 2;
+            ScF = (View - Location) / 10; 
+            Width = 2;
+            Height = 1; 
+            Resolution = (800, 400);
         }
 
         public Camera()
@@ -72,11 +76,18 @@ namespace Lab6_Figures3D
             View = new(0, 0, 2);
             I = new(1, 0, 2);
             J = new(0, 1, 2);
+            ScF = (View - Location) / 10;
+            Width = 2;
+            Height = 1;
+            Resolution = (800, 400);
         }
 
-        public void Shift(Point3D where)
+        public void Shift(Point3D vector)
         {
-            Location += where;
+            Location += vector;
+            View += vector;
+            I += vector;
+            J += vector;
         }
 
         public void Rotate(Line3D axis, double angle)
@@ -84,9 +95,33 @@ namespace Lab6_Figures3D
 
         }
 
-        public void Rotate(string axis, double angle)
+        public void ScaleI(bool more) => Width += more ? 0.1 : -0.1;
+        public void ScaleJ(bool more) => Height += more ? 0.1 : -0.1;
+        public void ScaleFocus(bool more)
         {
+            var screen = GetScreenFlat();
+            var vector = new Point3D(screen.X, screen.Y, screen.Z);
+            vector /= 10;
+            if (more)
+            {
+                View += ScF;
+                I += ScF;
+                J += ScF;
+            } 
+            else
+            {
+                View -= ScF;
+                I -= ScF;
+                J -= ScF;
+            }
+        }
 
+        public Point2D ToRealScreen(Point2D onScreenFlat)
+        {
+            return new Point2D(
+                onScreenFlat.X / Width * (Resolution.Item1 / 2), 
+                onScreenFlat.Y / Height * (Resolution.Item2 / 2)
+                );
         }
 
         /// <summary>
