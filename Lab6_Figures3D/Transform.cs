@@ -24,6 +24,9 @@ namespace Lab6_Figures3D
         // from *----------|------------------> new_point (was scaled by ~ 2.7)
         public static Point3D Scale(Point3D point, Point3D from, double coef)
         {
+            var vec = point - from;
+            vec *= coef;
+            return from + vec;
             throw new NotImplementedException("TODO");
         }
 

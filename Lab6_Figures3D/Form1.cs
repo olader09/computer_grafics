@@ -35,8 +35,10 @@ namespace Lab6_Figures3D
             ScreenWidth.Value = 2;
             ScreenHeight.Value = 1;
             Focus.Value = 1; 
-            ScreenWidth.DecimalPlaces = ScreenHeight.DecimalPlaces = Focus.DecimalPlaces = 1;
-            ScreenWidth.Increment = ScreenHeight.Increment = Focus.Increment = 0.1m;
+            ScreenWidth.DecimalPlaces = ScreenHeight.DecimalPlaces = Focus.DecimalPlaces = NumericPointX.DecimalPlaces
+                = NumericPointY.DecimalPlaces = NumericPointZ.DecimalPlaces = NumericAngle.DecimalPlaces = NumericScale.DecimalPlaces = 1;
+            ScreenWidth.Increment = ScreenHeight.Increment = Focus.Increment = NumericPointX.Increment
+                = NumericPointY.Increment = NumericPointZ.Increment = NumericAngle.Increment = NumericScale.Increment = 0.1m;
             camera.Resolution = (Canvas.Width, Canvas.Height); 
             //figures.Add(new F4());
 
@@ -250,7 +252,7 @@ namespace Lab6_Figures3D
 
         private void GetTransformCoef()
         {
-
+            transformCoef = (double)NumericScale.Value;
         }
 
         private void ScaleButton_Click(object sender, EventArgs e)
@@ -262,6 +264,7 @@ namespace Lab6_Figures3D
             GetTransformCoef();
             Figure3D old = figures[selectedFigure];
             old.Points = new(old.Points.Select(p => Transform.Scale(p, transformPoint, transformCoef)));
+            RedrawObjects(selectedFigure);
         }
 
         private void ShiftButton_Click(object sender, EventArgs e)
@@ -272,6 +275,7 @@ namespace Lab6_Figures3D
             GetTransformPoint();
             Figure3D old = figures[selectedFigure];
             old.Points = new(old.Points.Select(p => Transform.Shift(p, transformPoint)));
+            RedrawObjects(selectedFigure);
         }
 
         private void ReflectButton_Click(object sender, EventArgs e)
@@ -282,6 +286,7 @@ namespace Lab6_Figures3D
             GetTransformFlat();
             Figure3D old = figures[selectedFigure];
             old.Points = new(old.Points.Select(p => Transform.Reflect(transformFlat, p)));
+            RedrawObjects(selectedFigure);
         }
 
         private void RotateButton_Click(object sender, EventArgs e)
@@ -293,7 +298,7 @@ namespace Lab6_Figures3D
             GetTransformAngle(); 
             Figure3D old = figures[selectedFigure];
             old.Points = new(old.Points.Select(p => Transform.RotateAroundLine(transformLine, p, transformAngle)));
-
+            RedrawObjects(selectedFigure);
         }
     }
 }
