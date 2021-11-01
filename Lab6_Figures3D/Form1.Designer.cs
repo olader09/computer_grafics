@@ -128,6 +128,7 @@ namespace Lab6_Figures3D
             this.RotateButton.TabIndex = 10;
             this.RotateButton.Text = "Rotate";
             this.RotateButton.UseVisualStyleBackColor = true;
+            this.RotateButton.Click += new System.EventHandler(this.RotateButton_Click);
             // 
             // ShiftButton
             // 
@@ -137,6 +138,7 @@ namespace Lab6_Figures3D
             this.ShiftButton.TabIndex = 9;
             this.ShiftButton.Text = "Shift";
             this.ShiftButton.UseVisualStyleBackColor = true;
+            this.ShiftButton.Click += new System.EventHandler(this.ShiftButton_Click);
             // 
             // ScaleButton
             // 
@@ -146,6 +148,7 @@ namespace Lab6_Figures3D
             this.ScaleButton.TabIndex = 8;
             this.ScaleButton.Text = "Scale";
             this.ScaleButton.UseVisualStyleBackColor = true;
+            this.ScaleButton.Click += new System.EventHandler(this.ScaleButton_Click);
             // 
             // ReflectButton
             // 
@@ -155,6 +158,7 @@ namespace Lab6_Figures3D
             this.ReflectButton.TabIndex = 7;
             this.ReflectButton.Text = "Reflect";
             this.ReflectButton.UseVisualStyleBackColor = true;
+            this.ReflectButton.Click += new System.EventHandler(this.ReflectButton_Click);
             // 
             // CoefGB
             // 
@@ -394,6 +398,7 @@ namespace Lab6_Figures3D
             this.SceneFiguresList.Name = "SceneFiguresList";
             this.SceneFiguresList.Size = new System.Drawing.Size(299, 229);
             this.SceneFiguresList.TabIndex = 4;
+            this.SceneFiguresList.SelectedIndexChanged += new System.EventHandler(this.SceneFiguresList_SelectedIndexChanged);
             // 
             // AddFigureButton
             // 
