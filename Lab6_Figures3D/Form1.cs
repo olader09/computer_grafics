@@ -247,7 +247,7 @@ namespace Lab6_Figures3D
 
         private void GetTransformAngle()
         {
-
+            transformAngle = (double)NumericAngle.Value;
         }
 
         private void GetTransformCoef()
@@ -274,8 +274,7 @@ namespace Lab6_Figures3D
             
             GetTransformPoint();
             Figure3D old = figures[selectedFigure];
-            old.Points = new(old.Points.Select(p => Transform.Shift(p, (double)ShiftX.Value, (double)ShiftY.Value, (double)ShiftZ.Value, transformPoint)));
-           // figures[selectedFigure] = old;
+            old.Points = new(old.Points.Select(p => Transform.Shift(p, transformPoint)));
             RedrawObjects(selectedFigure);
         }
 
@@ -298,7 +297,7 @@ namespace Lab6_Figures3D
             GetTransformLine();
             GetTransformAngle(); 
             Figure3D old = figures[selectedFigure];
-            old.Points = new(old.Points.Select(p => Transform.RotateAroundLine(transformLine, p, transformAngle)));
+            old.Points = new(old.Points.Select(p => Transform.Rotate(p, transformAngle)));
             RedrawObjects(selectedFigure);
         }
 
@@ -308,6 +307,11 @@ namespace Lab6_Figures3D
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TransformGroup_Enter(object sender, EventArgs e)
         {
 
         }

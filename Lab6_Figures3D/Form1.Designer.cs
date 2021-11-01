@@ -77,13 +77,6 @@ namespace Lab6_Figures3D
             this.BackwardButton = new System.Windows.Forms.Button();
             this.FocusLabel = new System.Windows.Forms.Label();
             this.ScreenParamsLabel = new System.Windows.Forms.Label();
-            this.ShiftGB = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.ShiftZ = new System.Windows.Forms.NumericUpDown();
-            this.ShiftY = new System.Windows.Forms.NumericUpDown();
-            this.ShiftX = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.TransformGroup.SuspendLayout();
             this.CoefGB.SuspendLayout();
@@ -99,10 +92,6 @@ namespace Lab6_Figures3D
             ((System.ComponentModel.ISupportInitialize)(this.Focus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenWidth)).BeginInit();
-            this.ShiftGB.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ShiftZ)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ShiftY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ShiftX)).BeginInit();
             this.SuspendLayout();
             // 
             // Canvas
@@ -117,7 +106,6 @@ namespace Lab6_Figures3D
             // 
             // TransformGroup
             // 
-            this.TransformGroup.Controls.Add(this.ShiftGB);
             this.TransformGroup.Controls.Add(this.RotateButton);
             this.TransformGroup.Controls.Add(this.ShiftButton);
             this.TransformGroup.Controls.Add(this.ScaleButton);
@@ -134,13 +122,14 @@ namespace Lab6_Figures3D
             this.TransformGroup.TabIndex = 2;
             this.TransformGroup.TabStop = false;
             this.TransformGroup.Text = "Transform";
+            this.TransformGroup.Enter += new System.EventHandler(this.TransformGroup_Enter);
             // 
             // RotateButton
             // 
-            this.RotateButton.Location = new System.Drawing.Point(122, 497);
+            this.RotateButton.Location = new System.Drawing.Point(122, 458);
             this.RotateButton.Margin = new System.Windows.Forms.Padding(2);
             this.RotateButton.Name = "RotateButton";
-            this.RotateButton.Size = new System.Drawing.Size(113, 40);
+            this.RotateButton.Size = new System.Drawing.Size(113, 79);
             this.RotateButton.TabIndex = 10;
             this.RotateButton.Text = "Rotate";
             this.RotateButton.UseVisualStyleBackColor = true;
@@ -148,10 +137,10 @@ namespace Lab6_Figures3D
             // 
             // ShiftButton
             // 
-            this.ShiftButton.Location = new System.Drawing.Point(4, 458);
+            this.ShiftButton.Location = new System.Drawing.Point(4, 377);
             this.ShiftButton.Margin = new System.Windows.Forms.Padding(2);
             this.ShiftButton.Name = "ShiftButton";
-            this.ShiftButton.Size = new System.Drawing.Size(112, 35);
+            this.ShiftButton.Size = new System.Drawing.Size(112, 77);
             this.ShiftButton.TabIndex = 9;
             this.ShiftButton.Text = "Shift";
             this.ShiftButton.UseVisualStyleBackColor = true;
@@ -159,10 +148,10 @@ namespace Lab6_Figures3D
             // 
             // ScaleButton
             // 
-            this.ScaleButton.Location = new System.Drawing.Point(122, 458);
+            this.ScaleButton.Location = new System.Drawing.Point(122, 377);
             this.ScaleButton.Margin = new System.Windows.Forms.Padding(2);
             this.ScaleButton.Name = "ScaleButton";
-            this.ScaleButton.Size = new System.Drawing.Size(113, 35);
+            this.ScaleButton.Size = new System.Drawing.Size(113, 77);
             this.ScaleButton.TabIndex = 8;
             this.ScaleButton.Text = "Scale";
             this.ScaleButton.UseVisualStyleBackColor = true;
@@ -170,10 +159,10 @@ namespace Lab6_Figures3D
             // 
             // ReflectButton
             // 
-            this.ReflectButton.Location = new System.Drawing.Point(5, 497);
+            this.ReflectButton.Location = new System.Drawing.Point(5, 458);
             this.ReflectButton.Margin = new System.Windows.Forms.Padding(2);
             this.ReflectButton.Name = "ReflectButton";
-            this.ReflectButton.Size = new System.Drawing.Size(112, 40);
+            this.ReflectButton.Size = new System.Drawing.Size(112, 79);
             this.ReflectButton.TabIndex = 7;
             this.ReflectButton.Text = "Reflect";
             this.ReflectButton.UseVisualStyleBackColor = true;
@@ -185,7 +174,7 @@ namespace Lab6_Figures3D
             this.CoefGB.Controls.Add(this.LabelScale);
             this.CoefGB.Controls.Add(this.NumericAngle);
             this.CoefGB.Controls.Add(this.NumericScale);
-            this.CoefGB.Location = new System.Drawing.Point(6, 354);
+            this.CoefGB.Location = new System.Drawing.Point(6, 276);
             this.CoefGB.Margin = new System.Windows.Forms.Padding(2);
             this.CoefGB.Name = "CoefGB";
             this.CoefGB.Padding = new System.Windows.Forms.Padding(2);
@@ -238,7 +227,7 @@ namespace Lab6_Figures3D
             this.FlatGB.Controls.Add(this.FlatTBP3);
             this.FlatGB.Controls.Add(this.FlatTBP2);
             this.FlatGB.Controls.Add(this.FlatTBP1);
-            this.FlatGB.Location = new System.Drawing.Point(5, 267);
+            this.FlatGB.Location = new System.Drawing.Point(5, 189);
             this.FlatGB.Margin = new System.Windows.Forms.Padding(2);
             this.FlatGB.Name = "FlatGB";
             this.FlatGB.Padding = new System.Windows.Forms.Padding(2);
@@ -310,7 +299,7 @@ namespace Lab6_Figures3D
             this.LineGB.Controls.Add(this.LabelLineP1);
             this.LineGB.Controls.Add(this.LineTBP2);
             this.LineGB.Controls.Add(this.LineTBP1);
-            this.LineGB.Location = new System.Drawing.Point(6, 183);
+            this.LineGB.Location = new System.Drawing.Point(6, 105);
             this.LineGB.Margin = new System.Windows.Forms.Padding(2);
             this.LineGB.Name = "LineGB";
             this.LineGB.Padding = new System.Windows.Forms.Padding(2);
@@ -627,78 +616,6 @@ namespace Lab6_Figures3D
             this.ScreenParamsLabel.TabIndex = 2;
             this.ScreenParamsLabel.Text = "Screen params";
             // 
-            // ShiftGB
-            // 
-            this.ShiftGB.Controls.Add(this.ShiftY);
-            this.ShiftGB.Controls.Add(this.label1);
-            this.ShiftGB.Controls.Add(this.label2);
-            this.ShiftGB.Controls.Add(this.label3);
-            this.ShiftGB.Controls.Add(this.ShiftZ);
-            this.ShiftGB.Controls.Add(this.ShiftX);
-            this.ShiftGB.Location = new System.Drawing.Point(2, 102);
-            this.ShiftGB.Margin = new System.Windows.Forms.Padding(2);
-            this.ShiftGB.Name = "ShiftGB";
-            this.ShiftGB.Padding = new System.Windows.Forms.Padding(2);
-            this.ShiftGB.Size = new System.Drawing.Size(230, 77);
-            this.ShiftGB.TabIndex = 6;
-            this.ShiftGB.TabStop = false;
-            this.ShiftGB.Text = "Shift";
-            this.ShiftGB.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(175, 51);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(18, 20);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Z";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(102, 51);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(17, 20);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Y";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(30, 51);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(18, 20);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "X";
-            // 
-            // ShiftZ
-            // 
-            this.ShiftZ.Location = new System.Drawing.Point(154, 25);
-            this.ShiftZ.Margin = new System.Windows.Forms.Padding(2);
-            this.ShiftZ.Name = "ShiftZ";
-            this.ShiftZ.Size = new System.Drawing.Size(70, 27);
-            this.ShiftZ.TabIndex = 2;
-            // 
-            // ShiftY
-            // 
-            this.ShiftY.Location = new System.Drawing.Point(82, 25);
-            this.ShiftY.Margin = new System.Windows.Forms.Padding(2);
-            this.ShiftY.Name = "ShiftY";
-            this.ShiftY.Size = new System.Drawing.Size(67, 27);
-            this.ShiftY.TabIndex = 1;
-            // 
-            // ShiftX
-            // 
-            this.ShiftX.Location = new System.Drawing.Point(6, 25);
-            this.ShiftX.Margin = new System.Windows.Forms.Padding(2);
-            this.ShiftX.Name = "ShiftX";
-            this.ShiftX.Size = new System.Drawing.Size(72, 27);
-            this.ShiftX.TabIndex = 0;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -735,11 +652,6 @@ namespace Lab6_Figures3D
             ((System.ComponentModel.ISupportInitialize)(this.Focus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenWidth)).EndInit();
-            this.ShiftGB.ResumeLayout(false);
-            this.ShiftGB.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ShiftZ)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ShiftY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ShiftX)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -794,13 +706,6 @@ namespace Lab6_Figures3D
         private System.Windows.Forms.Label LabelLineP1;
         private System.Windows.Forms.TextBox LineTBP2;
         private System.Windows.Forms.TextBox LineTBP1;
-        private System.Windows.Forms.GroupBox ShiftGB;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown ShiftZ;
-        private System.Windows.Forms.NumericUpDown ShiftY;
-        private System.Windows.Forms.NumericUpDown ShiftX;
     }
 }
 
