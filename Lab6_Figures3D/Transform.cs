@@ -8,9 +8,13 @@ namespace Lab6_Figures3D
 {
     public static class Transform
     {
-        public static Point3D Shift(Point3D point, Point3D vector)
+        public static Point3D Shift(Point3D point, double dx, double dy, double dz, Point3D vector)
         {
-            throw new NotImplementedException("TODO");
+            //throw new NotImplementedException("TODO");
+            double[,] beg = new double[1, 4] { { point.X, point.Y, point.Z, 1 } };
+            double[,] res = new double[1, 4];
+            res = Matrix.Mult(beg, Matrix.ShiftMatrix(dx, dy, dz));
+            return new Point3D(res[0,0], res[0,1], res[0,2]);
         }
 
         public static Point3D RotateAroundLine(Line3D line, Point3D point, double angle)

@@ -271,10 +271,11 @@ namespace Lab6_Figures3D
         {
             if (selectedFigure == null)
                 return;
-
+            
             GetTransformPoint();
             Figure3D old = figures[selectedFigure];
-            old.Points = new(old.Points.Select(p => Transform.Shift(p, transformPoint)));
+            old.Points = new(old.Points.Select(p => Transform.Shift(p, (double)ShiftX.Value, (double)ShiftY.Value, (double)ShiftZ.Value, transformPoint)));
+           // figures[selectedFigure] = old;
             RedrawObjects(selectedFigure);
         }
 
@@ -299,6 +300,16 @@ namespace Lab6_Figures3D
             Figure3D old = figures[selectedFigure];
             old.Points = new(old.Points.Select(p => Transform.RotateAroundLine(transformLine, p, transformAngle)));
             RedrawObjects(selectedFigure);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
