@@ -222,12 +222,14 @@ namespace Lab6_Figures3D
                 case "Tetrahedron":
                     fig = new F4();
                     break;
-                /*case "Cube":
+                case "Cube":
                     fig = new F6();
                     break;
+                 
                 case "Octahedron":
                     fig = new F8();
                     break;
+                    /*
                 case "Dodecahedron":
                     fig = new F12();
                     break;
