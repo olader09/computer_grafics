@@ -28,8 +28,8 @@ namespace Lab6_Figures3D
         // Generates flat through point that is normal to a given line
         public static Flat3D NormalFlat(Line3D line, Point3D point)
         {
-            var n = new double[3] { line.LX.K, line.LY.K, line.LZ.K };
-            return new Flat3D(n[0], n[1], n[2], (-point.X * n[0]) + (-point.Y * n[1]) + (-point.Z * n[2]));
+            var vec = new Point3D(line.LX.K, line.LY.K, line.LZ.K);
+            return FlatByPointAndVector(point, vec);
         }
 
         // We assume that point lays on vector line
@@ -55,6 +55,12 @@ namespace Lab6_Figures3D
             var nf = NormalFlat(LineByPointAndVector(edge.P1, (edge.P2 - edge.P1)), point);
             var p = Projections.ParallelPoint(edge.P1, nf);
             return GetDistanceInUnits(edge, p); 
+        }
+
+        public static Flat3D FlatByPointAndVector(Point3D point, Point3D vector)
+        {
+            var n = new double[3] { vector.X, vector.Y, vector.Z };
+            return new Flat3D(n[0], n[1], n[2], (-point.X * n[0]) + (-point.Y * n[1]) + (-point.Z * n[2]));
         }
     }
 }

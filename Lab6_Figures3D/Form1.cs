@@ -21,7 +21,7 @@ namespace Lab6_Figures3D
         Camera camera = new Camera();
 
         public Point3D transformPoint;
-        public Line3D transformLine;
+        public Edge3D transformEdge;
         public Flat3D transformFlat;
         public double transformAngle;
         public double transformCoef; 
@@ -227,6 +227,7 @@ namespace Lab6_Figures3D
         private void SceneFiguresList_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedFigure = (string)SceneFiguresList.SelectedItem;
+            FigureCenter.Text = figures[selectedFigure].Center.ToString(); 
             RedrawObjects(selectedFigure);
         }
 
@@ -235,14 +236,22 @@ namespace Lab6_Figures3D
             transformPoint = new Point3D((double)NumericPointX.Value, (double)NumericPointY.Value, (double)NumericPointZ.Value);
         }
 
-        private void GetTransformLine()
+        private void GetTransformEdge()
         {
-
+            var p1Text = LineTBP1.Text.Split(' ');
+            var p1 = new Point3D(double.Parse(p1Text[0]), double.Parse(p1Text[1]), double.Parse(p1Text[2]));
+            var p2Text = LineTBP2.Text.Split(' ');
+            var p2 = new Point3D(double.Parse(p2Text[0]), double.Parse(p2Text[1]), double.Parse(p2Text[2]));
+            transformEdge = new Edge3D(p1, p2); 
         }
 
         private void GetTransformFlat()
         {
-
+            var pointText = FlatTBP1.Text.Split(' ');
+            var point = new Point3D(double.Parse(pointText[0]), double.Parse(pointText[1]), double.Parse(pointText[2]));
+            var normalText = FlatTBP2.Text.Split(' ');
+            var normal = new Point3D(double.Parse(normalText[0]), double.Parse(normalText[1]), double.Parse(normalText[2]));
+            transformFlat = Methods.FlatByPointAndVector(point, normal);
         }
 
         private void GetTransformAngle()
@@ -294,10 +303,10 @@ namespace Lab6_Figures3D
             if (selectedFigure == null)
                 return;
 
-            GetTransformLine();
+            GetTransformEdge();
             GetTransformAngle(); 
             Figure3D old = figures[selectedFigure];
-            old.Points = new(old.Points.Select(p => Transform.Rotate(p, transformAngle)));
+            old.Points = new(old.Points.Select(p => Transform.RotateAroundLine(transformEdge, p, transformAngle)));
             RedrawObjects(selectedFigure);
         }
 
@@ -314,6 +323,34 @@ namespace Lab6_Figures3D
         private void TransformGroup_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void TurnLeftButton_Click(object sender, EventArgs e)
+        {
+            GetTransformAngle(); 
+            camera.RotateLeftRight(true, transformAngle);
+            RedrawObjects(); 
+        }
+
+        private void TurnRightButton_Click(object sender, EventArgs e)
+        {
+            GetTransformAngle();
+            camera.RotateLeftRight(false, transformAngle);
+            RedrawObjects();
+        }
+
+        private void TurnUpButton_Click(object sender, EventArgs e)
+        {
+            GetTransformAngle();
+            camera.RotateUpDown(true, transformAngle);
+            RedrawObjects();
+        }
+
+        private void TurnDownButton_Click(object sender, EventArgs e)
+        {
+            GetTransformAngle();
+            camera.RotateUpDown(false, transformAngle);
+            RedrawObjects();
         }
     }
 }

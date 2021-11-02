@@ -50,6 +50,11 @@ namespace Lab6_Figures3D
         {
             return new Point3D(-p.X, -p.Y, -p.Z);
         }
+
+        public override string ToString()
+        {
+            return $"{X} {Y} {Z}";
+        }
     }
 
     public struct Point2D
@@ -126,7 +131,19 @@ namespace Lab6_Figures3D
         public List<List<int>> Planes;
 
         // In world coordinates 
-        public Point3D Center { get; set; }
+        public Point3D Center
+        {
+            get
+            {
+                var p = new Point3D(0, 0, 0);
+                foreach (var point in Points)
+                {
+                    p.X += point.X; p.Y += point.Y; p.Z += point.Z;
+                }
+                return p / Points.Count; 
+            }
+            set { Center = value; }
+        }
 
         public Figure3D() 
         {

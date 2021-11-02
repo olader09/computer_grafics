@@ -23,6 +23,42 @@ namespace Lab6_Figures3D
             };
         }
 
+        public static double[,] RX(Point3D point)
+        {
+            double l = point.X, m = point.Y, n = point.Z; 
+            var d = Sqrt(m * m + n * n);
+            return new double[4, 4] { {     1,     0,     0,     0 },
+                                      {     0,   n/d,   m/d,     0 },
+                                      {     0,  -m/d,   n/d,     0 },
+                                      {     0,     0,     0,     1 } };
+        }
+
+        public static double[,] RY(Point3D point)
+        {
+            double l = point.X, m = point.Y, n = point.Z;
+            var d = Sqrt(m * m + n * n);
+            return new double[4, 4] { {     l,     0,     d,     0 },
+                                      {     0,     1,     0,     0 },
+                                      {     d,     0,     l,     0 },
+                                      {     0,     0,     0,     1 } };
+        }
+
+        public static double[,] BigOne(Point3D point, double angle)
+        {
+            double l = point.X, m = point.Y, n = point.Z;
+            double rad = DegreesToRadians(angle);
+            double f = Cos(rad);
+            double s = Sin(rad);
+            double c = 1 - f;
+            return new double[4, 4]
+                 { 
+                     {     l * l + f * (1 - l*l),           l * c * m + n * s,           l * c * n - m * s,     0 },
+                     {         l * c * m - n * s,     m * m + f * (1 - m * m),           m * c * n + l * s,     0 },
+                     {         l * c * n + m * s,           m * c * n - l * s,     n * n + f * (1 - n * n),     0 },
+                     {                 0,                           0,                          0,              1 } 
+                 };
+        }
+
         public static double[,] ScaleMatrix(double dx, double dy, double dz)
         {
             return new double[4, 4] { {     dx,     0,     0,     0 },
@@ -31,12 +67,28 @@ namespace Lab6_Figures3D
                                       {     0,      0,     0,     1 } };
         }
 
+        public static double[,] ScaleMatrix(Point3D p)
+        {
+            return new double[4, 4] { {   p.X,     0,     0,     0 },
+                                      {     0,   p.Y,     0,     0 },
+                                      {     0,     0,   p.Z,     0 },
+                                      {     0,     0,     0,     1 } };
+        }
+
         public static double[,] ShiftMatrix(double dx, double dy, double dz)
         {
             return new double[4, 4] { {     1,     0,     0,     0 },
                                       {     0,     1,     0,     0 },
                                       {     0,     0,     1,     0 },
                                       {    dx,    dy,    dz,     1 } };
+        }
+
+        public static double[,] ShiftMatrix(Point3D p)
+        {
+            return new double[4, 4] { {     1,     0,     0,     0 },
+                                      {     0,     1,     0,     0 },
+                                      {     0,     0,     1,     0 },
+                                      {   p.X,   p.Y,   p.Z,     1 } };
         }
 
         public static double DegreesToRadians(double degrees) => degrees * (Math.PI / 180);

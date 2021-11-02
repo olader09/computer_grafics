@@ -90,9 +90,33 @@ namespace Lab6_Figures3D
             J += vector;
         }
 
-        public void Rotate(Line3D axis, double angle)
+        public void RotateUpDown(bool up, double angle)
         {
+            var vec = I - View;
+            var edge = new Edge3D(Location, Location + vec);
+            View = Transform.RotateAroundLine(edge, View, up ? angle : -angle);
+            I = Transform.RotateAroundLine(edge, I, up ? angle : -angle);
+            J = Transform.RotateAroundLine(edge, J, up ? angle : -angle);
+            ScF = Transform.RotateAroundLine(edge, ScF, up ? angle : -angle);
+        }
 
+        public void RotateLeftRight(bool left, double angle)
+        {
+            var vec = J - View;
+            var edge = new Edge3D(Location, Location + vec);
+            View = Transform.RotateAroundLine(edge, View, left ? angle : -angle);
+            I = Transform.RotateAroundLine(edge, I, left ? angle : -angle);
+            J = Transform.RotateAroundLine(edge, J, left ? angle : -angle);
+            ScF = Transform.RotateAroundLine(edge, ScF, left ? angle : -angle);
+        }
+
+        public void Rotate(Edge3D edge, double angle)
+        {
+            Location = Transform.RotateAroundLine(edge, Location, angle);
+            View = Transform.RotateAroundLine(edge, View, angle);
+            I = Transform.RotateAroundLine(edge, I, angle);
+            J = Transform.RotateAroundLine(edge, J, angle);
+            ScF = Transform.RotateAroundLine(edge, ScF, angle);
         }
 
         public void ScaleI(bool more) => Width += more ? 0.1 : -0.1;

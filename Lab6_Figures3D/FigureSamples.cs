@@ -85,12 +85,6 @@ namespace Lab6_Figures3D
                 new() { 1, 2, 3 }, 
                 new() { 0, 1, 3 },
             };
-
-            Center = new Point3D(
-                (p1.X + p2.X + p3.X + p4.X) / 4,
-                (p1.Y + p2.Y + p3.Y + p4.Y) / 4,
-                (p1.Z + p2.Z + p3.Z + p4.Z) / 4
-            );
         }
 
         // public F4(List<Edge3D> lines) : base(lines) { }
