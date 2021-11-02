@@ -85,7 +85,7 @@ namespace Lab6_Figures3D
                     {
                         string PointCoord = fs.ReadLine();
                         string[] arrPointCoord = PointCoord.Split(' ');
-                        df.points.Add(new Point3D(int.Parse(arrPointCoord[0]), int.Parse(arrPointCoord[1]), int.Parse(arrPointCoord[2])));
+                        df.points.Add(new Point3D(double.Parse(arrPointCoord[0]), double.Parse(arrPointCoord[1]), double.Parse(arrPointCoord[2])));
                     }
                     df.linesCount = int.Parse(fs.ReadLine());
                     df.lines = new List<(int, int)>();
@@ -101,7 +101,10 @@ namespace Lab6_Figures3D
                     {
                         string Plane = fs.ReadLine();
                         string[] arrPlanes = Plane.Split(' ');
-                        df.planes.Add(new() { int.Parse(arrPlanes[0]), int.Parse(arrPlanes[1]), int.Parse(arrPlanes[2]) });
+                        if (arrPlanes.Length == 3)
+                            df.planes.Add(new() { int.Parse(arrPlanes[0]), int.Parse(arrPlanes[1]), int.Parse(arrPlanes[2]) });
+                        else if (arrPlanes.Length == 4)
+                            df.planes.Add(new() { int.Parse(arrPlanes[0]), int.Parse(arrPlanes[1]), int.Parse(arrPlanes[2]), int.Parse(arrPlanes[3]) });
                     }
                     figures.Add(df);
                 }
