@@ -33,8 +33,9 @@ namespace Lab6_Figures3D
             SceneFiguresList.SelectionMode = SelectionMode.One;
             g = Canvas.CreateGraphics();
             ScreenWidth.Value = 2;
-            ScreenHeight.Value = 1;
-            Focus.Value = 1; 
+            ScreenHeight.Value = 1.9m;
+            Focus.Value = 1;
+            NumericPointX.Minimum = NumericPointY.Minimum = NumericPointZ.Minimum = -100m;
             ScreenWidth.DecimalPlaces = ScreenHeight.DecimalPlaces = Focus.DecimalPlaces = NumericPointX.DecimalPlaces
                 = NumericPointY.DecimalPlaces = NumericPointZ.DecimalPlaces = NumericAngle.DecimalPlaces = NumericScale.DecimalPlaces = 1;
             ScreenWidth.Increment = ScreenHeight.Increment = Focus.Increment = NumericPointX.Increment
@@ -148,6 +149,22 @@ namespace Lab6_Figures3D
         private void MoveDownButton_Click(object sender, EventArgs e)
         {
             var vector = camera.View - camera.J;
+            vector /= 4;
+            camera.Shift(vector);
+            RedrawObjects(selectedFigure);
+        }
+
+        private void MoveLeftButton_Click(object sender, EventArgs e)
+        {
+            var vector = camera.View - camera.I;
+            vector /= 4;
+            camera.Shift(vector);
+            RedrawObjects(selectedFigure);
+        }
+
+        private void MoveRightButton_Click(object sender, EventArgs e)
+        {
+            var vector = camera.I - camera.View;
             vector /= 4;
             camera.Shift(vector);
             RedrawObjects(selectedFigure);

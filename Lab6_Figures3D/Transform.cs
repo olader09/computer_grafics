@@ -41,7 +41,7 @@ namespace Lab6_Figures3D
             p = p.Mult(Matrix.BigOne(lp, angle));
 
             var shiftBack = Matrix.ShiftMatrix(edge.P1);
-            p.Mult(shiftBack);
+            p = p.Mult(shiftBack);
             return new Point3D(p[0, 0], p[0, 1], p[0, 2]); 
         }
 

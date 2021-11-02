@@ -53,7 +53,7 @@ namespace Lab6_Figures3D
 
         public override string ToString()
         {
-            return $"{X} {Y} {Z}";
+            return $"{X:00.00} {Y:00.00} {Z:00.00}";
         }
     }
 

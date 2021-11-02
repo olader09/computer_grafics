@@ -76,6 +76,8 @@ namespace Lab6_Figures3D
             this.FocusLabel = new System.Windows.Forms.Label();
             this.ScreenParamsLabel = new System.Windows.Forms.Label();
             this.FigureCenter = new System.Windows.Forms.Label();
+            this.MoveLeftButton = new System.Windows.Forms.Button();
+            this.MoveRightButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.TransformGroup.SuspendLayout();
             this.CoefGB.SuspendLayout();
@@ -429,6 +431,8 @@ namespace Lab6_Figures3D
             // 
             // CameraGroup
             // 
+            this.CameraGroup.Controls.Add(this.MoveRightButton);
+            this.CameraGroup.Controls.Add(this.MoveLeftButton);
             this.CameraGroup.Controls.Add(this.Focus);
             this.CameraGroup.Controls.Add(this.ScreenHeight);
             this.CameraGroup.Controls.Add(this.ScreenWidth);
@@ -492,23 +496,23 @@ namespace Lab6_Figures3D
             // 
             // MoveDownButton
             // 
-            this.MoveDownButton.Location = new System.Drawing.Point(152, 152);
+            this.MoveDownButton.Location = new System.Drawing.Point(104, 151);
             this.MoveDownButton.Margin = new System.Windows.Forms.Padding(2);
             this.MoveDownButton.Name = "MoveDownButton";
-            this.MoveDownButton.Size = new System.Drawing.Size(142, 42);
+            this.MoveDownButton.Size = new System.Drawing.Size(93, 42);
             this.MoveDownButton.TabIndex = 12;
-            this.MoveDownButton.Text = "Move Down";
+            this.MoveDownButton.Text = "Down";
             this.MoveDownButton.UseVisualStyleBackColor = true;
             this.MoveDownButton.Click += new System.EventHandler(this.MoveDownButton_Click);
             // 
             // MoveUpButton
             // 
-            this.MoveUpButton.Location = new System.Drawing.Point(6, 152);
+            this.MoveUpButton.Location = new System.Drawing.Point(104, 106);
             this.MoveUpButton.Margin = new System.Windows.Forms.Padding(2);
             this.MoveUpButton.Name = "MoveUpButton";
-            this.MoveUpButton.Size = new System.Drawing.Size(138, 42);
+            this.MoveUpButton.Size = new System.Drawing.Size(93, 42);
             this.MoveUpButton.TabIndex = 11;
-            this.MoveUpButton.Text = "Move Up";
+            this.MoveUpButton.Text = "Up";
             this.MoveUpButton.UseVisualStyleBackColor = true;
             this.MoveUpButton.Click += new System.EventHandler(this.MoveUpButton_Click);
             // 
@@ -558,10 +562,10 @@ namespace Lab6_Figures3D
             // 
             // ForwardButton
             // 
-            this.ForwardButton.Location = new System.Drawing.Point(6, 105);
+            this.ForwardButton.Location = new System.Drawing.Point(8, 105);
             this.ForwardButton.Margin = new System.Windows.Forms.Padding(2);
             this.ForwardButton.Name = "ForwardButton";
-            this.ForwardButton.Size = new System.Drawing.Size(139, 42);
+            this.ForwardButton.Size = new System.Drawing.Size(92, 42);
             this.ForwardButton.TabIndex = 6;
             this.ForwardButton.Text = "Forward";
             this.ForwardButton.UseVisualStyleBackColor = true;
@@ -569,12 +573,12 @@ namespace Lab6_Figures3D
             // 
             // BackwardButton
             // 
-            this.BackwardButton.Location = new System.Drawing.Point(151, 105);
+            this.BackwardButton.Location = new System.Drawing.Point(8, 151);
             this.BackwardButton.Margin = new System.Windows.Forms.Padding(2);
             this.BackwardButton.Name = "BackwardButton";
-            this.BackwardButton.Size = new System.Drawing.Size(142, 42);
+            this.BackwardButton.Size = new System.Drawing.Size(92, 42);
             this.BackwardButton.TabIndex = 5;
-            this.BackwardButton.Text = "Backward";
+            this.BackwardButton.Text = "Back";
             this.BackwardButton.UseVisualStyleBackColor = true;
             this.BackwardButton.Click += new System.EventHandler(this.BackwardButton_Click);
             // 
@@ -606,6 +610,26 @@ namespace Lab6_Figures3D
             this.FigureCenter.Size = new System.Drawing.Size(59, 25);
             this.FigureCenter.TabIndex = 7;
             this.FigureCenter.Text = "label1";
+            // 
+            // MoveLeftButton
+            // 
+            this.MoveLeftButton.Location = new System.Drawing.Point(202, 106);
+            this.MoveLeftButton.Name = "MoveLeftButton";
+            this.MoveLeftButton.Size = new System.Drawing.Size(91, 42);
+            this.MoveLeftButton.TabIndex = 17;
+            this.MoveLeftButton.Text = "Left";
+            this.MoveLeftButton.UseVisualStyleBackColor = true;
+            this.MoveLeftButton.Click += new System.EventHandler(this.MoveLeftButton_Click);
+            // 
+            // MoveRightButton
+            // 
+            this.MoveRightButton.Location = new System.Drawing.Point(202, 151);
+            this.MoveRightButton.Name = "MoveRightButton";
+            this.MoveRightButton.Size = new System.Drawing.Size(91, 42);
+            this.MoveRightButton.TabIndex = 18;
+            this.MoveRightButton.Text = "Right";
+            this.MoveRightButton.UseVisualStyleBackColor = true;
+            this.MoveRightButton.Click += new System.EventHandler(this.MoveRightButton_Click);
             // 
             // Form1
             // 
@@ -698,6 +722,8 @@ namespace Lab6_Figures3D
         private System.Windows.Forms.TextBox LineTBP2;
         private System.Windows.Forms.TextBox LineTBP1;
         private System.Windows.Forms.Label FigureCenter;
+        private System.Windows.Forms.Button MoveRightButton;
+        private System.Windows.Forms.Button MoveLeftButton;
     }
 }
 
