@@ -195,6 +195,23 @@ namespace Lab6_Figures3D
             }
             return (name, f);
         }
+
+        public static void Save(Figure3D figure, string name)
+        {
+            using (var sw = File.CreateText(name + ".txt"))
+            {
+                sw.WriteLine(name);
+                sw.WriteLine(figure.Points.Count);
+                foreach (var point in figure.Points)
+                    sw.WriteLine(string.Join(' ', point.X, point.Y, point.Z));
+                sw.WriteLine(figure.Lines.Count); 
+                foreach (var line in figure.Lines)
+                    sw.WriteLine(string.Join(' ', line.Item1, line.Item2));
+                sw.WriteLine(figure.Planes.Count);
+                foreach (var plane in figure.Planes)
+                    sw.WriteLine(string.Join(' ', plane));
+            }
+        }
     }
 
     public class Figure2D

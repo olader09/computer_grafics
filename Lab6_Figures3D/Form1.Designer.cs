@@ -51,6 +51,8 @@ namespace Lab6_Figures3D
             this.LineTBP2 = new System.Windows.Forms.TextBox();
             this.LineTBP1 = new System.Windows.Forms.TextBox();
             this.PointGB = new System.Windows.Forms.GroupBox();
+            this.NumericRotationSplitCount = new System.Windows.Forms.NumericUpDown();
+            this.BuildRotationFigureButton = new System.Windows.Forms.Button();
             this.richPointsTB = new System.Windows.Forms.RichTextBox();
             this.LabelPointZ = new System.Windows.Forms.Label();
             this.LabelPointY = new System.Windows.Forms.Label();
@@ -79,13 +81,11 @@ namespace Lab6_Figures3D
             this.ScreenParamsLabel = new System.Windows.Forms.Label();
             this.FigureCenter = new System.Windows.Forms.Label();
             this.GraphGB = new System.Windows.Forms.GroupBox();
-            this.FunctionCB = new System.Windows.Forms.ComboBox();
-            this.DeltaXTB = new System.Windows.Forms.TextBox();
-            this.DeltaYTB = new System.Windows.Forms.TextBox();
-            this.DeltaXLabel = new System.Windows.Forms.Label();
             this.DeltaYLabel = new System.Windows.Forms.Label();
-            this.BuildRotationFigureButton = new System.Windows.Forms.Button();
-            this.NumericRotationSplitCount = new System.Windows.Forms.NumericUpDown();
+            this.DeltaXLabel = new System.Windows.Forms.Label();
+            this.DeltaYTB = new System.Windows.Forms.TextBox();
+            this.DeltaXTB = new System.Windows.Forms.TextBox();
+            this.FunctionCB = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.TransformGroup.SuspendLayout();
             this.CoefGB.SuspendLayout();
@@ -94,6 +94,7 @@ namespace Lab6_Figures3D
             this.FlatGB.SuspendLayout();
             this.LineGB.SuspendLayout();
             this.PointGB.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericRotationSplitCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericPointZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericPointY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericPointX)).BeginInit();
@@ -102,7 +103,6 @@ namespace Lab6_Figures3D
             ((System.ComponentModel.ISupportInitialize)(this.ScreenHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenWidth)).BeginInit();
             this.GraphGB.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericRotationSplitCount)).BeginInit();
             this.SuspendLayout();
             // 
             // Canvas
@@ -356,6 +356,33 @@ namespace Lab6_Figures3D
             this.PointGB.TabStop = false;
             this.PointGB.Text = "Point";
             this.PointGB.Enter += new System.EventHandler(this.PointGB_Enter);
+            // 
+            // NumericRotationSplitCount
+            // 
+            this.NumericRotationSplitCount.Location = new System.Drawing.Point(158, 96);
+            this.NumericRotationSplitCount.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.NumericRotationSplitCount.Name = "NumericRotationSplitCount";
+            this.NumericRotationSplitCount.Size = new System.Drawing.Size(123, 31);
+            this.NumericRotationSplitCount.TabIndex = 8;
+            this.NumericRotationSplitCount.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // BuildRotationFigureButton
+            // 
+            this.BuildRotationFigureButton.Location = new System.Drawing.Point(158, 136);
+            this.BuildRotationFigureButton.Name = "BuildRotationFigureButton";
+            this.BuildRotationFigureButton.Size = new System.Drawing.Size(122, 86);
+            this.BuildRotationFigureButton.TabIndex = 7;
+            this.BuildRotationFigureButton.Text = "Build Rotation";
+            this.BuildRotationFigureButton.UseVisualStyleBackColor = true;
+            this.BuildRotationFigureButton.Click += new System.EventHandler(this.BuildRotationFigureButton_Click);
             // 
             // richPointsTB
             // 
@@ -658,29 +685,14 @@ namespace Lab6_Figures3D
             this.GraphGB.TabStop = false;
             this.GraphGB.Text = "Graph";
             // 
-            // FunctionCB
+            // DeltaYLabel
             // 
-            this.FunctionCB.FormattingEnabled = true;
-            this.FunctionCB.Location = new System.Drawing.Point(7, 31);
-            this.FunctionCB.Name = "FunctionCB";
-            this.FunctionCB.Size = new System.Drawing.Size(236, 33);
-            this.FunctionCB.TabIndex = 0;
-            // 
-            // DeltaXTB
-            // 
-            this.DeltaXTB.Location = new System.Drawing.Point(342, 31);
-            this.DeltaXTB.Name = "DeltaXTB";
-            this.DeltaXTB.Size = new System.Drawing.Size(150, 31);
-            this.DeltaXTB.TabIndex = 1;
-            this.DeltaXTB.Text = "-5 5";
-            // 
-            // DeltaYTB
-            // 
-            this.DeltaYTB.Location = new System.Drawing.Point(587, 31);
-            this.DeltaYTB.Name = "DeltaYTB";
-            this.DeltaYTB.Size = new System.Drawing.Size(150, 31);
-            this.DeltaYTB.TabIndex = 2;
-            this.DeltaYTB.Text = "-5 5";
+            this.DeltaYLabel.AutoSize = true;
+            this.DeltaYLabel.Location = new System.Drawing.Point(513, 34);
+            this.DeltaYLabel.Name = "DeltaYLabel";
+            this.DeltaYLabel.Size = new System.Drawing.Size(68, 25);
+            this.DeltaYLabel.TabIndex = 4;
+            this.DeltaYLabel.Text = "Delta Y";
             // 
             // DeltaXLabel
             // 
@@ -691,40 +703,29 @@ namespace Lab6_Figures3D
             this.DeltaXLabel.TabIndex = 3;
             this.DeltaXLabel.Text = "Delta X";
             // 
-            // DeltaYLabel
+            // DeltaYTB
             // 
-            this.DeltaYLabel.AutoSize = true;
-            this.DeltaYLabel.Location = new System.Drawing.Point(513, 34);
-            this.DeltaYLabel.Name = "DeltaYLabel";
-            this.DeltaYLabel.Size = new System.Drawing.Size(68, 25);
-            this.DeltaYLabel.TabIndex = 4;
-            this.DeltaYLabel.Text = "Delta Y";
+            this.DeltaYTB.Location = new System.Drawing.Point(587, 31);
+            this.DeltaYTB.Name = "DeltaYTB";
+            this.DeltaYTB.Size = new System.Drawing.Size(150, 31);
+            this.DeltaYTB.TabIndex = 2;
+            this.DeltaYTB.Text = "-5 5";
             // 
-            // BuildRotationFigureButton
+            // DeltaXTB
             // 
-            this.BuildRotationFigureButton.Location = new System.Drawing.Point(158, 136);
-            this.BuildRotationFigureButton.Name = "BuildRotationFigureButton";
-            this.BuildRotationFigureButton.Size = new System.Drawing.Size(122, 86);
-            this.BuildRotationFigureButton.TabIndex = 7;
-            this.BuildRotationFigureButton.Text = "Build Rotation";
-            this.BuildRotationFigureButton.UseVisualStyleBackColor = true;
+            this.DeltaXTB.Location = new System.Drawing.Point(342, 31);
+            this.DeltaXTB.Name = "DeltaXTB";
+            this.DeltaXTB.Size = new System.Drawing.Size(150, 31);
+            this.DeltaXTB.TabIndex = 1;
+            this.DeltaXTB.Text = "-5 5";
             // 
-            // NumericRotationSplitCount
+            // FunctionCB
             // 
-            this.NumericRotationSplitCount.Location = new System.Drawing.Point(158, 96);
-            this.NumericRotationSplitCount.Minimum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.NumericRotationSplitCount.Name = "NumericRotationSplitCount";
-            this.NumericRotationSplitCount.Size = new System.Drawing.Size(123, 31);
-            this.NumericRotationSplitCount.TabIndex = 8;
-            this.NumericRotationSplitCount.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
+            this.FunctionCB.FormattingEnabled = true;
+            this.FunctionCB.Location = new System.Drawing.Point(7, 31);
+            this.FunctionCB.Name = "FunctionCB";
+            this.FunctionCB.Size = new System.Drawing.Size(236, 33);
+            this.FunctionCB.TabIndex = 0;
             // 
             // Form1
             // 
@@ -755,6 +756,7 @@ namespace Lab6_Figures3D
             this.LineGB.PerformLayout();
             this.PointGB.ResumeLayout(false);
             this.PointGB.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericRotationSplitCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericPointZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericPointY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericPointX)).EndInit();
@@ -765,7 +767,6 @@ namespace Lab6_Figures3D
             ((System.ComponentModel.ISupportInitialize)(this.ScreenWidth)).EndInit();
             this.GraphGB.ResumeLayout(false);
             this.GraphGB.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericRotationSplitCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

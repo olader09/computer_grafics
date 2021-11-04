@@ -12,7 +12,7 @@ namespace Lab6_Figures3D
 {
     public partial class Form1 : Form
     {
-        public int i = 1; 
+        public int iname = 1;
         public Dictionary<string, Figure3D> figures = new();
         public Figure3D currentFigure;
         public string selectedFigure = null;
@@ -42,7 +42,7 @@ namespace Lab6_Figures3D
                 = NumericPointY.DecimalPlaces = NumericPointZ.DecimalPlaces = NumericAngle.DecimalPlaces = NumericScale.DecimalPlaces = 1;
             ScreenWidth.Increment = ScreenHeight.Increment = Focus.Increment = NumericPointX.Increment
                 = NumericPointY.Increment = NumericPointZ.Increment = NumericAngle.Increment = NumericScale.Increment = 0.1m;
-            camera.Resolution = (Canvas.Width, Canvas.Height); 
+            camera.Resolution = (Canvas.Width, Canvas.Height);
             //figures.Add(new F4());
 
             // var r = Projections.ParallelPoint(new Point3D(1, 2, -1), new Flat3D(3, -1, 2, -27));
@@ -61,7 +61,7 @@ namespace Lab6_Figures3D
         public void RedrawObjects(string selectedFigure = null)
         {
             g.Clear(DefaultBackColor);
-            var fs = new List<(bool, Figure2D)>(); 
+            var fs = new List<(bool, Figure2D)>();
             foreach (var f in figures)
             {
                 fs.Add((f.Key == selectedFigure, camera.GetFigure2D(f.Value)));
@@ -88,9 +88,9 @@ namespace Lab6_Figures3D
         public Point From3D(Point2D p)
         {
             return new Point(
-                (int)(p.X + (Canvas.Width / 2.0)), 
+                (int)(p.X + (Canvas.Width / 2.0)),
                 (int)(Canvas.Height / 2.0 - p.Y)
-                ); 
+                );
         }
 
         public void ShowF(bool color, Figure2D f)
@@ -99,7 +99,7 @@ namespace Lab6_Figures3D
             foreach (var l in f.Lines)
             {
                 var p1 = From3D(f.Points[l.Item1]);
-                var p2 = From3D(f.Points[l.Item2]); 
+                var p2 = From3D(f.Points[l.Item2]);
                 g.DrawLine(pen, p1, p2);
             }
         }
@@ -107,7 +107,7 @@ namespace Lab6_Figures3D
         public void ShowFigures(List<(bool, Figure2D)> list)
         {
             foreach (var f in list)
-                ShowF(f.Item1, f.Item2); 
+                ShowF(f.Item1, f.Item2);
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs ke)
@@ -116,7 +116,7 @@ namespace Lab6_Figures3D
             {
                 case 'r':
                     RedrawObjects();
-                    break; 
+                    break;
             };
         }
 
@@ -129,7 +129,7 @@ namespace Lab6_Figures3D
             var vector = camera.View - camera.Location;
             vector /= 4;
             camera.Shift(vector);
-            RedrawObjects(selectedFigure); 
+            RedrawObjects(selectedFigure);
         }
 
         private void BackwardButton_Click(object sender, EventArgs e)
@@ -193,7 +193,7 @@ namespace Lab6_Figures3D
         private void ScreenWidth_ValueChanged(object sender, EventArgs e)
         {
             camera.Width = (double)ScreenWidth.Value;
-            RedrawObjects(selectedFigure); 
+            RedrawObjects(selectedFigure);
         }
 
         private void ScreenHeight_ValueChanged(object sender, EventArgs e)
@@ -222,7 +222,7 @@ namespace Lab6_Figures3D
             if (open.ShowDialog() == DialogResult.OK)
             {
                 var figure = Figure3D.Download(open.FileName);
-                string figName = figure.Item1 + i++;
+                string figName = figure.Item1 + iname++;
                 figures.Add(figName, figure.Item2);
                 SceneFiguresList.Items.Add(figName);
                 RedrawObjects(selectedFigure);
@@ -259,7 +259,7 @@ namespace Lab6_Figures3D
         private void SceneFiguresList_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedFigure = (string)SceneFiguresList.SelectedItem;
-            FigureCenter.Text = figures[selectedFigure].Center.ToString(); 
+            FigureCenter.Text = figures[selectedFigure].Center.ToString();
             RedrawObjects(selectedFigure);
         }
 
@@ -274,7 +274,7 @@ namespace Lab6_Figures3D
             var p1 = new Point3D(double.Parse(p1Text[0]), double.Parse(p1Text[1]), double.Parse(p1Text[2]));
             var p2Text = LineTBP2.Text.Split(' ');
             var p2 = new Point3D(double.Parse(p2Text[0]), double.Parse(p2Text[1]), double.Parse(p2Text[2]));
-            transformEdge = new Edge3D(p1, p2); 
+            transformEdge = new Edge3D(p1, p2);
         }
 
         private void GetTransformFlat()
@@ -299,7 +299,7 @@ namespace Lab6_Figures3D
         private void ScaleButton_Click(object sender, EventArgs e)
         {
             if (selectedFigure == null)
-                return; 
+                return;
 
             GetTransformPoint();
             GetTransformCoef();
@@ -312,7 +312,7 @@ namespace Lab6_Figures3D
         {
             if (selectedFigure == null)
                 return;
-            
+
             GetTransformPoint();
             Figure3D old = figures[selectedFigure];
             old.Points = new(old.Points.Select(p => Transform.Shift(p, transformPoint)));
@@ -336,7 +336,7 @@ namespace Lab6_Figures3D
                 return;
 
             GetTransformEdge();
-            GetTransformAngle(); 
+            GetTransformAngle();
             Figure3D old = figures[selectedFigure];
             old.Points = new(old.Points.Select(p => Transform.RotateAroundLine(transformEdge, p, transformAngle)));
             RedrawObjects(selectedFigure);
@@ -359,9 +359,9 @@ namespace Lab6_Figures3D
 
         private void TurnLeftButton_Click(object sender, EventArgs e)
         {
-            GetTransformAngle(); 
+            GetTransformAngle();
             camera.RotateLeftRight(true, transformAngle);
-            RedrawObjects(); 
+            RedrawObjects();
         }
 
         private void TurnRightButton_Click(object sender, EventArgs e)
@@ -387,21 +387,91 @@ namespace Lab6_Figures3D
 
         private void richPointsTB_TextChanged(object sender, EventArgs e)
         {
-            try
+            var text = richPointsTB.Text.Split('\n');
+            bool good = true; 
+            listPoints = new();
+            foreach (var p in text)
             {
-                var text = richPointsTB.Text.Split('\n');
-                listPoints = new(); 
-                foreach (var p in text)
+                var ppp = p.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                if (ppp.Length != 3)
                 {
-                    var ppp = p.Split(' ');
-                    listPoints.Add(new Point3D(double.Parse(ppp[0]), double.Parse(ppp[1]), double.Parse(ppp[2])));
+                    good = false;
+                    break; 
                 }
-                richPointsTB.BackColor = Color.White; 
+                bool x = double.TryParse(ppp[0], out double resultx); 
+                if (!x)
+                {
+                    good = false;
+                    break; 
+                }
+                bool y = double.TryParse(ppp[1], out double resulty);
+                if (!y)
+                {
+                    good = false;
+                    break;
+                }
+                bool z = double.TryParse(ppp[2], out double resultz);
+                if (!z)
+                {
+                    good = false;
+                    break;
+                }
+                listPoints.Add(new Point3D(resultx, resulty, resultz));
             }
-            catch (Exception)
+
+            if (good)
+                richPointsTB.BackColor = Color.White;
+            else
+                richPointsTB.BackColor = Color.Red;
+        }
+
+        private void BuildRotationFigureButton_Click(object sender, EventArgs e)
+        {
+            GetTransformEdge();
+            var rots = (int)NumericRotationSplitCount.Value;
+            Figure3D rotation = new();
+            rotation.Points.AddRange(listPoints);
+            // for (int i = 0; i < rotation.Points.Count - 1; ++i)
+               // rotation.Lines.Add((i, i + 1));
+
+            List<Point3D> iteration = new(listPoints);
+            var count = iteration.Count;
+
+            for (int i = 1; i < rots; ++i)
             {
-                richPointsTB.BackColor = Color.Red; 
+                iteration = iteration.Select(x => Transform.RotateAroundLine(transformEdge, x, 360.0 / rots)).ToList();
+                rotation.Points.AddRange(iteration);
+
+                // Up lines by axis
+                for (int ind = 0; ind < count - 1; ++ind)
+                    rotation.Lines.Add((count * i + ind, count * i + ind + 1));
+
+                // Lines between iterations
+                for (int ind = 0; ind < count; ++ind)
+                    rotation.Lines.Add((count * (i - 1) + ind, count * i + ind));
+
+                // Planes between iterations
+                for (int ind = 0; ind < count - 1; ++ind)
+                    rotation.Planes.Add(new() { count * (i - 1) + ind, count * (i - 1) + ind + 1, count * i + ind + 1, count * i + ind });
             }
+
+            // Up lines by axis
+            for (int ind = 0; ind < count - 1; ++ind)
+                rotation.Lines.Add((ind, ind + 1));
+
+            // Lines between iterations
+            for (int ind = 0; ind < count; ++ind)
+                rotation.Lines.Add((count * (rots - 1) + ind, ind));
+
+            // Planes between iterations
+            for (int ind = 0; ind < count - 1; ++ind)
+                rotation.Planes.Add(new() { count * (rots - 1) + ind, count * (rots - 1) + ind + 1, ind + 1, ind });
+
+            var name = "Rotation" + iname++; 
+            figures.Add(name, rotation);
+            SceneFiguresList.Items.Add(name);
+            Figure3D.Save(rotation, name);
+            RedrawObjects(); 
         }
     }
 }
