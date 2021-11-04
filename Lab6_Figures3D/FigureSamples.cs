@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+
+
 namespace Lab6_Figures3D
 {
-
     public class Coord : Figure3D
     {
         public Coord()
@@ -51,7 +52,7 @@ namespace Lab6_Figures3D
             }
         }
     }
-
+    /*
     public class DownloadFigure
     {
         public string figureName;
@@ -110,7 +111,7 @@ namespace Lab6_Figures3D
                 }
             }
         }
-    }
+    }*/
 
     public class F4 : Figure3D
     {
@@ -122,20 +123,20 @@ namespace Lab6_Figures3D
             // 3 -> (1/2, sqrt(3)/2, 0)
             // 4 -> (1/2, 1/(2*sqrt(3)), sqrt(2/3))
 
-            /*
+            
             var p1 = new Point3D(0, 0, 0);
             var p2 = new Point3D(1, 0, 0);
             var p3 = new Point3D(1 / 2.0, Math.Sqrt(3) / 2, 0);
             var p4 = new Point3D(1 / 2.0, 1 / (2 * Math.Sqrt(3)), Math.Sqrt(2.0 / 3));
-            */
-            //Points = new List<Point3D>() { p1, p2, p3, p4 };
+            
+            Points = new List<Point3D>() { p1, p2, p3, p4 };
 
-            Figures fs = new Figures("figures.txt");
+            // Figures fs = new Figures("figures.txt");
 
-
+            /*
             Points = new List<Point3D>();
             for (int i = 0; i < fs.figures[0].pointsCount; i++)
-                Points.Add(fs.figures[0].points[i]);
+                Points.Add(fs.figures[0].points[i]);*/
             /*
             { fs.figures[0].points[0],
                                            fs.figures[0].points[1],
@@ -154,17 +155,18 @@ namespace Lab6_Figures3D
                 fs.figures[0].lines[4],
                 fs.figures[0].lines[5]
                 */
-                /*
+                
                 (0, 1),
                 (0, 2),
                 (0, 3),
                 (1, 2),
                 (1, 3), 
                 (2, 3), 
-                */
+                
             };
+            /*
             for (int i = 0; i < fs.figures[0].linesCount; i++)
-                Lines.Add(fs.figures[0].lines[i]);
+                Lines.Add(fs.figures[0].lines[i]);*/
 
             Planes = new List<List<int>>()
             {
@@ -174,25 +176,26 @@ namespace Lab6_Figures3D
                 fs.figures[0].planes[2],
                 fs.figures[0].planes[3],
                 */
-                /*
+                
                 new() { 0, 1, 2 },
                 new() { 0, 2, 3 }, 
                 new() { 1, 2, 3 }, 
                 new() { 0, 1, 3 },
-                */
+                
             };
-            for (int i = 0; i < fs.figures[0].planesCount; i++)
-                Planes.Add(fs.figures[0].planes[i]);
+            /*for (int i = 0; i < fs.figures[0].planesCount; i++)
+                Planes.Add(fs.figures[0].planes[i]);*/
         }
 
         // public F4(List<Edge3D> lines) : base(lines) { }
     }
 
+    /*
     public class F6 : Figure3D
     {
         public F6()
         {
-            Figures fs = new Figures("figures.txt");
+            // Figures fs = new Figures("figures.txt");
 
             Points = new List<Point3D>();
             for (int i = 0; i < fs.figures[1].pointsCount; i++)
@@ -237,6 +240,6 @@ namespace Lab6_Figures3D
 
         // public F4(List<Edge3D> lines) : base(lines) { }
     }
-
+    */
 
 }

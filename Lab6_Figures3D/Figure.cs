@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO; 
 
 namespace Lab6_Figures3D
 {
@@ -161,6 +162,38 @@ namespace Lab6_Figures3D
         public Figure3D(List<Point3D> points, List<(int, int)> lines, List<List<int>> planes): this(points, lines)
         {
             Planes = new(planes); 
+        }
+
+        public static (string, Figure3D) Download(string file)
+        {
+            Figure3D f = new Figure3D(); 
+            var text = File.ReadAllLines(file);
+            int lineCounter = 0;
+            string name = text[lineCounter++];
+            int pointsCount = int.Parse(text[lineCounter++]);
+            for (int i = 0; i < pointsCount; ++i)
+            {
+                var pCoords = text[lineCounter++].Split(' ');
+                f.Points.Add(new Point3D(double.Parse(pCoords[0]), double.Parse(pCoords[1]), double.Parse(pCoords[2]))); 
+            }
+            int linesCount = int.Parse(text[lineCounter++]);
+            for (int i = 0; i < linesCount; ++i)
+            {
+                var line = text[lineCounter++].Split(' ');
+                f.Lines.Add((int.Parse(line[0]), int.Parse(line[1])));
+            }
+            int planesCount = int.Parse(text[lineCounter++]);
+            for (int i = 0; i < planesCount; ++i)
+            {
+                var line = text[lineCounter++].Split(' ');
+                List<int> planePoints = new(); 
+                foreach (var plPoint in line)
+                {
+                    planePoints.Add(int.Parse(plPoint)); 
+                }
+                f.Planes.Add(planePoints);
+            }
+            return (name, f);
         }
     }
 

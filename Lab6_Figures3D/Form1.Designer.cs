@@ -51,16 +51,18 @@ namespace Lab6_Figures3D
             this.LineTBP2 = new System.Windows.Forms.TextBox();
             this.LineTBP1 = new System.Windows.Forms.TextBox();
             this.PointGB = new System.Windows.Forms.GroupBox();
+            this.richPointsTB = new System.Windows.Forms.RichTextBox();
             this.LabelPointZ = new System.Windows.Forms.Label();
             this.LabelPointY = new System.Windows.Forms.Label();
             this.LabelPointX = new System.Windows.Forms.Label();
             this.NumericPointZ = new System.Windows.Forms.NumericUpDown();
             this.NumericPointY = new System.Windows.Forms.NumericUpDown();
             this.NumericPointX = new System.Windows.Forms.NumericUpDown();
-            this.FiguresList = new System.Windows.Forms.ComboBox();
             this.SceneFiguresList = new System.Windows.Forms.ListBox();
             this.AddFigureButton = new System.Windows.Forms.Button();
             this.CameraGroup = new System.Windows.Forms.GroupBox();
+            this.MoveRightButton = new System.Windows.Forms.Button();
+            this.MoveLeftButton = new System.Windows.Forms.Button();
             this.Focus = new System.Windows.Forms.NumericUpDown();
             this.ScreenHeight = new System.Windows.Forms.NumericUpDown();
             this.ScreenWidth = new System.Windows.Forms.NumericUpDown();
@@ -76,8 +78,14 @@ namespace Lab6_Figures3D
             this.FocusLabel = new System.Windows.Forms.Label();
             this.ScreenParamsLabel = new System.Windows.Forms.Label();
             this.FigureCenter = new System.Windows.Forms.Label();
-            this.MoveLeftButton = new System.Windows.Forms.Button();
-            this.MoveRightButton = new System.Windows.Forms.Button();
+            this.GraphGB = new System.Windows.Forms.GroupBox();
+            this.FunctionCB = new System.Windows.Forms.ComboBox();
+            this.DeltaXTB = new System.Windows.Forms.TextBox();
+            this.DeltaYTB = new System.Windows.Forms.TextBox();
+            this.DeltaXLabel = new System.Windows.Forms.Label();
+            this.DeltaYLabel = new System.Windows.Forms.Label();
+            this.BuildRotationFigureButton = new System.Windows.Forms.Button();
+            this.NumericRotationSplitCount = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.TransformGroup.SuspendLayout();
             this.CoefGB.SuspendLayout();
@@ -93,14 +101,16 @@ namespace Lab6_Figures3D
             ((System.ComponentModel.ISupportInitialize)(this.Focus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenWidth)).BeginInit();
+            this.GraphGB.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericRotationSplitCount)).BeginInit();
             this.SuspendLayout();
             // 
             // Canvas
             // 
-            this.Canvas.Location = new System.Drawing.Point(624, 12);
+            this.Canvas.Location = new System.Drawing.Point(624, 102);
             this.Canvas.Margin = new System.Windows.Forms.Padding(2);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(746, 678);
+            this.Canvas.Size = new System.Drawing.Size(746, 588);
             this.Canvas.TabIndex = 0;
             this.Canvas.TabStop = false;
             this.Canvas.Click += new System.EventHandler(this.Canvas_Click);
@@ -127,10 +137,10 @@ namespace Lab6_Figures3D
             // 
             // RotateButton
             // 
-            this.RotateButton.Location = new System.Drawing.Point(152, 572);
+            this.RotateButton.Location = new System.Drawing.Point(152, 622);
             this.RotateButton.Margin = new System.Windows.Forms.Padding(2);
             this.RotateButton.Name = "RotateButton";
-            this.RotateButton.Size = new System.Drawing.Size(141, 99);
+            this.RotateButton.Size = new System.Drawing.Size(141, 49);
             this.RotateButton.TabIndex = 10;
             this.RotateButton.Text = "Rotate";
             this.RotateButton.UseVisualStyleBackColor = true;
@@ -138,10 +148,10 @@ namespace Lab6_Figures3D
             // 
             // ShiftButton
             // 
-            this.ShiftButton.Location = new System.Drawing.Point(5, 471);
+            this.ShiftButton.Location = new System.Drawing.Point(6, 566);
             this.ShiftButton.Margin = new System.Windows.Forms.Padding(2);
             this.ShiftButton.Name = "ShiftButton";
-            this.ShiftButton.Size = new System.Drawing.Size(140, 96);
+            this.ShiftButton.Size = new System.Drawing.Size(140, 49);
             this.ShiftButton.TabIndex = 9;
             this.ShiftButton.Text = "Shift";
             this.ShiftButton.UseVisualStyleBackColor = true;
@@ -149,10 +159,10 @@ namespace Lab6_Figures3D
             // 
             // ScaleButton
             // 
-            this.ScaleButton.Location = new System.Drawing.Point(152, 471);
+            this.ScaleButton.Location = new System.Drawing.Point(150, 566);
             this.ScaleButton.Margin = new System.Windows.Forms.Padding(2);
             this.ScaleButton.Name = "ScaleButton";
-            this.ScaleButton.Size = new System.Drawing.Size(141, 96);
+            this.ScaleButton.Size = new System.Drawing.Size(141, 49);
             this.ScaleButton.TabIndex = 8;
             this.ScaleButton.Text = "Scale";
             this.ScaleButton.UseVisualStyleBackColor = true;
@@ -160,10 +170,10 @@ namespace Lab6_Figures3D
             // 
             // ReflectButton
             // 
-            this.ReflectButton.Location = new System.Drawing.Point(6, 572);
+            this.ReflectButton.Location = new System.Drawing.Point(6, 622);
             this.ReflectButton.Margin = new System.Windows.Forms.Padding(2);
             this.ReflectButton.Name = "ReflectButton";
-            this.ReflectButton.Size = new System.Drawing.Size(140, 99);
+            this.ReflectButton.Size = new System.Drawing.Size(140, 49);
             this.ReflectButton.TabIndex = 7;
             this.ReflectButton.Text = "Reflect";
             this.ReflectButton.UseVisualStyleBackColor = true;
@@ -175,7 +185,7 @@ namespace Lab6_Figures3D
             this.CoefGB.Controls.Add(this.LabelScale);
             this.CoefGB.Controls.Add(this.NumericAngle);
             this.CoefGB.Controls.Add(this.NumericScale);
-            this.CoefGB.Location = new System.Drawing.Point(8, 345);
+            this.CoefGB.Location = new System.Drawing.Point(8, 464);
             this.CoefGB.Margin = new System.Windows.Forms.Padding(2);
             this.CoefGB.Name = "CoefGB";
             this.CoefGB.Padding = new System.Windows.Forms.Padding(2);
@@ -226,7 +236,7 @@ namespace Lab6_Figures3D
             this.FlatGB.Controls.Add(this.LabelFlatP1);
             this.FlatGB.Controls.Add(this.FlatTBP2);
             this.FlatGB.Controls.Add(this.FlatTBP1);
-            this.FlatGB.Location = new System.Drawing.Point(6, 236);
+            this.FlatGB.Location = new System.Drawing.Point(8, 358);
             this.FlatGB.Margin = new System.Windows.Forms.Padding(2);
             this.FlatGB.Name = "FlatGB";
             this.FlatGB.Padding = new System.Windows.Forms.Padding(2);
@@ -279,7 +289,7 @@ namespace Lab6_Figures3D
             this.LineGB.Controls.Add(this.LabelLineP1);
             this.LineGB.Controls.Add(this.LineTBP2);
             this.LineGB.Controls.Add(this.LineTBP1);
-            this.LineGB.Location = new System.Drawing.Point(8, 131);
+            this.LineGB.Location = new System.Drawing.Point(8, 256);
             this.LineGB.Margin = new System.Windows.Forms.Padding(2);
             this.LineGB.Name = "LineGB";
             this.LineGB.Padding = new System.Windows.Forms.Padding(2);
@@ -328,6 +338,9 @@ namespace Lab6_Figures3D
             // 
             // PointGB
             // 
+            this.PointGB.Controls.Add(this.NumericRotationSplitCount);
+            this.PointGB.Controls.Add(this.BuildRotationFigureButton);
+            this.PointGB.Controls.Add(this.richPointsTB);
             this.PointGB.Controls.Add(this.LabelPointZ);
             this.PointGB.Controls.Add(this.LabelPointY);
             this.PointGB.Controls.Add(this.LabelPointX);
@@ -338,11 +351,20 @@ namespace Lab6_Figures3D
             this.PointGB.Margin = new System.Windows.Forms.Padding(2);
             this.PointGB.Name = "PointGB";
             this.PointGB.Padding = new System.Windows.Forms.Padding(2);
-            this.PointGB.Size = new System.Drawing.Size(288, 98);
+            this.PointGB.Size = new System.Drawing.Size(288, 227);
             this.PointGB.TabIndex = 0;
             this.PointGB.TabStop = false;
             this.PointGB.Text = "Point";
             this.PointGB.Enter += new System.EventHandler(this.PointGB_Enter);
+            // 
+            // richPointsTB
+            // 
+            this.richPointsTB.Location = new System.Drawing.Point(8, 96);
+            this.richPointsTB.Name = "richPointsTB";
+            this.richPointsTB.Size = new System.Drawing.Size(143, 126);
+            this.richPointsTB.TabIndex = 6;
+            this.richPointsTB.Text = "";
+            this.richPointsTB.TextChanged += new System.EventHandler(this.richPointsTB_TextChanged);
             // 
             // LabelPointZ
             // 
@@ -398,32 +420,23 @@ namespace Lab6_Figures3D
             this.NumericPointX.Size = new System.Drawing.Size(90, 31);
             this.NumericPointX.TabIndex = 0;
             // 
-            // FiguresList
-            // 
-            this.FiguresList.FormattingEnabled = true;
-            this.FiguresList.Location = new System.Drawing.Point(12, 12);
-            this.FiguresList.Margin = new System.Windows.Forms.Padding(2);
-            this.FiguresList.Name = "FiguresList";
-            this.FiguresList.Size = new System.Drawing.Size(299, 33);
-            this.FiguresList.TabIndex = 3;
-            // 
             // SceneFiguresList
             // 
             this.SceneFiguresList.FormattingEnabled = true;
             this.SceneFiguresList.ItemHeight = 25;
-            this.SceneFiguresList.Location = new System.Drawing.Point(12, 102);
+            this.SceneFiguresList.Location = new System.Drawing.Point(12, 77);
             this.SceneFiguresList.Margin = new System.Windows.Forms.Padding(2);
             this.SceneFiguresList.Name = "SceneFiguresList";
-            this.SceneFiguresList.Size = new System.Drawing.Size(299, 204);
+            this.SceneFiguresList.Size = new System.Drawing.Size(299, 229);
             this.SceneFiguresList.TabIndex = 4;
             this.SceneFiguresList.SelectedIndexChanged += new System.EventHandler(this.SceneFiguresList_SelectedIndexChanged);
             // 
             // AddFigureButton
             // 
-            this.AddFigureButton.Location = new System.Drawing.Point(12, 52);
+            this.AddFigureButton.Location = new System.Drawing.Point(12, 12);
             this.AddFigureButton.Margin = new System.Windows.Forms.Padding(2);
             this.AddFigureButton.Name = "AddFigureButton";
-            this.AddFigureButton.Size = new System.Drawing.Size(299, 44);
+            this.AddFigureButton.Size = new System.Drawing.Size(299, 61);
             this.AddFigureButton.TabIndex = 5;
             this.AddFigureButton.Text = "Add Figure";
             this.AddFigureButton.UseVisualStyleBackColor = true;
@@ -455,6 +468,26 @@ namespace Lab6_Figures3D
             this.CameraGroup.TabIndex = 6;
             this.CameraGroup.TabStop = false;
             this.CameraGroup.Text = "Camera";
+            // 
+            // MoveRightButton
+            // 
+            this.MoveRightButton.Location = new System.Drawing.Point(202, 151);
+            this.MoveRightButton.Name = "MoveRightButton";
+            this.MoveRightButton.Size = new System.Drawing.Size(91, 42);
+            this.MoveRightButton.TabIndex = 18;
+            this.MoveRightButton.Text = "Right";
+            this.MoveRightButton.UseVisualStyleBackColor = true;
+            this.MoveRightButton.Click += new System.EventHandler(this.MoveRightButton_Click);
+            // 
+            // MoveLeftButton
+            // 
+            this.MoveLeftButton.Location = new System.Drawing.Point(202, 106);
+            this.MoveLeftButton.Name = "MoveLeftButton";
+            this.MoveLeftButton.Size = new System.Drawing.Size(91, 42);
+            this.MoveLeftButton.TabIndex = 17;
+            this.MoveLeftButton.Text = "Left";
+            this.MoveLeftButton.UseVisualStyleBackColor = true;
+            this.MoveLeftButton.Click += new System.EventHandler(this.MoveLeftButton_Click);
             // 
             // Focus
             // 
@@ -611,36 +644,98 @@ namespace Lab6_Figures3D
             this.FigureCenter.TabIndex = 7;
             this.FigureCenter.Text = "label1";
             // 
-            // MoveLeftButton
+            // GraphGB
             // 
-            this.MoveLeftButton.Location = new System.Drawing.Point(202, 106);
-            this.MoveLeftButton.Name = "MoveLeftButton";
-            this.MoveLeftButton.Size = new System.Drawing.Size(91, 42);
-            this.MoveLeftButton.TabIndex = 17;
-            this.MoveLeftButton.Text = "Left";
-            this.MoveLeftButton.UseVisualStyleBackColor = true;
-            this.MoveLeftButton.Click += new System.EventHandler(this.MoveLeftButton_Click);
+            this.GraphGB.Controls.Add(this.DeltaYLabel);
+            this.GraphGB.Controls.Add(this.DeltaXLabel);
+            this.GraphGB.Controls.Add(this.DeltaYTB);
+            this.GraphGB.Controls.Add(this.DeltaXTB);
+            this.GraphGB.Controls.Add(this.FunctionCB);
+            this.GraphGB.Location = new System.Drawing.Point(624, 13);
+            this.GraphGB.Name = "GraphGB";
+            this.GraphGB.Size = new System.Drawing.Size(746, 84);
+            this.GraphGB.TabIndex = 8;
+            this.GraphGB.TabStop = false;
+            this.GraphGB.Text = "Graph";
             // 
-            // MoveRightButton
+            // FunctionCB
             // 
-            this.MoveRightButton.Location = new System.Drawing.Point(202, 151);
-            this.MoveRightButton.Name = "MoveRightButton";
-            this.MoveRightButton.Size = new System.Drawing.Size(91, 42);
-            this.MoveRightButton.TabIndex = 18;
-            this.MoveRightButton.Text = "Right";
-            this.MoveRightButton.UseVisualStyleBackColor = true;
-            this.MoveRightButton.Click += new System.EventHandler(this.MoveRightButton_Click);
+            this.FunctionCB.FormattingEnabled = true;
+            this.FunctionCB.Location = new System.Drawing.Point(7, 31);
+            this.FunctionCB.Name = "FunctionCB";
+            this.FunctionCB.Size = new System.Drawing.Size(236, 33);
+            this.FunctionCB.TabIndex = 0;
+            // 
+            // DeltaXTB
+            // 
+            this.DeltaXTB.Location = new System.Drawing.Point(342, 31);
+            this.DeltaXTB.Name = "DeltaXTB";
+            this.DeltaXTB.Size = new System.Drawing.Size(150, 31);
+            this.DeltaXTB.TabIndex = 1;
+            this.DeltaXTB.Text = "-5 5";
+            // 
+            // DeltaYTB
+            // 
+            this.DeltaYTB.Location = new System.Drawing.Point(587, 31);
+            this.DeltaYTB.Name = "DeltaYTB";
+            this.DeltaYTB.Size = new System.Drawing.Size(150, 31);
+            this.DeltaYTB.TabIndex = 2;
+            this.DeltaYTB.Text = "-5 5";
+            // 
+            // DeltaXLabel
+            // 
+            this.DeltaXLabel.AutoSize = true;
+            this.DeltaXLabel.Location = new System.Drawing.Point(267, 34);
+            this.DeltaXLabel.Name = "DeltaXLabel";
+            this.DeltaXLabel.Size = new System.Drawing.Size(69, 25);
+            this.DeltaXLabel.TabIndex = 3;
+            this.DeltaXLabel.Text = "Delta X";
+            // 
+            // DeltaYLabel
+            // 
+            this.DeltaYLabel.AutoSize = true;
+            this.DeltaYLabel.Location = new System.Drawing.Point(513, 34);
+            this.DeltaYLabel.Name = "DeltaYLabel";
+            this.DeltaYLabel.Size = new System.Drawing.Size(68, 25);
+            this.DeltaYLabel.TabIndex = 4;
+            this.DeltaYLabel.Text = "Delta Y";
+            // 
+            // BuildRotationFigureButton
+            // 
+            this.BuildRotationFigureButton.Location = new System.Drawing.Point(158, 136);
+            this.BuildRotationFigureButton.Name = "BuildRotationFigureButton";
+            this.BuildRotationFigureButton.Size = new System.Drawing.Size(122, 86);
+            this.BuildRotationFigureButton.TabIndex = 7;
+            this.BuildRotationFigureButton.Text = "Build Rotation";
+            this.BuildRotationFigureButton.UseVisualStyleBackColor = true;
+            // 
+            // NumericRotationSplitCount
+            // 
+            this.NumericRotationSplitCount.Location = new System.Drawing.Point(158, 96);
+            this.NumericRotationSplitCount.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.NumericRotationSplitCount.Name = "NumericRotationSplitCount";
+            this.NumericRotationSplitCount.Size = new System.Drawing.Size(123, 31);
+            this.NumericRotationSplitCount.TabIndex = 8;
+            this.NumericRotationSplitCount.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1382, 702);
+            this.Controls.Add(this.GraphGB);
             this.Controls.Add(this.FigureCenter);
             this.Controls.Add(this.CameraGroup);
             this.Controls.Add(this.AddFigureButton);
             this.Controls.Add(this.SceneFiguresList);
-            this.Controls.Add(this.FiguresList);
             this.Controls.Add(this.Canvas);
             this.Controls.Add(this.TransformGroup);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -668,6 +763,9 @@ namespace Lab6_Figures3D
             ((System.ComponentModel.ISupportInitialize)(this.Focus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenWidth)).EndInit();
+            this.GraphGB.ResumeLayout(false);
+            this.GraphGB.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericRotationSplitCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -677,7 +775,6 @@ namespace Lab6_Figures3D
 
         private System.Windows.Forms.PictureBox Canvas;
         private System.Windows.Forms.GroupBox TransformGroup;
-        private System.Windows.Forms.ComboBox FiguresList;
         private System.Windows.Forms.ListBox SceneFiguresList;
         private System.Windows.Forms.Button AddFigureButton;
         private System.Windows.Forms.GroupBox CameraGroup;
@@ -724,6 +821,15 @@ namespace Lab6_Figures3D
         private System.Windows.Forms.Label FigureCenter;
         private System.Windows.Forms.Button MoveRightButton;
         private System.Windows.Forms.Button MoveLeftButton;
+        private System.Windows.Forms.RichTextBox richPointsTB;
+        private System.Windows.Forms.GroupBox GraphGB;
+        private System.Windows.Forms.Label DeltaYLabel;
+        private System.Windows.Forms.Label DeltaXLabel;
+        private System.Windows.Forms.TextBox DeltaYTB;
+        private System.Windows.Forms.TextBox DeltaXTB;
+        private System.Windows.Forms.ComboBox FunctionCB;
+        private System.Windows.Forms.NumericUpDown NumericRotationSplitCount;
+        private System.Windows.Forms.Button BuildRotationFigureButton;
     }
 }
 

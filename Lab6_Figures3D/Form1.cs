@@ -24,12 +24,14 @@ namespace Lab6_Figures3D
         public Edge3D transformEdge;
         public Flat3D transformFlat;
         public double transformAngle;
-        public double transformCoef; 
+        public double transformCoef;
+
+        public List<Point3D> listPoints;
 
         public Form1()
         {
             InitializeComponent();
-            FiguresList.Items.AddRange(new object[] { "Tetrahedron", "Cube", "Octahedron", "Dodecahedron", "Icosahedron" });
+            // FiguresList.Items.AddRange(new object[] { "Tetrahedron", "Cube", "Octahedron", "Dodecahedron", "Icosahedron" });
             SceneFiguresList.SelectionMode = SelectionMode.One;
             g = Canvas.CreateGraphics();
             ScreenWidth.Value = 2;
@@ -212,9 +214,20 @@ namespace Lab6_Figures3D
 
         private void AddFigureButton_Click(object sender, EventArgs e)
         {
-            if ((string)FiguresList.SelectedItem == null)
-                return; 
+            //if ((string)FiguresList.SelectedItem == null)
+            //  return; 
 
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Text Files(*.txt)|*.txt";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                var figure = Figure3D.Download(open.FileName);
+                string figName = figure.Item1 + i++;
+                figures.Add(figName, figure.Item2);
+                SceneFiguresList.Items.Add(figName);
+                RedrawObjects(selectedFigure);
+            }
+            /*
             Figure3D fig = new Figure3D();
             var name = (string)FiguresList.SelectedItem; 
             switch (name)
@@ -235,12 +248,12 @@ namespace Lab6_Figures3D
                     break;
                 case "Icosahedron":
                     fig = new F20();
-                    break;*/
-            }
-            string figName = (string)FiguresList.SelectedItem + i++;
+                    break;
+            }*/
+            /*string figName = (string)FiguresList.SelectedItem + i++;
             figures.Add(figName, fig);
             SceneFiguresList.Items.Add(figName);
-            RedrawObjects(selectedFigure);
+            RedrawObjects(selectedFigure);*/
         }
 
         private void SceneFiguresList_SelectedIndexChanged(object sender, EventArgs e)
@@ -370,6 +383,25 @@ namespace Lab6_Figures3D
             GetTransformAngle();
             camera.RotateUpDown(false, transformAngle);
             RedrawObjects();
+        }
+
+        private void richPointsTB_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var text = richPointsTB.Text.Split('\n');
+                listPoints = new(); 
+                foreach (var p in text)
+                {
+                    var ppp = p.Split(' ');
+                    listPoints.Add(new Point3D(double.Parse(ppp[0]), double.Parse(ppp[1]), double.Parse(ppp[2])));
+                }
+                richPointsTB.BackColor = Color.White; 
+            }
+            catch (Exception)
+            {
+                richPointsTB.BackColor = Color.Red; 
+            }
         }
     }
 }
