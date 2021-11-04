@@ -52,10 +52,10 @@ namespace Lab6_Figures3D
             double c = 1 - f;
             return new double[4, 4]
                  { 
-                     {     l * l + f * (1 - l*l),           l * c * m + n * s,           l * c * n - m * s,     0 },
-                     {         l * c * m - n * s,     m * m + f * (1 - m * m),           m * c * n + l * s,     0 },
-                     {         l * c * n + m * s,           m * c * n - l * s,     n * n + f * (1 - n * n),     0 },
-                     {                 0,                           0,                          0,              1 } 
+                     {     l * l + f * (1 - l * l),            l * c * m - n * s,           l * c * n + m * s,      0 },
+                     {           l * c * m + n * s,      m * m + f * (1 - m * m),           m * c * n - l * s,      0 },
+                     {           l * c * n - m * s,            m * c * n + l * s,     n * n + f * (1 - n * n),      0 },
+                     {                   0,                            0,                           0,              1 } 
                  };
         }
 

@@ -17,14 +17,17 @@ namespace Lab6_Figures3D
 
         public static Point3D RotateAroundLine(Edge3D edge, Point3D point, double angle)
         {
+            point -= edge.P1; 
             var p = new double[1, 4] { { point.X, point.Y, point.Z, 1} };
             //var lp = new double[1, 4] { { edge.P2.X, edge.P2.Y, edge.P2.Z, 1} };
-            var lp = edge.P2; 
+            var lp = edge.P2 - edge.P1;
+            var lpLen = Methods.Point3DDistance(edge.P1, edge.P2);
+            lp /= lpLen; 
 
             // Shifted to origin
-            var shiftMatrix = Matrix.ShiftMatrix(-edge.P1);
-            lp -= edge.P1; 
-            p = p.Mult(shiftMatrix);
+            // var shiftMatrix = Matrix.ShiftMatrix(-edge.P1);
+            // lp -= edge.P1; 
+            // p = p.Mult(shiftMatrix);
             // Rotate around OX
             /* var Ox = Matrix.RX(new Point3D(lp[0, 0], lp[0, 1], lp[0, 2]));
             lp = lp.Mult(Ox);
@@ -39,10 +42,11 @@ namespace Lab6_Figures3D
             // Rotate back around OY
             */
             p = p.Mult(Matrix.BigOne(lp, angle));
+            var pp = new Point3D(p[0, 0], p[0, 1], p[0, 2]); 
 
-            var shiftBack = Matrix.ShiftMatrix(edge.P1);
-            p = p.Mult(shiftBack);
-            return new Point3D(p[0, 0], p[0, 1], p[0, 2]); 
+            //var shiftBack = Matrix.ShiftMatrix(edge.P1);
+            //p = p.Mult(shiftBack);
+            return pp + edge.P1; 
         }
 
         public static Point3D RotateX(Point3D point, double angle)

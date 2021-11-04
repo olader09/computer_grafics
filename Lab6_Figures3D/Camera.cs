@@ -121,11 +121,12 @@ namespace Lab6_Figures3D
 
         public void ScaleI(bool more) => Width += more ? 0.1 : -0.1;
         public void ScaleJ(bool more) => Height += more ? 0.1 : -0.1;
+
         public void ScaleFocus(bool more)
         {
             var screen = GetScreenFlat();
-            var vector = new Point3D(screen.X, screen.Y, screen.Z);
-            vector /= 10;
+            // var vector = new Point3D(screen.X, screen.Y, screen.Z);
+            // vector /= 10;
             if (more)
             {
                 View += ScF;
