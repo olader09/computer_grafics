@@ -49,7 +49,9 @@ namespace Lab6_Figures3D
             figures.Add("Coord", new Coord());
             figures.Add("Grid", new Grid());
 
-            //RedrawObjects();
+            RedrawObjects();
+
+            FunctionCB.Items.AddRange(new object[] { "z = 1/(1 + x^2) + 1 / (1 + y^2)" }); 
             /*var pp = new Point3D(1, 1, 1);
             var old = camera.GetIJCoordinates(pp);
             BackwardButton_Click(new object(), new EventArgs());
@@ -472,6 +474,54 @@ namespace Lab6_Figures3D
             SceneFiguresList.Items.Add(name);
             Figure3D.Save(rotation, name);
             RedrawObjects(); 
+        }
+
+        private List<Func<double, double, double>> functions;
+
+        private double F1(double x, double y) => 1 / (1 + x * x) + 1 / (1 + y * y);
+
+        private void FunctionCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (FunctionCB.SelectedIndex == -1)
+                return;
+
+            functions = new() { F1 };
+            Func<double, double, double> f = functions[FunctionCB.SelectedIndex];
+
+            var deltax = DeltaXTB.Text.Split(' ');
+            double XStart = double.Parse(deltax[0]), XFin = double.Parse(deltax[1]);
+
+            var deltay = DeltaYTB.Text.Split(' ');
+            double YStart = double.Parse(deltay[0]), YFin = double.Parse(deltay[1]);
+
+            int splits = (int)NumericRotationSplitCount.Value;
+            double stepX = Math.Abs(XStart - XFin) / splits;
+            double stepY = Math.Abs(YStart - YFin) / splits;
+
+            (double, double, double)[,] grid = new (double, double, double)[splits, splits];
+
+            int i = 0; 
+            for (double x = XStart; i < splits; x += stepX)
+            {
+                int j = 0;
+                for (double y = YStart; j < splits; y += stepY)
+                {
+                    grid[i, j] = (x, y, f(x, y)); 
+                }
+            }
+
+            Figure3D figure = new();
+
+            // Заполнить figure
+            // Точки это элементы grid
+            // Линии соответственно соседнии клетки соединяют
+            // Грани это четверки соседних ячеек
+
+            var name = "Function" + iname++;
+            figures.Add(name, figure);
+            SceneFiguresList.Items.Add(name);
+            Figure3D.Save(figure, name);
+            RedrawObjects();
         }
     }
 }
