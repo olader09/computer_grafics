@@ -558,6 +558,9 @@ namespace Lab6_Figures3D
             g.Clear(DefaultBackColor);
             figures.Clear();
             SceneFiguresList.Items.Clear();
+            figures.Add("Coord", new Coord());
+            figures.Add("Grid", new Grid());
+            RedrawObjects();
             iname = 1;
         }
 
