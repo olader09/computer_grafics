@@ -52,8 +52,8 @@ namespace Lab6_Figures3D
             RedrawObjects();
 
             FunctionCB.Items.AddRange(new object[] { "z = 1/(1 + x^2) + 1 / (1 + y^2)", 
-                                                     "z = sin(x)*cos(x)",
-                                                     "z = 3*x^2 - x*y + y^2 - 7*x -8*y + 2",
+                                                     "z = sin(x) * cos(x)",
+                                                     "z = (x^2 + 3 * y^2) * exp(-x^2 + y^2)",
                                                      "z = exp(-(x^2 + y^2) / 8) * sin(x^2) + cos(y^2)",
                                                      "z = sin(sqrt(x^2 + y^2)) / sqrt(x^2 + y^2)"}); 
             /*var pp = new Point3D(1, 1, 1);
@@ -484,7 +484,7 @@ namespace Lab6_Figures3D
 
         private double F1(double x, double y) => 1 / (1 + x * x) + 1 / (1 + y * y);
         private double SinCos(double x, double y) => Math.Sin(x) * Math.Cos(y);
-        private double F3(double x, double y) => 3*x*x -x*y + y*y - 7*x -8*y + 2;
+        private double F3(double x, double y) => (x*x + 3*y*y)*Math.Exp(-(x*x+y*y));
         private double F4(double x, double y) => Math.Exp(-(x*x+y*y)/8)*Math.Sin(x*x) + Math.Cos(y*y);
         private double F5(double x, double y) => Math.Sin(Math.Sqrt(x*x + y*y)) / Math.Sqrt(x * x + y * y);
 
@@ -552,5 +552,15 @@ namespace Lab6_Figures3D
             Figure3D.Save(figure, name);
             RedrawObjects();
         }
+
+        private void Clear_Click(object sender, EventArgs e)
+        {
+            g.Clear(DefaultBackColor);
+            figures.Clear();
+            SceneFiguresList.Items.Clear();
+            iname = 1;
+        }
+
+        
     }
 }

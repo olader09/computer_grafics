@@ -51,6 +51,7 @@ namespace Lab6_Figures3D
             this.LineTBP2 = new System.Windows.Forms.TextBox();
             this.LineTBP1 = new System.Windows.Forms.TextBox();
             this.PointGB = new System.Windows.Forms.GroupBox();
+            this.ClearButton = new System.Windows.Forms.Button();
             this.NumericRotationSplitCount = new System.Windows.Forms.NumericUpDown();
             this.BuildRotationFigureButton = new System.Windows.Forms.Button();
             this.richPointsTB = new System.Windows.Forms.RichTextBox();
@@ -357,10 +358,20 @@ namespace Lab6_Figures3D
             this.PointGB.Text = "Point";
             this.PointGB.Enter += new System.EventHandler(this.PointGB_Enter);
             // 
+            // ClearButton
+            // 
+            this.ClearButton.Location = new System.Drawing.Point(133, 10);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(116, 49);
+            this.ClearButton.TabIndex = 11;
+            this.ClearButton.Text = "Clear";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.Clear_Click);
+            // 
             // NumericRotationSplitCount
             // 
             this.NumericRotationSplitCount.Location = new System.Drawing.Point(126, 77);
-            this.NumericRotationSplitCount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.NumericRotationSplitCount.Margin = new System.Windows.Forms.Padding(2);
             this.NumericRotationSplitCount.Minimum = new decimal(new int[] {
             3,
             0,
@@ -378,7 +389,7 @@ namespace Lab6_Figures3D
             // BuildRotationFigureButton
             // 
             this.BuildRotationFigureButton.Location = new System.Drawing.Point(126, 109);
-            this.BuildRotationFigureButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BuildRotationFigureButton.Margin = new System.Windows.Forms.Padding(2);
             this.BuildRotationFigureButton.Name = "BuildRotationFigureButton";
             this.BuildRotationFigureButton.Size = new System.Drawing.Size(98, 69);
             this.BuildRotationFigureButton.TabIndex = 7;
@@ -389,7 +400,7 @@ namespace Lab6_Figures3D
             // richPointsTB
             // 
             this.richPointsTB.Location = new System.Drawing.Point(6, 77);
-            this.richPointsTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richPointsTB.Margin = new System.Windows.Forms.Padding(2);
             this.richPointsTB.Name = "richPointsTB";
             this.richPointsTB.Size = new System.Drawing.Size(115, 102);
             this.richPointsTB.TabIndex = 6;
@@ -466,7 +477,7 @@ namespace Lab6_Figures3D
             this.AddFigureButton.Location = new System.Drawing.Point(10, 10);
             this.AddFigureButton.Margin = new System.Windows.Forms.Padding(2);
             this.AddFigureButton.Name = "AddFigureButton";
-            this.AddFigureButton.Size = new System.Drawing.Size(239, 49);
+            this.AddFigureButton.Size = new System.Drawing.Size(115, 49);
             this.AddFigureButton.TabIndex = 5;
             this.AddFigureButton.Text = "Add Figure";
             this.AddFigureButton.UseVisualStyleBackColor = true;
@@ -502,7 +513,7 @@ namespace Lab6_Figures3D
             // MoveRightButton
             // 
             this.MoveRightButton.Location = new System.Drawing.Point(162, 121);
-            this.MoveRightButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MoveRightButton.Margin = new System.Windows.Forms.Padding(2);
             this.MoveRightButton.Name = "MoveRightButton";
             this.MoveRightButton.Size = new System.Drawing.Size(73, 34);
             this.MoveRightButton.TabIndex = 18;
@@ -513,7 +524,7 @@ namespace Lab6_Figures3D
             // MoveLeftButton
             // 
             this.MoveLeftButton.Location = new System.Drawing.Point(162, 85);
-            this.MoveLeftButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MoveLeftButton.Margin = new System.Windows.Forms.Padding(2);
             this.MoveLeftButton.Name = "MoveLeftButton";
             this.MoveLeftButton.Size = new System.Drawing.Size(73, 34);
             this.MoveLeftButton.TabIndex = 17;
@@ -685,9 +696,9 @@ namespace Lab6_Figures3D
             this.GraphGB.Controls.Add(this.DeltaXTB);
             this.GraphGB.Controls.Add(this.FunctionCB);
             this.GraphGB.Location = new System.Drawing.Point(499, 10);
-            this.GraphGB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GraphGB.Margin = new System.Windows.Forms.Padding(2);
             this.GraphGB.Name = "GraphGB";
-            this.GraphGB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GraphGB.Padding = new System.Windows.Forms.Padding(2);
             this.GraphGB.Size = new System.Drawing.Size(597, 67);
             this.GraphGB.TabIndex = 8;
             this.GraphGB.TabStop = false;
@@ -716,7 +727,7 @@ namespace Lab6_Figures3D
             // DeltaYTB
             // 
             this.DeltaYTB.Location = new System.Drawing.Point(470, 25);
-            this.DeltaYTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DeltaYTB.Margin = new System.Windows.Forms.Padding(2);
             this.DeltaYTB.Name = "DeltaYTB";
             this.DeltaYTB.Size = new System.Drawing.Size(121, 27);
             this.DeltaYTB.TabIndex = 2;
@@ -725,7 +736,7 @@ namespace Lab6_Figures3D
             // DeltaXTB
             // 
             this.DeltaXTB.Location = new System.Drawing.Point(274, 25);
-            this.DeltaXTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DeltaXTB.Margin = new System.Windows.Forms.Padding(2);
             this.DeltaXTB.Name = "DeltaXTB";
             this.DeltaXTB.Size = new System.Drawing.Size(121, 27);
             this.DeltaXTB.TabIndex = 1;
@@ -735,7 +746,7 @@ namespace Lab6_Figures3D
             // 
             this.FunctionCB.FormattingEnabled = true;
             this.FunctionCB.Location = new System.Drawing.Point(6, 25);
-            this.FunctionCB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FunctionCB.Margin = new System.Windows.Forms.Padding(2);
             this.FunctionCB.Name = "FunctionCB";
             this.FunctionCB.Size = new System.Drawing.Size(190, 28);
             this.FunctionCB.TabIndex = 0;
@@ -746,6 +757,7 @@ namespace Lab6_Figures3D
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1106, 562);
+            this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.GraphGB);
             this.Controls.Add(this.FigureCenter);
             this.Controls.Add(this.CameraGroup);
@@ -845,6 +857,7 @@ namespace Lab6_Figures3D
         private System.Windows.Forms.ComboBox FunctionCB;
         private System.Windows.Forms.NumericUpDown NumericRotationSplitCount;
         private System.Windows.Forms.Button BuildRotationFigureButton;
+        private System.Windows.Forms.Button ClearButton;
     }
 }
 
