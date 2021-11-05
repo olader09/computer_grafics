@@ -101,6 +101,8 @@ namespace Lab6_Figures3D
 
         public void ShowF(bool color, Figure2D f)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+
             Pen pen = new Pen(color ? Color.Red : Color.Black);
             foreach (var l in f.Lines)
             {
@@ -265,6 +267,8 @@ namespace Lab6_Figures3D
         private void SceneFiguresList_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedFigure = (string)SceneFiguresList.SelectedItem;
+            if (selectedFigure == null)
+                return; 
             FigureCenter.Text = figures[selectedFigure].Center.ToString();
             RedrawObjects(selectedFigure);
         }
