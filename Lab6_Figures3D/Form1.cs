@@ -51,7 +51,11 @@ namespace Lab6_Figures3D
 
             RedrawObjects();
 
-            FunctionCB.Items.AddRange(new object[] { "z = 1/(1 + x^2) + 1 / (1 + y^2)" }); 
+            FunctionCB.Items.AddRange(new object[] { "z = 1/(1 + x^2) + 1 / (1 + y^2)", 
+                                                     "z = sin(x)*cos(x)",
+                                                     "z = 3*x^2 - x*y + y^2 - 7*x -8*y + 2",
+                                                     "z = exp(-(x^2 + y^2) / 8) * sin(x^2) + cos(y^2)",
+                                                     "z = sin(sqrt(x^2 + y^2)) / sqrt(x^2 + y^2)"}); 
             /*var pp = new Point3D(1, 1, 1);
             var old = camera.GetIJCoordinates(pp);
             BackwardButton_Click(new object(), new EventArgs());
@@ -479,13 +483,17 @@ namespace Lab6_Figures3D
         private List<Func<double, double, double>> functions;
 
         private double F1(double x, double y) => 1 / (1 + x * x) + 1 / (1 + y * y);
+        private double SinCos(double x, double y) => Math.Sin(x) * Math.Cos(y);
+        private double F3(double x, double y) => 3*x*x -x*y + y*y - 7*x -8*y + 2;
+        private double F4(double x, double y) => Math.Exp(-(x*x+y*y)/8)*Math.Sin(x*x) + Math.Cos(y*y);
+        private double F5(double x, double y) => Math.Sin(Math.Sqrt(x*x + y*y)) / Math.Sqrt(x * x + y * y);
 
         private void FunctionCB_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (FunctionCB.SelectedIndex == -1)
                 return;
 
-            functions = new() { F1 };
+            functions = new() { F1, SinCos, F3, F4, F5 };
             Func<double, double, double> f = functions[FunctionCB.SelectedIndex];
 
             var deltax = DeltaXTB.Text.Split(' ');
@@ -506,16 +514,37 @@ namespace Lab6_Figures3D
                 int j = 0;
                 for (double y = YStart; j < splits; y += stepY)
                 {
-                    grid[i, j] = (x, y, f(x, y)); 
+                    grid[i, j] = (x, y, f(x, y));
+                    j++;
                 }
+                i++;
             }
 
             Figure3D figure = new();
+            int cnt = 0;
+            i = 0;
 
-            // Заполнить figure
-            // Точки это элементы grid
-            // Линии соответственно соседнии клетки соединяют
-            // Грани это четверки соседних ячеек
+            for (double x = XStart; i < splits; x += stepX)
+            {
+                int j = 0;
+                for (double y = YStart; j < splits; y += stepY)
+                {
+                    figure.Points.Add(new Point3D(grid[i, j].Item1, grid[i, j].Item2, grid[i, j].Item3));
+
+                    if (cnt+1 < grid.Length && (cnt + 1) % (splits) != 0) 
+                        figure.Lines.Add((cnt, cnt+1)); // добавляем грань с точкой, соседней по Y
+
+                    if (cnt + splits < grid.Length )
+                        figure.Lines.Add((cnt, cnt + splits)); // добавляем грань с точкой, соседней по X
+
+                    if (cnt % splits != splits - 1 && cnt % splits != splits - 2 && cnt + 2*splits < grid.Length)
+                        figure.Planes.Add(new() { cnt, cnt + splits, cnt + 1, cnt + 1 + splits });
+
+                    j++;
+                    cnt++;
+                }
+                i++;
+            }
 
             var name = "Function" + iname++;
             figures.Add(name, figure);
