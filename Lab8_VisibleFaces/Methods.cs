@@ -74,5 +74,11 @@ namespace Lab6_Figures3D
         }
 
         #endregion
+
+        #region Vector Multiplications
+
+        public static double ScalarMult(Point3D p1, Point3D p2) => p1.X * p2.X + p1.Y * p2.Y + p1.Z * p2.Z;
+
+        #endregion
     }
 }

@@ -24,14 +24,12 @@ namespace Lab6_Figures3D
             m.Value = matr;
             return m;
         }
-        /*
-        public static explicit operator Matrix(double [,] matr)
+
+        public double this[int i, int j]
         {
-            Matrix m = new Matrix();
-            m.Value = matr;
-            return m;
+            get { return Value[i, j]; }
+            set { Value[i, j] = value; }
         }
-        */
 
         public static Matrix operator +(Matrix a, Matrix b)
         {
@@ -65,15 +63,29 @@ namespace Lab6_Figures3D
             return (Matrix)res;
         }
 
-        
-
-
         // FOR MULTIPLICATION FROM LEFT SIDE:
         // [x, y, z, 1] * [change matrix] => result
 
+        #region View
+
+        public static Matrix View(Point3D UpVector, Point3D RightVector, Point3D ViewVector, Point3D CameraLocation)
+        {
+            return (Matrix)new double[4, 4]
+            {
+                { UpVector.X, RightVector.X, ViewVector.X, 0 },
+                { UpVector.Y, RightVector.Y, ViewVector.Y, 0 },
+                { UpVector.Z, RightVector.Z, ViewVector.Z, 0 },
+                { -Methods.ScalarMult(UpVector, CameraLocation),
+                  -Methods.ScalarMult(RightVector, CameraLocation),
+                  -Methods.ScalarMult(ViewVector, CameraLocation), 1 }
+            };
+        }
+
+        #endregion
+
         #region Identity 
 
-        public static Matrix IdentityMatrix()
+        public static Matrix Identity()
         {
             return (Matrix)new double[4, 4]
             {
@@ -88,7 +100,7 @@ namespace Lab6_Figures3D
 
         #region Scale
 
-        public static Matrix ScaleMatrix(double dx, double dy, double dz)
+        public static Matrix Scale(double dx, double dy, double dz)
         {
             return (Matrix)
                   new double[4, 4] { {     dx,     0,     0,     0 },
@@ -97,7 +109,7 @@ namespace Lab6_Figures3D
                                    {     0,      0,     0,     1 } };
         }
 
-        public static Matrix ScaleMatrix(Point3D p)
+        public static Matrix Scale(Point3D p)
         {
             return (Matrix)
                 new double[4, 4] { {   p.X,     0,     0,     0 },
@@ -110,7 +122,7 @@ namespace Lab6_Figures3D
 
         #region Shift
 
-        public static Matrix ShiftMatrix(double dx, double dy, double dz)
+        public static Matrix Shift(double dx, double dy, double dz)
         {
             return (Matrix)
                 new double[4, 4] { {     1,     0,     0,     0 },
@@ -119,7 +131,7 @@ namespace Lab6_Figures3D
                                    {    dx,    dy,    dz,     1 } };
         }
 
-        public static Matrix ShiftMatrix(Point3D p)
+        public static Matrix Shift(Point3D p)
         {
             return (Matrix)
                 new double[4, 4] { {     1,     0,     0,     0 },

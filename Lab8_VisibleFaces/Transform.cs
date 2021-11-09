@@ -13,7 +13,7 @@ namespace Lab6_Figures3D
         public static Point3D Shift(Point3D point, Point3D vector)
         {
             Matrix begin = (Matrix)new double[1, 4] { { point.X, point.Y, point.Z, 1 } };
-            Matrix res = begin * Matrix.ShiftMatrix(vector);
+            Matrix res = begin * Matrix.Shift(vector);
             return new Point3D(res.Value[0,0], res.Value[0,1], res.Value[0,2]);
         }
 
@@ -23,7 +23,7 @@ namespace Lab6_Figures3D
 
         public static Point3D RotateAroundEdge(Edge3D edge, Point3D point, double angle)
         {
-            var shiftToCenter = Matrix.ShiftMatrix(edge.P1);
+            var shiftToCenter = Matrix.Shift(edge.P1);
 
             point -= edge.P1; 
 
@@ -70,10 +70,10 @@ namespace Lab6_Figures3D
         {
             Matrix begin = (Matrix) new double[1, 4] { { point.X, point.Y, point.Z, 1 } };
 
-            Matrix shift = Matrix.ShiftMatrix(-from);
-            Matrix shiftBack = Matrix.ShiftMatrix(from);
+            Matrix shift = Matrix.Shift(-from);
+            Matrix shiftBack = Matrix.Shift(from);
 
-            Matrix res = begin * shift * Matrix.ScaleMatrix(coef, coef, coef) * shiftBack; 
+            Matrix res = begin * shift * Matrix.Scale(coef, coef, coef) * shiftBack; 
             return new Point3D(res.Value[0, 0], res.Value[0, 1], res.Value[0, 2]);
         }
 
