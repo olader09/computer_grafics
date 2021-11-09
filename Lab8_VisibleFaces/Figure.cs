@@ -143,7 +143,8 @@ namespace Lab6_Figures3D
             Points = new();
             Lines = new();
             Planes = new();
-            NormalVectors = new(); 
+            NormalVectors = new();
+            AddingNormalVector();
         }
 
         public Figure3D(Figure3D other)
@@ -152,6 +153,7 @@ namespace Lab6_Figures3D
             Lines = new(other.Lines);
             Planes = new(other.Planes);
             NormalVectors = new(other.NormalVectors);
+            AddingNormalVector();
         }
 
         public Figure3D(List<Point3D> points, List<(int, int)> lines)
@@ -211,6 +213,27 @@ namespace Lab6_Figures3D
                 sw.WriteLine(figure.Planes.Count);
                 foreach (var plane in figure.Planes)
                     sw.WriteLine(string.Join(' ', plane));
+            }
+        }
+        public Point3D VectorProd((Point3D,Point3D) l1, (Point3D, Point3D) l2)
+        {
+
+            //double ax = l1.LX.B, ay = l1.LY.B, az = l1.LZ.B,
+            //      bx = l2.LX.B, by = l2.LY.B, bz = l2.LZ.B;
+
+            double ax = (l1.Item2.X - l1.Item1.X), ay = (l1.Item2.Y - l1.Item1.Y), az = (l1.Item2.Z - l1.Item1.Z),
+                   bx = (l2.Item2.X - l2.Item1.X), by = (l2.Item2.Y - l2.Item1.Y), bz = (l2.Item2.Z - l2.Item1.Z);
+            return new Point3D(ay * bz - az * by,
+                               -(ax * bz - az * bx),
+                               ax * by - ay * bx);
+        }
+
+        public void AddingNormalVector()
+        {
+            foreach (var plane in Planes)
+            {
+                NormalVectors.Add(VectorProd((Points[plane[0]], Points[plane[1]]),
+                                             (Points[plane[1]], Points[plane[2]])));
             }
         }
     }
