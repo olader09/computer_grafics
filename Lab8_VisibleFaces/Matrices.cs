@@ -9,18 +9,31 @@ namespace Lab6_Figures3D
 {
     public class Matrix
     {
-        public double[,] Value; 
+        public double[,] Value;
 
         public static double DegreesToRadians(double degrees) => degrees * (Math.PI / 180);
 
-        public static explicit operator Matrix(double [,] matr)
+        public Matrix(double[,] matr)
         {
-            Matrix m = new();
+            Value = matr;
+        }
+
+        public static explicit operator Matrix(double[,] matr)
+        {
+            Matrix m = new Matrix(matr);
             m.Value = matr;
             return m;
         }
+        /*
+        public static explicit operator Matrix(double [,] matr)
+        {
+            Matrix m = new Matrix();
+            m.Value = matr;
+            return m;
+        }
+        */
 
-        public static Matrix operator + (Matrix a, Matrix b)
+        public static Matrix operator +(Matrix a, Matrix b)
         {
             double[,] res = new double[a.Value.GetLength(0), b.Value.GetLength(1)];
 
@@ -35,7 +48,7 @@ namespace Lab6_Figures3D
         }
 
 
-        public static Matrix operator * (Matrix a, Matrix b)
+        public static Matrix operator *(Matrix a, Matrix b)
         {
             double[,] res = new double[a.Value.GetLength(0), b.Value.GetLength(1)];
 
@@ -51,6 +64,9 @@ namespace Lab6_Figures3D
             }
             return (Matrix)res;
         }
+
+        
+
 
         // FOR MULTIPLICATION FROM LEFT SIDE:
         // [x, y, z, 1] * [change matrix] => result
