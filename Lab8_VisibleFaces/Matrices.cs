@@ -7,26 +7,49 @@ using static System.Math;
 
 namespace Lab6_Figures3D
 {
-    public static class Matrix
+    public class Matrix
     {
+        public double[,] Value; 
+
         public static double DegreesToRadians(double degrees) => degrees * (Math.PI / 180);
 
-        // a.Mult(b)
-        public static double[,] Mult(this double[,] a, double[,] b)
+        public static explicit operator Matrix(double [,] matr)
         {
-            double[,] res = new double[a.GetLength(0), b.GetLength(1)];
+            Matrix m = new();
+            m.Value = matr;
+            return m;
+        }
 
-            for (int i = 0; i < a.GetLength(0); i++)
+        public static Matrix operator + (Matrix a, Matrix b)
+        {
+            double[,] res = new double[a.Value.GetLength(0), b.Value.GetLength(1)];
+
+            for (int i = 0; i < a.Value.GetLength(0); i++)
             {
-                for (int j = 0; j < b.GetLength(1); j++)
+                for (int j = 0; j < b.Value.GetLength(1); j++)
                 {
-                    for (int k = 0; k < a.GetLength(1); k++)
+                    res[i, j] = a.Value[i, j] + b.Value[i, j];
+                }
+            }
+            return (Matrix)res;
+        }
+
+
+        public static Matrix operator * (Matrix a, Matrix b)
+        {
+            double[,] res = new double[a.Value.GetLength(0), b.Value.GetLength(1)];
+
+            for (int i = 0; i < a.Value.GetLength(0); i++)
+            {
+                for (int j = 0; j < b.Value.GetLength(1); j++)
+                {
+                    for (int k = 0; k < a.Value.GetLength(1); k++)
                     {
-                        res[i, j] += a[i, k] * b[k, j];
+                        res[i, j] += a.Value[i, k] * b.Value[k, j];
                     }
                 }
             }
-            return res;
+            return (Matrix)res;
         }
 
         // FOR MULTIPLICATION FROM LEFT SIDE:
@@ -34,9 +57,9 @@ namespace Lab6_Figures3D
 
         #region Identity 
 
-        public static double[,] IdentityMatrix()
+        public static Matrix IdentityMatrix()
         {
-            return new double[4, 4]
+            return (Matrix)new double[4, 4]
             {
                 { 1, 0, 0, 0 },
                 { 0, 1, 0, 0 },
@@ -49,40 +72,44 @@ namespace Lab6_Figures3D
 
         #region Scale
 
-        public static double[,] ScaleMatrix(double dx, double dy, double dz)
+        public static Matrix ScaleMatrix(double dx, double dy, double dz)
         {
-            return new double[4, 4] { {     dx,     0,     0,     0 },
-                                      {     0,     dy,     0,     0 },
-                                      {     0,      0,    dz,     0 },
-                                      {     0,      0,     0,     1 } };
+            return (Matrix)
+                  new double[4, 4] { {     dx,     0,     0,     0 },
+                                   {     0,     dy,     0,     0 },
+                                   {     0,      0,    dz,     0 },
+                                   {     0,      0,     0,     1 } };
         }
 
-        public static double[,] ScaleMatrix(Point3D p)
+        public static Matrix ScaleMatrix(Point3D p)
         {
-            return new double[4, 4] { {   p.X,     0,     0,     0 },
-                                      {     0,   p.Y,     0,     0 },
-                                      {     0,     0,   p.Z,     0 },
-                                      {     0,     0,     0,     1 } };
+            return (Matrix)
+                new double[4, 4] { {   p.X,     0,     0,     0 },
+                                   {     0,   p.Y,     0,     0 },
+                                   {     0,     0,   p.Z,     0 },
+                                   {     0,     0,     0,     1 } };
         }
 
         #endregion
 
         #region Shift
 
-        public static double[,] ShiftMatrix(double dx, double dy, double dz)
+        public static Matrix ShiftMatrix(double dx, double dy, double dz)
         {
-            return new double[4, 4] { {     1,     0,     0,     0 },
-                                      {     0,     1,     0,     0 },
-                                      {     0,     0,     1,     0 },
-                                      {    dx,    dy,    dz,     1 } };
+            return (Matrix)
+                new double[4, 4] { {     1,     0,     0,     0 },
+                                   {     0,     1,     0,     0 },
+                                   {     0,     0,     1,     0 },
+                                   {    dx,    dy,    dz,     1 } };
         }
 
-        public static double[,] ShiftMatrix(Point3D p)
+        public static Matrix ShiftMatrix(Point3D p)
         {
-            return new double[4, 4] { {     1,     0,     0,     0 },
-                                      {     0,     1,     0,     0 },
-                                      {     0,     0,     1,     0 },
-                                      {   p.X,   p.Y,   p.Z,     1 } };
+            return (Matrix)
+                new double[4, 4] { {     1,     0,     0,     0 },
+                                   {     0,     1,     0,     0 },
+                                   {     0,     0,     1,     0 },
+                                   {   p.X,   p.Y,   p.Z,     1 } };
         }
 
         #endregion
@@ -90,10 +117,10 @@ namespace Lab6_Figures3D
         #region Rotate
 
         // Angle in degrees
-        public static double[,] RotateX(double angle)
+        public static Matrix RotateX(double angle)
         {
             double rad = DegreesToRadians(angle);
-            return new double[4, 4] {
+            return (Matrix) new double[4, 4] {
                 { 1,       0,           0,        0 },
                 { 0,    Cos(rad),    Sin(rad),    0 },
                 { 0,   -Sin(rad),    Cos(rad),    0 },
@@ -102,10 +129,10 @@ namespace Lab6_Figures3D
         }
 
         // Angle in degrees
-        public static double[,] RotateY(double angle)
+        public static Matrix RotateY(double angle)
         {
             double rad = DegreesToRadians(angle);
-            return new double[4, 4] {
+            return (Matrix) new double[4, 4] {
                 { Cos(rad),   0,  -Sin(rad),   0 },
                 {    0,       1,      0,       0 },
                 { Sin(rad),   0,   Cos(rad),   0 },
@@ -114,10 +141,10 @@ namespace Lab6_Figures3D
         }
 
         // Angle in degrees
-        public static double[,] RotateZ(double angle)
+        public static Matrix RotateZ(double angle)
         {
             double rad = DegreesToRadians(angle);
-            return new double[4, 4] {
+            return (Matrix) new double[4, 4] {
                 {  Cos(rad),    Sin(rad),    0,    0 },
                 { -Sin(rad),    Cos(rad),    0,    0 },
                 {     0,           0,        1,    0 },
@@ -125,34 +152,38 @@ namespace Lab6_Figures3D
             };
         }
 
-        public static double[,] RX(Point3D point)
+        public static Matrix RX(Point3D point)
         {
             double l = point.X, m = point.Y, n = point.Z;
             var d = Sqrt(m * m + n * n);
-            return new double[4, 4] { {     1,     0,     0,     0 },
-                                      {     0,   n/d,   m/d,     0 },
-                                      {     0,  -m/d,   n/d,     0 },
-                                      {     0,     0,     0,     1 } };
+            return (Matrix) new double[4, 4] { 
+                {     1,     0,     0,     0 },
+                {     0,   n/d,   m/d,     0 },
+                {     0,  -m/d,   n/d,     0 },
+                {     0,     0,     0,     1 } 
+            };
         }
 
-        public static double[,] RY(Point3D point)
+        public static Matrix RY(Point3D point)
         {
             double l = point.X, m = point.Y, n = point.Z;
             var d = Sqrt(m * m + n * n);
-            return new double[4, 4] { {     l,     0,     d,     0 },
-                                      {     0,     1,     0,     0 },
-                                      {     d,     0,     l,     0 },
-                                      {     0,     0,     0,     1 } };
+            return (Matrix) new double[4, 4] {
+                {     l,     0,     d,     0 },
+                {     0,     1,     0,     0 },
+                {     d,     0,     l,     0 },
+                {     0,     0,     0,     1 }
+            };
         }
 
-        public static double[,] BigOne(Point3D point, double angle)
+        public static Matrix BigOne(Point3D point, double angle)
         {
             double l = point.X, m = point.Y, n = point.Z;
             double rad = DegreesToRadians(angle);
             double f = Cos(rad);
             double s = Sin(rad);
             double c = 1 - f;
-            return new double[4, 4]
+            return (Matrix) new double[4, 4]
                  {
                      {     l * l + f * (1 - l * l),            l * c * m - n * s,           l * c * n + m * s,      0 },
                      {           l * c * m + n * s,      m * m + f * (1 - m * m),           m * c * n - l * s,      0 },
