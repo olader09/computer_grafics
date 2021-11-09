@@ -10,7 +10,16 @@ namespace Lab6_Figures3D
 
     class Camera
     {
-        public double Width, Height, Focus;
+        public double Width, Height; 
+        public double Focus
+        {
+            get => Focus; 
+            set
+            {
+                if (value > 0 && value < double.PositiveInfinity)
+                    Focus = value; 
+            }
+        }
 
         public ProjectionType Projection;
 
@@ -18,8 +27,10 @@ namespace Lab6_Figures3D
 
         public Camera()
         {
+            Projection = ProjectionType.Central;
             Width = 2;
             Height = 1;
+            Focus = 1; 
             S = Matrix.IdentityMatrix();
             RX = Matrix.IdentityMatrix();
             RY = Matrix.IdentityMatrix();
@@ -52,15 +63,6 @@ namespace Lab6_Figures3D
         }
 
         public void Rotate(Edge3D edge, double angle)
-        {
-
-        }
-
-        public void ScaleI(bool more) => Width += more ? 0.1 : -0.1;
-
-        public void ScaleJ(bool more) => Height += more ? 0.1 : -0.1;
-
-        public void ScaleFocus(bool far)
         {
 
         }

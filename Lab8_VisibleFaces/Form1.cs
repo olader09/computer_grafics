@@ -13,15 +13,20 @@ namespace Lab8_VisibleFaces
 {
     public partial class Form1 : Form
     {
+        public enum Action { NoAction, AddFigure }
+
+        SceneFigures figures = new();
+        public Figure3D currentFigure;
+        public Action action;
+        Graphics g; 
+
         public Form1()
         {
             InitializeComponent();
-            SceneFigures figures = new();
+            g = Canvas.CreateGraphics(); 
             figures.AddFigure(new Grid());
             figures.AddFigure(new Coord());
-            figures.AddFigure(new F4());
             Camera cam = new(); 
-            
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -29,8 +34,24 @@ namespace Lab8_VisibleFaces
             switch (e.KeyChar)
             {
                 case 'n':
-                    Canvas.BackColor = Color.Red;
+                    currentFigure = figures.NextFigure(); 
                     break;
+
+                case 'a':
+                    action = Action.AddFigure; 
+                    break;
+
+                case 't':
+                    if (action == Action.AddFigure)
+                    {
+                        figures.AddFigure(new F4());
+                        action = Action.NoAction; 
+                    }
+                    break;
+
+                case 'd':
+                    figures.DeleteFigure(); 
+                    break; 
             }
         }
     }
