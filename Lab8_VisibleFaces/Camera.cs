@@ -155,7 +155,7 @@ namespace Lab6_Figures3D
         /// <returns>Flat of screen</returns>
         public Flat3D GetScreenFlat()
         {
-            var nv = Location - View; 
+            var nv = View - Location; 
             return new Flat3D(nv.X, nv.Y, nv.Z, (-View.X * nv.X) + (-View.Y * nv.Y) + (-View.Z * nv.Z)); 
         }
 

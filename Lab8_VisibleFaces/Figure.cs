@@ -7,6 +7,8 @@ using System.IO;
 
 namespace Lab6_Figures3D
 {
+    #region Point
+
     public struct Point3D
     {
         public double X { get; set; }
@@ -75,26 +77,9 @@ namespace Lab6_Figures3D
         }
     }
 
-    // Side of a Figure3D
-    /*public class Plane3D
-    {
-        public List<Point3D> Value { get; set; }
+    #endregion
 
-        public Plane3D(List<Point3D> list)
-        {
-            Value = new List<Point3D>(list);
-        }
-    }
-
-    public class Plane2D
-    {
-        public List<Point2D> Value { get; set; }
-
-        public Plane2D(List<Point2D> list)
-        {
-            Value = new List<Point2D>(list);
-        }
-    }*/
+    #region Edge
 
     // Edge3D of Figure3D
     public class Edge3D
@@ -121,6 +106,10 @@ namespace Lab6_Figures3D
         }
     }
 
+    #endregion
+
+    #region Figure
+
     public class Figure3D
     {
         public List<Point3D> Points;
@@ -130,6 +119,9 @@ namespace Lab6_Figures3D
 
         // Contains planes as list of points 
         public List<List<int>> Planes;
+
+        // Normal vectors for planes
+        public List<Point3D> NormalVectors; 
 
         // In world coordinates 
         public Point3D Center
@@ -150,7 +142,16 @@ namespace Lab6_Figures3D
         {
             Points = new();
             Lines = new();
-            Planes = new(); 
+            Planes = new();
+            NormalVectors = new(); 
+        }
+
+        public Figure3D(Figure3D other)
+        {
+            Points = new(other.Points);
+            Lines = new(other.Lines);
+            Planes = new(other.Planes);
+            NormalVectors = new(other.NormalVectors);
         }
 
         public Figure3D(List<Point3D> points, List<(int, int)> lines)
@@ -246,6 +247,10 @@ namespace Lab6_Figures3D
         }
     }
 
+    #endregion
+
+    #region Line
+
     public class Line2D
     {
         public double K, B; 
@@ -265,6 +270,10 @@ namespace Lab6_Figures3D
         }
     }
 
+    #endregion
+
+    #region Flat
+
     // Surface like line but in 3D
     public class Flat3D
     {
@@ -279,9 +288,5 @@ namespace Lab6_Figures3D
         }
     }
 
-    // Flat with coordinates
-    /*public class CFlat3D: Flat3D
-    {
-        public Edge3D I, J; 
-    }*/
+    #endregion
 }

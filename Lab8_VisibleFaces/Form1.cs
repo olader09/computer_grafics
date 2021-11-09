@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Lab6_Figures3D;
 
 namespace Lab8_VisibleFaces
 {
@@ -15,7 +16,22 @@ namespace Lab8_VisibleFaces
         public Form1()
         {
             InitializeComponent();
+            SceneFigures figures = new();
+            figures.AddFigure(new Grid());
+            figures.AddFigure(new Coord());
+            figures.AddFigure(new F4());
+            Camera cam = new(); 
+            
         }
 
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            switch (e.KeyChar)
+            {
+                case 'n':
+                    Canvas.BackColor = Color.Red;
+                    break;
+            }
+        }
     }
 }
