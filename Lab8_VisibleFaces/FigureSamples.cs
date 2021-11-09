@@ -82,11 +82,13 @@ namespace Lab6_Figures3D
 
             Planes = new List<List<int>>()
             {
-                new() { 0, 1, 2 },
-                new() { 0, 2, 3 }, 
-                new() { 1, 2, 3 }, 
-                new() { 0, 1, 3 },
+                new() { 1, 2, 3 },
+                new() { 1, 0, 3 }, 
+                new() { 3, 0, 2 }, 
+                new() { 2, 0, 1 },
             };
+
+            //AddingNormalVector();
         }
     }
 }
