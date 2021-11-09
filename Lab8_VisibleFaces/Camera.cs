@@ -16,8 +16,8 @@ namespace Lab6_Figures3D
             get => Focus; 
             set
             {
-                if (value > 0 && value < double.PositiveInfinity)
-                    Focus = value; 
+                //if (value > 0 && value < double.PositiveInfinity)
+                  //  Focus = value; 
             }
         }
 
