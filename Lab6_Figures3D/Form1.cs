@@ -73,7 +73,7 @@ namespace Lab6_Figures3D
                 if (f.Key == selectedFigure)
                 {
                     Figure3D fig = new Figure3D(f.Value);
-                    fig.CameraVector = camera.View - camera.Location;
+                    fig.CameraVector = camera.View;
                     fig.RemovingNonFacePlanes();
                     new_fig[f.Key] = fig;
                 }

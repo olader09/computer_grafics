@@ -241,8 +241,8 @@ namespace Lab6_Figures3D
             double ax = (l1.Item2.X - l1.Item1.X), ay = (l1.Item2.Y - l1.Item1.Y), az = (l1.Item2.Z - l1.Item1.Z),
                    bx = (l2.Item2.X - l2.Item1.X), by = (l2.Item2.Y - l2.Item1.Y), bz = (l2.Item2.Z - l2.Item1.Z);
             var res = new Point3D(ay * bz - az * by,
-                               -(ax * bz - az * bx),
-                               ax * by - ay * bx);
+                                -(ax * bz - az * bx),
+                                  ax * by - ay * bx);
             return res;
         }
 
@@ -260,7 +260,7 @@ namespace Lab6_Figures3D
             double x1 = p1.X, y1 = p1.Y, z1 = p1.Z,
                    x2 = p2.X, y2 = p2.Y, z2 = p2.Z;
             var res = (x1 * x2 + y1 * y2 + z1 * z2) /
-                   (Math.Sqrt(x1*x1 + y1*y1 + z1*x1) * Math.Sqrt(x2*x2 + y2*y2 + z2*x2));
+                   (Math.Sqrt(x1*x1 + y1*y1 + z1*z1) * Math.Sqrt(x2*x2 + y2*y2 + z2*z2));
             return res;
         }
         public void RemovingNonFacePlanes()
