@@ -266,19 +266,48 @@ namespace Lab6_Figures3D
         public void RemovingNonFacePlanes()
         {
             List<List<int>> NotFasesPlanes = new List<List<int>>();
+            List<List<int>> FasesPlanes = new List<List<int>>();
 
             for (int i = 0; i < NormalVectors.Count; i++)
-                if (CosBetweenVectors(NormalVectors[i], CameraVector) < 0)
+                if (CosBetweenVectors(NormalVectors[i], CameraVector) > 0)
+                {
+                    // NotFasesPlanes.Add(Planes[i]);
+                    FasesPlanes.Add(Planes[i]);
+                }
+                else
+                {
                     NotFasesPlanes.Add(Planes[i]);
+                }
 
                
-            if (NotFasesPlanes.Count == 1) // для тетраэдра - вид сверху, рисуем всё
+            if (Planes.Count - FasesPlanes.Count == 1) // для тетраэдра - вид сверху, рисуем всё
                 return;
-            
-            if (NotFasesPlanes.Count == 2) // если две нелицевых грани - одно ребро не рисуем
+            /*else if (Planes.Count - FasesPlanes.Count == 2) // если две нелицевых грани - одно ребро не рисуем
             {
                 var InvisibleLine = NotFasesPlanes[0].Intersect(NotFasesPlanes[1]).ToList();
                 Lines.Remove((InvisibleLine[0], InvisibleLine[1]));
+            }*/
+            else if (Planes.Count - FasesPlanes.Count > 1)
+            {
+                List<(bool, (int, int))> smt =  new List<(bool, (int, int))>();
+                foreach (var line in Lines)
+                {
+                    foreach (var plane in FasesPlanes)
+                    {
+                        var currentLine = new List<int>();
+                        currentLine.Add(line.Item1);
+                        currentLine.Add(line.Item2);
+
+                        if (plane.Contains(line.Item1) && plane.Contains(line.Item2))
+                        {
+                            smt.Add((true, line));
+                            break;
+                        }
+                    }
+                }
+                Lines.Clear();
+                foreach (var x in smt)
+                    Lines.Add(x.Item2);
             }
         }
     }
