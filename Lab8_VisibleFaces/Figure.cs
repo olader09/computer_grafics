@@ -240,7 +240,7 @@ namespace Lab6_Figures3D
 
     public class Figure2D
     {
-        public List<Point2D> Points;
+        public List<(bool, Point2D)> Points;
 
         // Indexes in list of Points
         public List<(int, int)> Lines;
@@ -258,13 +258,13 @@ namespace Lab6_Figures3D
             Planes = new();
         }
 
-        public Figure2D(List<Point2D> points, List<(int, int)> lines)
+        public Figure2D(List<(bool, Point2D)> points, List<(int, int)> lines)
         {
             Points = new(points);
             Lines = new(lines);
         }
 
-        public Figure2D(List<Point2D> points, List<(int, int)> lines, List<List<int>> planes) : this(points, lines)
+        public Figure2D(List<(bool, Point2D)> points, List<(int, int)> lines, List<List<int>> planes) : this(points, lines)
         {
             Planes = new(planes);
         }

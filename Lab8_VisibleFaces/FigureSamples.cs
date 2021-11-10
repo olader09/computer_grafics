@@ -13,9 +13,9 @@ namespace Lab6_Figures3D
         public Coord()
         {
             var O = new Point3D(0, 0, 0);
-            var X = new Point3D(10, 0, 0);
-            var Y = new Point3D(0, 10, 0);
-            var Z = new Point3D(0, 0, 10);
+            var X = new Point3D(100, 0, 0);
+            var Y = new Point3D(0, 100, 0);
+            var Z = new Point3D(0, 0, 100);
             Points.AddRange(new List<Point3D>() { O, X, Y, Z });
             Lines = new()
             {

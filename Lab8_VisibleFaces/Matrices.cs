@@ -18,6 +18,8 @@ namespace Lab6_Figures3D
             Value = matr;
         }
 
+        #region Operations
+
         public static explicit operator Matrix(double[,] matr)
         {
             Matrix m = new Matrix(matr);
@@ -45,7 +47,6 @@ namespace Lab6_Figures3D
             return (Matrix)res;
         }
 
-
         public static Matrix operator *(Matrix a, Matrix b)
         {
             double[,] res = new double[a.Value.GetLength(0), b.Value.GetLength(1)];
@@ -63,8 +64,62 @@ namespace Lab6_Figures3D
             return (Matrix)res;
         }
 
+        public static Matrix operator *(Matrix a, double n)
+        {
+            double[,] res = new double[a.Value.GetLength(0), a.Value.GetLength(1)];
+
+            for (int i = 0; i < a.Value.GetLength(0); i++)
+            {
+                for (int j = 0; j < a.Value.GetLength(1); j++)
+                {
+                    res[i, j] = a.Value[i, j] * n;
+                }
+            }
+            return (Matrix)res;
+        }
+
+        #endregion
+
         // FOR MULTIPLICATION FROM LEFT SIDE:
         // [x, y, z, 1] * [change matrix] => result
+
+        #region Homogenious 
+
+
+
+        #endregion
+
+        #region Point
+
+        public static Matrix Point(Point3D p)
+        {
+            return (Matrix)new double[,]
+            {
+                { p.X, p.Y, p.Z, 1 },
+            };
+        }
+
+        public static Point3D GetPoint(Matrix matr)
+        {
+            return new Point3D(matr[0, 0], matr[0, 1], matr[0, 2]);
+        }
+
+        #endregion
+
+        #region Projection
+
+        public static Matrix P1(double focalLength)
+        {
+            return (Matrix)new double[,]
+            {
+                { 1, 0, 0,         0      },
+                { 0, 1, 0,         0      },
+                { 0, 0, 0,    focalLength },
+                { 0, 0, 0,         1      },
+            };
+        }
+
+        #endregion
 
         #region View
 

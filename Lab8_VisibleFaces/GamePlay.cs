@@ -9,18 +9,20 @@ namespace Lab8_VisibleFaces
 {
     public class SceneFigures
     {
-        private List<Figure3D> sceneFigures = new();
+        private List<(string, Figure3D)> sceneFigures = new();
         private int Index = -1;
 
-        public Figure3D NextFigure()
+        public List<(string, Figure3D)> GetFigures() => new(sceneFigures); 
+
+        public (string, Figure3D) NextFigure()
         {
             if (sceneFigures.Count == 0)
-                return null; 
+                return (null, null); 
             Index = Index == sceneFigures.Count - 1 ? 0 : Index + 1; 
             return sceneFigures.ElementAt(Index);
         }
 
-        public void AddFigure(Figure3D figure) => sceneFigures.Add(new(figure));
+        public void AddFigure(string name, Figure3D figure) => sceneFigures.Add((name, new(figure)));
 
         public void DeleteFigure()
         {
@@ -31,6 +33,6 @@ namespace Lab8_VisibleFaces
                 Index = 0; 
         }
 
-        public void SetFigure(string name, Figure3D figure) => sceneFigures[Index] = new(figure);
+        public void SetFigure(string name, Figure3D figure) => sceneFigures[Index] = (name, new(figure));
     }
 }

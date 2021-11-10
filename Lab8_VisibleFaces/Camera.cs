@@ -18,16 +18,47 @@ namespace Lab6_Figures3D
 
         public Camera()
         {
-            Projection = ProjectionType.Central;
+            Projection = ProjectionType.P1;
+            Location = new(0, 0, 0);
+            Right = new(1, 0, 0);
+            Up = new(0, 1, 0);
+            View = new(0, 0, 1);
             Width = 2;
             Height = 1;
-            Focus = 1; 
+            Focus = 0.001; 
         }
 
         public void Shift(Point3D vector)
         {
 
         }
+
+        public (bool, Point2D) Project(Point3D point)
+        {
+            switch (Projection)
+            {
+                case ProjectionType.P1:
+                    var matr = Matrix.P1(Focus);
+                    var p = Matrix.Point(point);
+                    var result = Matrix.GetPoint(p * matr * (1/ (Focus * point.Z + 1)));
+                    if (point.Z < 0)
+                        return (false, new());
+                    if (point.Z == 0)
+                        return (true, new(point.X, point.Y));
+                    else
+                        return (true, new Point2D(point.X / point.Z, point.Y / point.Z)); //new(point.X / (1 - point.Z * Focus), point.Y / (1 - point.Z * Focus)));
+                    break; 
+            }
+
+            return (false, new Point2D()); 
+        }
+
+        public void MoveForward() => Location += View / 4;
+        public void MoveBackward() => Location -= View / 4;
+        public void MoveRight() => Location += Right / 4;
+        public void MoveLeft() => Location -= Right / 4;
+        public void MoveUp() => Location += Up / 4;
+        public void MoveDown() => Location -= Up / 4;
 
         public void RotateUpDown(bool up, double angle)
         {
