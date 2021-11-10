@@ -8,7 +8,7 @@ namespace Lab6_Figures3D
 {
     public enum ProjectionType { Parallel, Central }
 
-    class Camera
+    public class Camera
     {
         // Location is camera center
         // View is projection of Location on screen surface 

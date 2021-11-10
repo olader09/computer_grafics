@@ -18,7 +18,7 @@ namespace Lab6_Figures3D
         public string selectedFigure = null;
         // public void Next() => selectedFigure = selectedFigure == figures.Count - 1 ? 0 : (selectedFigure + 1);
         public Graphics g;
-        Camera camera = new Camera();
+        public Camera camera = new Camera();
 
         public Point3D transformPoint;
         public Edge3D transformEdge;
@@ -67,8 +67,24 @@ namespace Lab6_Figures3D
         public void RedrawObjects(string selectedFigure = null)
         {
             g.Clear(DefaultBackColor);
-            var fs = new List<(bool, Figure2D)>();
+            Dictionary<string, Figure3D> new_fig = new Dictionary<string, Figure3D>();
             foreach (var f in figures)
+            {
+                if (f.Key == selectedFigure)
+                {
+                    Figure3D fig = new Figure3D(f.Value);
+                    fig.CameraVector = camera.View - camera.Location;
+                    fig.RemovingNonFacePlanes();
+                    new_fig[f.Key] = fig;
+                }
+                else
+                {
+                    new_fig[f.Key] = f.Value;
+                }
+            }
+                        
+            var fs = new List<(bool, Figure2D)>();
+            foreach (var f in new_fig)
             {
                 fs.Add((f.Key == selectedFigure, camera.GetFigure2D(f.Value)));
             }
@@ -230,6 +246,7 @@ namespace Lab6_Figures3D
             if (open.ShowDialog() == DialogResult.OK)
             {
                 var figure = Figure3D.Download(open.FileName);
+                figure.Item2.CameraVector = camera.View - camera.Location;
                 string figName = figure.Item1 + iname++;
                 figures.Add(figName, figure.Item2);
                 SceneFiguresList.Items.Add(figName);

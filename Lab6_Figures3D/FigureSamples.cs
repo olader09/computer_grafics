@@ -177,11 +177,11 @@ namespace Lab6_Figures3D
                 fs.figures[0].planes[3],
                 */
                 
-                new() { 0, 1, 2 },
-                new() { 0, 2, 3 }, 
-                new() { 1, 2, 3 }, 
-                new() { 0, 1, 3 },
-                
+                new() { 1, 2, 3 },
+                new() { 1, 0, 3 },
+                new() { 3, 0, 2 },
+                new() { 2, 0, 1 },
+
             };
             /*for (int i = 0; i < fs.figures[0].planesCount; i++)
                 Planes.Add(fs.figures[0].planes[i]);*/

@@ -131,6 +131,11 @@ namespace Lab6_Figures3D
         // Contains planes as list of points 
         public List<List<int>> Planes;
 
+        // Normal vectors for planes
+        public List<Point3D> NormalVectors;
+
+        public Point3D CameraVector;
+
         // In world coordinates 
         public Point3D Center
         {
@@ -150,18 +155,32 @@ namespace Lab6_Figures3D
         {
             Points = new();
             Lines = new();
-            Planes = new(); 
+            Planes = new();
+            NormalVectors = new();
+            NormalVectors = new();
+            AddingNormalVector();
         }
 
         public Figure3D(List<Point3D> points, List<(int, int)> lines)
         {
             Points = new(points);
-            Lines = new(lines); 
+            Lines = new(lines);
+            NormalVectors = new();
+            AddingNormalVector();
         }
 
         public Figure3D(List<Point3D> points, List<(int, int)> lines, List<List<int>> planes): this(points, lines)
         {
             Planes = new(planes); 
+        }
+
+        public Figure3D(Figure3D other) 
+        {
+            Points = new(other.Points);
+            Lines = new(other.Lines);
+            Planes = new(other.Planes);
+            NormalVectors = new();
+            AddingNormalVector();
         }
 
         public static (string, Figure3D) Download(string file)
@@ -212,6 +231,56 @@ namespace Lab6_Figures3D
                     sw.WriteLine(string.Join(' ', plane));
             }
         }
+
+        public Point3D VectorProd((Point3D, Point3D) l1, (Point3D, Point3D) l2)
+        {
+
+            //double ax = l1.LX.B, ay = l1.LY.B, az = l1.LZ.B,
+            //      bx = l2.LX.B, by = l2.LY.B, bz = l2.LZ.B;
+
+            double ax = (l1.Item2.X - l1.Item1.X), ay = (l1.Item2.Y - l1.Item1.Y), az = (l1.Item2.Z - l1.Item1.Z),
+                   bx = (l2.Item2.X - l2.Item1.X), by = (l2.Item2.Y - l2.Item1.Y), bz = (l2.Item2.Z - l2.Item1.Z);
+            var res = new Point3D(ay * bz - az * by,
+                                -(ax * bz - az * bx),
+                                  ax * by - ay * bx);
+            return res;
+        }
+
+        public void AddingNormalVector()
+        {
+            foreach (var plane in Planes)
+            {
+                NormalVectors.Add(VectorProd((Points[plane[0]], Points[plane[1]]),
+                                             (Points[plane[0]], Points[plane[2]])));
+            }
+        }
+
+        public double CosBetweenVectors(Point3D p1, Point3D p2)
+        {
+            double x1 = p1.X, y1 = p1.Y, z1 = p1.Z,
+                   x2 = p2.X, y2 = p2.Y, z2 = p2.Z;
+            var res = (x1 * x2 + y1 * y2 + z1 * z2) /
+                   (Math.Sqrt(x1*x1 + y1*y1 + z1*z1) * Math.Sqrt(x2*x2 + y2*y2 + z2*z2));
+            return res;
+        }
+        public void RemovingNonFacePlanes()
+        {
+            List<List<int>> NotFasesPlanes = new List<List<int>>();
+
+            for (int i = 0; i < NormalVectors.Count; i++)
+                if (CosBetweenVectors(NormalVectors[i], CameraVector) < 0)
+                    NotFasesPlanes.Add(Planes[i]);
+
+               
+            if (NotFasesPlanes.Count == 1) // для тетраэдра - вид сверху, рисуем всё
+                return;
+            
+            if (NotFasesPlanes.Count == 2) // если две нелицевых грани - одно ребро не рисуем
+            {
+                var InvisibleLine = NotFasesPlanes[0].Intersect(NotFasesPlanes[1]).ToList();
+                Lines.Remove((InvisibleLine[0], InvisibleLine[1]));
+            }
+        }
     }
 
     public class Figure2D
@@ -223,6 +292,9 @@ namespace Lab6_Figures3D
 
         // Contains planes as list of points 
         public List<List<int>> Planes;
+
+        // Normal vectors for planes
+        public List<Point2D> NormalVectors;
 
         // In world coordinates 
         public Point2D Center { get; set; }
