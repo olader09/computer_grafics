@@ -250,8 +250,8 @@ namespace Lab6_Figures3D
         {
             foreach (var plane in Planes)
             {
-                NormalVectors.Add(VectorProd((Points[plane[1]], Points[plane[0]]),
-                                             (Points[plane[2]], Points[plane[1]])));
+                NormalVectors.Add(VectorProd((Points[plane[0]], Points[plane[1]]),
+                                             (Points[plane[0]], Points[plane[2]])));
             }
         }
 
@@ -259,10 +259,10 @@ namespace Lab6_Figures3D
         {
             double x1 = p1.X, y1 = p1.Y, z1 = p1.Z,
                    x2 = p2.X, y2 = p2.Y, z2 = p2.Z;
-            double lengthVec = (Math.Sqrt(x1 * x1 + y1 * y1 + z1 * z1) * Math.Sqrt(x2 * x2 + y2 * y2 + z2 * z2));
-            double res = 0;
+           // double lengthVec = (Math.Sqrt(x1 * x1 + y1 * y1 + z1 * z1) * Math.Sqrt(x2 * x2 + y2 * y2 + z2 * z2));
+            double res;
             //if (lengthVec != 0)
-                res = (x1 * x2 + y1 * y2 + z1 * z2) / lengthVec;
+            res = (x1 * x2 + y1 * y2 + z1 * z2) / (Math.Sqrt(x1 * x1 + y1 * y1 + z1 * z1) * Math.Sqrt(x2 * x2 + y2 * y2 + z2 * z2));
             // return Math.Cos(Math.PI - Math.Acos(res));
             return res;
         }
