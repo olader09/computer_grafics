@@ -240,9 +240,9 @@ namespace Lab6_Figures3D
 
             double ax = (l1.Item2.X - l1.Item1.X), ay = (l1.Item2.Y - l1.Item1.Y), az = (l1.Item2.Z - l1.Item1.Z),
                    bx = (l2.Item2.X - l2.Item1.X), by = (l2.Item2.Y - l2.Item1.Y), bz = (l2.Item2.Z - l2.Item1.Z);
-            var res = new Point3D(ay * bz - az * by,
-                                -(ax * bz - az * bx),
-                                  ax * by - ay * bx);
+            var res = new Point3D((ay * bz - az * by),
+                                  -(ax * bz - az * bx),
+                                  (ax * by - ay * bx));
             return res;
         }
 
@@ -261,7 +261,7 @@ namespace Lab6_Figures3D
                    x2 = p2.X, y2 = p2.Y, z2 = p2.Z;
             var res = (x1 * x2 + y1 * y2 + z1 * z2) /
                    (Math.Sqrt(x1*x1 + y1*y1 + z1*z1) * Math.Sqrt(x2*x2 + y2*y2 + z2*z2));
-            return res;
+            return Math.Cos(Math.PI - Math.Acos(res));
         }
         public void RemovingNonFacePlanes()
         {
@@ -269,7 +269,8 @@ namespace Lab6_Figures3D
             List<List<int>> FasesPlanes = new List<List<int>>();
 
             for (int i = 0; i < NormalVectors.Count; i++)
-                if (CosBetweenVectors(NormalVectors[i], CameraVector) > 0)
+            {
+                if (CosBetweenVectors(CameraVector, NormalVectors[i]) < 0)
                 {
                     // NotFasesPlanes.Add(Planes[i]);
                     FasesPlanes.Add(Planes[i]);
@@ -278,7 +279,7 @@ namespace Lab6_Figures3D
                 {
                     NotFasesPlanes.Add(Planes[i]);
                 }
-
+            }
                
             if (Planes.Count - FasesPlanes.Count == 1) // для тетраэдра - вид сверху, рисуем всё
                 return;
@@ -289,25 +290,22 @@ namespace Lab6_Figures3D
             }*/
             else if (Planes.Count - FasesPlanes.Count > 1)
             {
-                List<(bool, (int, int))> smt =  new List<(bool, (int, int))>();
+                List<(int, int)> smt =  new List<(int, int)>();
                 foreach (var line in Lines)
                 {
                     foreach (var plane in FasesPlanes)
                     {
-                        var currentLine = new List<int>();
-                        currentLine.Add(line.Item1);
-                        currentLine.Add(line.Item2);
-
                         if (plane.Contains(line.Item1) && plane.Contains(line.Item2))
                         {
-                            smt.Add((true, line));
+                            smt.Add(line);
                             break;
                         }
                     }
                 }
                 Lines.Clear();
-                foreach (var x in smt)
-                    Lines.Add(x.Item2);
+                Lines = smt;
+                //foreach (var x in smt)
+                  //  Lines.Add(x);
             }
         }
     }
