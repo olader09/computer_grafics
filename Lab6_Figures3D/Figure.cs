@@ -250,8 +250,8 @@ namespace Lab6_Figures3D
         {
             foreach (var plane in Planes)
             {
-                NormalVectors.Add(VectorProd((Points[plane[0]], Points[plane[1]]),
-                                             (Points[plane[0]], Points[plane[2]])));
+                NormalVectors.Add(VectorProd((Points[plane[1]], Points[plane[0]]),
+                                             (Points[plane[2]], Points[plane[1]])));
             }
         }
 
@@ -259,9 +259,12 @@ namespace Lab6_Figures3D
         {
             double x1 = p1.X, y1 = p1.Y, z1 = p1.Z,
                    x2 = p2.X, y2 = p2.Y, z2 = p2.Z;
-            var res = (x1 * x2 + y1 * y2 + z1 * z2) /
-                   (Math.Sqrt(x1*x1 + y1*y1 + z1*z1) * Math.Sqrt(x2*x2 + y2*y2 + z2*z2));
-            return Math.Cos(Math.PI - Math.Acos(res));
+            double lengthVec = (Math.Sqrt(x1 * x1 + y1 * y1 + z1 * z1) * Math.Sqrt(x2 * x2 + y2 * y2 + z2 * z2));
+            double res = 0;
+            //if (lengthVec != 0)
+                res = (x1 * x2 + y1 * y2 + z1 * z2) / lengthVec;
+            // return Math.Cos(Math.PI - Math.Acos(res));
+            return res;
         }
         public void RemovingNonFacePlanes()
         {
@@ -270,7 +273,7 @@ namespace Lab6_Figures3D
 
             for (int i = 0; i < NormalVectors.Count; i++)
             {
-                if (CosBetweenVectors(CameraVector, NormalVectors[i]) < 0)
+                if (CosBetweenVectors(CameraVector, NormalVectors[i]) > 0)
                 {
                     // NotFasesPlanes.Add(Planes[i]);
                     FasesPlanes.Add(Planes[i]);

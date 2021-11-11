@@ -73,7 +73,8 @@ namespace Lab6_Figures3D
                 if (f.Key == selectedFigure)
                 {
                     Figure3D fig = new Figure3D(f.Value);
-                    fig.CameraVector = camera.View - camera.Location;
+                    //fig.CameraVector = camera.View - camera.Location;
+                    fig.CameraVector = camera.View;
                     fig.RemovingNonFacePlanes();
                     new_fig[f.Key] = fig;
                 }
@@ -105,6 +106,12 @@ namespace Lab6_Figures3D
                 res.Add((f.Item1, newF));
             }
             ShowFigures(res);
+            Pen pen = new Pen(Color.Green);
+            //g.DrawLine(pen, From3D(camera.GetIJCoordinates(camera.Location)), From3D(camera.GetIJCoordinates(camera.View)));
+            //if (selectedFigure != null)
+            //  if (figures[selectedFigure].Points.Count>1)
+            //    g.DrawLine(pen, From3D(camera.GetIJCoordinates(figures[selectedFigure].Points[0])), From3D(camera.GetIJCoordinates(figures[selectedFigure].Points[1])));
+
         }
 
         public Point From3D(Point2D p)
