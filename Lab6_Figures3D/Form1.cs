@@ -7,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Figure;
+using FigureParts.Point;
+using FigureParts.Edge;
+using GeometricPrimitives.CanonicFlat;
 
 namespace Lab6_Figures3D
 {
     public partial class Form1 : Form
     {
+
         public int iname = 1;
         public Dictionary<string, Figure3D> figures = new();
         public Figure3D currentFigure;
@@ -27,6 +32,7 @@ namespace Lab6_Figures3D
         public double transformCoef;
 
         public List<Point3D> listPoints;
+
 
         public Form1()
         {
@@ -73,8 +79,8 @@ namespace Lab6_Figures3D
                 if (f.Key == selectedFigure)
                 {
                     Figure3D fig = new Figure3D(f.Value);
-                    //fig.CameraVector = camera.View - camera.Location;
-                    fig.CameraVector = camera.View;
+                    fig.CameraVector = camera.View - camera.Location;
+                    // fig.CameraVector = camera.View;
                     fig.RemovingNonFacePlanes();
                     new_fig[f.Key] = fig;
                 }
@@ -238,16 +244,8 @@ namespace Lab6_Figures3D
 
         }
 
-        private void PointGB_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void AddFigureButton_Click(object sender, EventArgs e)
         {
-            //if ((string)FiguresList.SelectedItem == null)
-            //  return; 
-
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "Text Files(*.txt)|*.txt";
             if (open.ShowDialog() == DialogResult.OK)
@@ -259,33 +257,6 @@ namespace Lab6_Figures3D
                 SceneFiguresList.Items.Add(figName);
                 RedrawObjects(selectedFigure);
             }
-            /*
-            Figure3D fig = new Figure3D();
-            var name = (string)FiguresList.SelectedItem; 
-            switch (name)
-            {
-                case "Tetrahedron":
-                    fig = new F4();
-                    break;
-                case "Cube":
-                    fig = new F6();
-                    break;
-                 
-                case "Octahedron":
-                    fig = new F8();
-                    break;
-                    /*
-                case "Dodecahedron":
-                    fig = new F12();
-                    break;
-                case "Icosahedron":
-                    fig = new F20();
-                    break;
-            }*/
-            /*string figName = (string)FiguresList.SelectedItem + i++;
-            figures.Add(figName, fig);
-            SceneFiguresList.Items.Add(figName);
-            RedrawObjects(selectedFigure);*/
         }
 
         private void SceneFiguresList_SelectedIndexChanged(object sender, EventArgs e)
@@ -374,21 +345,6 @@ namespace Lab6_Figures3D
             Figure3D old = figures[selectedFigure];
             old.Points = new(old.Points.Select(p => Transform.RotateAroundLine(transformEdge, p, transformAngle)));
             RedrawObjects(selectedFigure);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TransformGroup_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void TurnLeftButton_Click(object sender, EventArgs e)

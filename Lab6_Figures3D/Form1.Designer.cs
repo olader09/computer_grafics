@@ -134,7 +134,6 @@ namespace Lab6_Figures3D
             this.TransformGroup.TabIndex = 2;
             this.TransformGroup.TabStop = false;
             this.TransformGroup.Text = "Transform";
-            this.TransformGroup.Enter += new System.EventHandler(this.TransformGroup_Enter);
             // 
             // RotateButton
             // 
@@ -356,7 +355,6 @@ namespace Lab6_Figures3D
             this.PointGB.TabIndex = 0;
             this.PointGB.TabStop = false;
             this.PointGB.Text = "Point";
-            this.PointGB.Enter += new System.EventHandler(this.PointGB_Enter);
             // 
             // ClearButton
             // 
@@ -768,7 +766,6 @@ namespace Lab6_Figures3D
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             this.TransformGroup.ResumeLayout(false);

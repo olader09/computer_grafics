@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FigureParts.Point;
-using FigureParts.Edge; 
+using FigureParts.Edge;
+using GeometricPrimitives.CanonicFlat; 
 
 namespace Lab6_Figures3D
 {
