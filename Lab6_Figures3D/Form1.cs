@@ -30,6 +30,8 @@ namespace Lab6_Figures3D
         public Flat3D transformFlat;
         public double transformAngle;
         public double transformCoef;
+		
+		public double[,] ZBuffer; 
 
         public List<Point3D> listPoints;
 
@@ -68,6 +70,8 @@ namespace Lab6_Figures3D
             var new_ = camera.GetIJCoordinates(pp); */
             /*var p1 = Projections.ParallelPoint(pp, new Flat3D(0, 0, 1, -2));
             var p2 = Projections.ParallelPoint(pp, new Flat3D(0, 0, 1, -2.25));*/
+			
+			ZBuffer = new double[Canvas.Width, Canvas.Height];
         }
 
         public void RedrawObjects(string selectedFigure = null)
