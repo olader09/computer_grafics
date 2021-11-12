@@ -317,7 +317,7 @@ namespace Lab6And7_Figures3D
 
 
                         //Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
-                        if (x < 0)
+                        /*if (x < 0)
                         {
                             if (canvas[1, y] > z_cur)
                             {
@@ -332,7 +332,7 @@ namespace Lab6And7_Figures3D
                                 canvas[x, y] = z_cur;
                                 color_canvas[x, y] = color;
                             //}
-                        }
+                        }*/
 
 
                     }

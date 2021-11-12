@@ -58,8 +58,8 @@ namespace Lab6_Figures3D
             //figures.Add(new F4());
 
             // var r = Projections.ParallelPoint(new Point3D(1, 2, -1), new Flat3D(3, -1, 2, -27));
-            figures.Add("Coord", new Coord());
-            figures.Add("Grid", new Grid());
+            //figures.Add("Coord", new Coord());
+            //figures.Add("Grid", new Grid());
 
             RedrawObjects();
 
