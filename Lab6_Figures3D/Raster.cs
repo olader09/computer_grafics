@@ -9,11 +9,13 @@ namespace Lab6And7_Figures3D
 {
     public static class Raster
     {
-        public static void Triangle(ref double[,] canvas, Point p1, Point p2, Point p3)
+        public static void Triangle(double[,] canvas, Point p1, Point p2, Point p3, double z1, double z2, double z3, Color color, Color[,] color_canvas)
         { 
-            int x1_ = 0, y1_ = 1, x2_ = 0, y2_ = 2, x3_ = 0, y3_ = 3;
-            Color c1_ = Color.FromArgb(1, 2, 3), c2_ = Color.FromArgb(4, 5, 6), c3_ = Color.FromArgb(7, 8, 9);
-            bool firstPoint = true, secondPoint = false, thirdPoint = false; // для рисования мышью
+            //int x1 = p1.X, y1 = p1.Y, x2 = p2.X, y2 = p2.Y, x3 = p3.X, y3 = p3.Y;
+            //double z1_ = Color.FromArgb(1, 2, 3), c2_ = Color.FromArgb(4, 5, 6), c3_ = Color.FromArgb(7, 8, 9);
+            //bool firstPoint = true, secondPoint = false, thirdPoint = false; // для рисования мышью
+
+            
 
             void swap(ref int x, ref int y)
             {
@@ -127,7 +129,7 @@ namespace Lab6And7_Figures3D
             }
             /////////
             // **********
-            void drawGradientUpToDown(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3)
+            void drawGradientUpToDown(int x1, int y1, double z1, int x2, int y2, double z2, int x3, int y3, double z3)
             {
                 int i = 0; // каждый пиксель по оси у
                 int j = 0; // каждый пиксель по оси х, когда рисуем прямые
@@ -160,18 +162,18 @@ namespace Lab6And7_Figures3D
                 //int color_right_blue = 0;
                 double z_right = 0;
 
-                for (double y = y2; y < y3; y+=0.01)
+                for (int y = y2; y < y3; y++)
                 {
 
                     i++;
 
-                    double xleft = x2 - (x2 - x1) * i / (double)(y3 - y2); // левая точка текущей прямой
-                    double deltax = i * (x3 - x1) / (double)(y3 - y2);     // длина текущей прямой
+                    int xleft = x2 - (x2 - x1) * i / (y3 - y2); // левая точка текущей прямой
+                    int deltax = i * (x3 - x1) / (y3 - y2);     // длина текущей прямой
 
                     // int color_left_red = r2_begin + (i * (r1_begin - r2_begin) / (y1 - y2)); // цвет левой точки
                     // int color_left_green = g2_begin + (i * (g1_begin - g2_begin) / (y1 - y2));
                     // int color_left_blue = b2_begin + (i * (b1_begin - b2_begin) / (y1 - y2));
-                    double z_left = z2 + (i * (z1 - z2) / (double)(y1 - y2));
+                    double z_left = z2 + (i * (z1 - z2) / (y1 - y2));
 
                    // color_right_red = r2_begin + (i * (r3_begin - r2_begin) / (y3 - y2));  // цвет правой точки
                     //color_right_green = g2_begin + (i * (g3_begin - g2_begin) / (y3 - y2));
@@ -181,7 +183,7 @@ namespace Lab6And7_Figures3D
                     j = 0;
 
 
-                    for (double x = xleft; x < xleft + deltax; x+=0.01)
+                    for (int x = xleft; x < xleft + deltax; x++)
                     {
                         j++;
                         //int red_cur = color_left_red + (j * (color_right_red - color_left_red) / (x3 - x1));    // текущие цвета
@@ -189,26 +191,34 @@ namespace Lab6And7_Figures3D
                         //int blue_cur = color_left_blue + (j * (color_right_blue - color_left_blue) / (x3 - x1));
                         double z_cur = z_left + (j * (z_right - z_left) / (double)(x3 - x1));
 
-                       /* if (red_cur > 255)   // ну, не без этого
-                            red_cur = 255;
-                        if (green_cur > 255)
-                            green_cur = 255;
-                        if (blue_cur > 255)
-                            blue_cur = 255;
-                        if (red_cur < 0)
-                            red_cur = 0;
-                        if (green_cur < 0)
-                            green_cur = 0;
-                        if (blue_cur < 0)
-                            blue_cur = 0;*/
+                        /* if (red_cur > 255)   // ну, не без этого
+                             red_cur = 255;
+                         if (green_cur > 255)
+                             green_cur = 255;
+                         if (blue_cur > 255)
+                             blue_cur = 255;
+                         if (red_cur < 0)
+                             red_cur = 0;
+                         if (green_cur < 0)
+                             green_cur = 0;
+                         if (blue_cur < 0)
+                             blue_cur = 0;*/
 
-                        /*
-                        Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
+
+                        //Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
                         if (x < 0)
-                            canvas[1, y] = cur_color;
-                        else
-                            canvas[x, y] = cur_color;
-                        */
+                            if (canvas[1, y] > z_cur)
+                            {
+                                canvas[1, y] = z_cur;
+                                color_canvas[1, y] = color;
+                            }
+                            else
+                            {
+                                canvas[x, y] = z_cur;
+                                color_canvas[x, y] = color;
+                            }
+
+                        
                     }
                     //if (y == y1)
                     // break;
@@ -218,7 +228,7 @@ namespace Lab6And7_Figures3D
 
             }
             // **********------
-            double drawGradientUpToDown1(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3)
+            double drawGradientUpToDown1(int x1, int y1, double z1, int x2, int y2, double z2, int x3, int y3, double z3)
             {
                 int i = 0; // каждый пиксель по оси у
                 int j = 0; // каждый пиксель по оси х, когда рисуем прямые
@@ -249,13 +259,13 @@ namespace Lab6And7_Figures3D
                 //int color_right_blue = 0;
                 double z_right = 0;
 
-                for (double y = y2; y < y3; y+=0.01)
+                for (int y = y2; y < y3; y++)
                 {
 
                     i++;
-                    double x_new_ = x2 + (x3 - x2) * (y1 - y2) / (double)(y3 - y2);
-                    double xleft = x2 - (x2 - x1) * i / (double)(y3 - y2); // левая точка текущей прямой
-                    double deltax = i * (x3 - x1) / (double)(y3 - y2);     // длина текущей прямой
+                    int x_new_ = x2 + (x3 - x2) * (y1 - y2) / (y3 - y2);
+                    int xleft = x2 - (x2 - x1) * i / (y3 - y2); // левая точка текущей прямой
+                    int deltax = i * (x3 - x1) / (y3 - y2);     // длина текущей прямой
 
                     //int color_left_red = r2_begin + (i * (r1_begin - r2_begin) / (y1 - y2)); // цвет левой точки
                     //int color_left_green = g2_begin + (i * (g1_begin - g2_begin) / (y1 - y2));
@@ -270,7 +280,7 @@ namespace Lab6And7_Figures3D
                     j = 0;
 
 
-                    for (double x = xleft; x < xleft + deltax; x+=0.01)
+                    for (int x = xleft; x < xleft + deltax; x++)
                     {
                         j++;
                         // int red_cur = color_left_red + (j * (color_right_red - color_left_red) / (x3 - x1));    // текущие цвета
@@ -293,13 +303,20 @@ namespace Lab6And7_Figures3D
                             blue_cur = 0;
                         */
 
-                        /*
-                        Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
+
+                        //Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
                         if (x < 0)
-                            canvas[1, y] = cur_color;
-                        else
-                            canvas[x, y] = cur_color;
-                        */
+                            if (canvas[1, y] > z_cur)
+                            {
+                                canvas[1, y] = z_cur;
+                                color_canvas[1, y] = color;
+                            }
+                            else
+                            {
+                                canvas[x, y] = z_cur;
+                                color_canvas[x, y] = color;
+                            }
+
 
                     }
                     if (y == y1)
@@ -315,7 +332,7 @@ namespace Lab6And7_Figures3D
 
             }
             //-------------
-            void drawGradientDownToUp(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3)
+            void drawGradientDownToUp(int x1, int y1, double z1, int x2, int y2, double z2, int x3, int y3, double z3)
             {
                 int i = 0;
                 int j = 0;
@@ -341,11 +358,11 @@ namespace Lab6And7_Figures3D
                 if (y2 == y3)
                     y3++;
 
-                for (double y = y2; y >= y3; y-=0.01)
+                for (int y = y2; y >= y3; y--)
                 {
                     i++;
-                    double xleft = x2 - (x2 - x1) * i / (double)(y2 - y3);
-                    double deltax = i * (x3 - x1) / (double)(y2 - y3);
+                    int xleft = x2 - (x2 - x1) * i / (y2 - y3);
+                    int deltax = i * (x3 - x1) / (y2 - y3);
 
                     // int color_left_red = r2_begin + (i * (r1_begin - r2_begin) / (y2 - y1));
                     // int color_left_green = g2_begin + (i * (g1_begin - g2_begin) / (y2 - y1));
@@ -359,7 +376,7 @@ namespace Lab6And7_Figures3D
 
                     j = 0;
 
-                    for (double x = xleft; x < xleft + deltax; x+=0.01)
+                    for (int x = xleft; x < xleft + deltax; x++)
                     {
                         j++;
                         //int red_cur = color_left_red + (j * (color_right_red - color_left_red) / (x3 - x1));
@@ -384,11 +401,18 @@ namespace Lab6And7_Figures3D
                         */
 
 
-                       // Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
-                       // if (x < 0)
-                       //     canvas[1, y] = cur_color;
-                       // else
-                       //     canvas[x, y] = cur_color;
+                        // Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
+                        if (x < 0)
+                            if (canvas[1, y] > z_cur)
+                            {
+                                canvas[1, y] = z_cur;
+                                color_canvas[1, y] = color;
+                            }
+                            else
+                            {
+                                canvas[x, y] = z_cur;
+                                color_canvas[x, y] = color;
+                            }
                     }
                 }
             }

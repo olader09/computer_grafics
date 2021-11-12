@@ -11,6 +11,7 @@ using Figure;
 using FigureParts.Point;
 using FigureParts.Edge;
 using GeometricPrimitives.CanonicFlat;
+using static Lab6And7_Figures3D.Raster;
 
 namespace Lab6_Figures3D
 {
@@ -31,7 +32,9 @@ namespace Lab6_Figures3D
         public double transformAngle;
         public double transformCoef;
 		
-		public double[,] ZBuffer; 
+		public double[,] ZBuffer;
+        public Color[,] CBuffer;
+
 
         public List<Point3D> listPoints;
 
@@ -39,6 +42,7 @@ namespace Lab6_Figures3D
         public Form1()
         {
             InitializeComponent();
+            
             // FiguresList.Items.AddRange(new object[] { "Tetrahedron", "Cube", "Octahedron", "Dodecahedron", "Icosahedron" });
             SceneFiguresList.SelectionMode = SelectionMode.One;
             g = Canvas.CreateGraphics();
@@ -72,6 +76,14 @@ namespace Lab6_Figures3D
             var p2 = Projections.ParallelPoint(pp, new Flat3D(0, 0, 1, -2.25));*/
 			
 			ZBuffer = new double[Canvas.Width, Canvas.Height];
+            for (int i = 0; i < ZBuffer.GetLength(0); i++)
+                for (int j = 0; j < ZBuffer.GetLength(1); j++)
+                    ZBuffer[i, j] = double.MaxValue;
+
+            CBuffer = new Color[Canvas.Width, Canvas.Height];
+            for (int i = 0; i < CBuffer.GetLength(0); i++)
+                for (int j = 0; j < CBuffer.GetLength(1); j++)
+                    CBuffer[i, j] = Color.White;
         }
 
         public void RedrawObjects(string selectedFigure = null)
@@ -93,7 +105,26 @@ namespace Lab6_Figures3D
                     new_fig[f.Key] = f.Value;
                 }
             }
-                        
+
+            foreach(var figure in figures)
+            {
+                foreach (var plane in figure.Value.Planes)
+                {
+                    List<Point> lst = new List<Point>();
+                    List<double> lst2 = new List<double>();
+                    foreach (var point in plane)
+                    {
+                        var a = Projections.ParallelPoint(figure.Value.Points.ElementAt(point), camera.GetScreenFlat());
+                       var x =  camera.GetIJCoordinates(figure.Value.Points.ElementAt(point));
+                        var y = camera.ToRealScreen(x);
+                        var z = From3D(y);
+                        lst.Add(z);
+                        lst2.Add(Methods.Point3DDistance(figure.Value.Points.ElementAt(point), a));
+                    }
+                    Triangle(ZBuffer, lst[0], lst[1], lst[2], lst2[0], lst2[1], lst2[2], figure.Value.colors.ElementAt(figure.Value.Planes.IndexOf(plane)), CBuffer);
+                }
+            }
+            
             var fs = new List<(bool, Figure2D)>();
             foreach (var f in new_fig)
             {

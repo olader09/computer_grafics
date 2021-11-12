@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Drawing;
 
 namespace Figure
 {
@@ -23,6 +24,8 @@ namespace Figure
         public List<Point3D> NormalVectors;
 
         public Point3D CameraVector;
+
+        public List<Color> colors;
 
         // In world coordinates 
         public Point3D Center
@@ -47,6 +50,7 @@ namespace Figure
             NormalVectors = new();
             NormalVectors = new();
             AddingNormalVector();
+
         }
 
         public Figure3D(List<Point3D> points, List<(int, int)> lines)
@@ -100,6 +104,9 @@ namespace Figure
                 }
                 f.Planes.Add(planePoints);
             }
+            Random r = new Random();
+
+            f.colors = f.Points.Select(x => Color.FromArgb(r.Next(0,255), r.Next(0, 255), r.Next(0, 255))).ToList();
             return (name, f);
         }
 
