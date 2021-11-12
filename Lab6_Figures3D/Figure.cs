@@ -240,9 +240,9 @@ namespace Lab6_Figures3D
 
             double ax = (l1.Item2.X - l1.Item1.X), ay = (l1.Item2.Y - l1.Item1.Y), az = (l1.Item2.Z - l1.Item1.Z),
                    bx = (l2.Item2.X - l2.Item1.X), by = (l2.Item2.Y - l2.Item1.Y), bz = (l2.Item2.Z - l2.Item1.Z);
-            var res = new Point3D(ay * bz - az * by,
-                                -(ax * bz - az * bx),
-                                  ax * by - ay * bx);
+            var res = new Point3D((ay * bz - az * by),
+                                  -(ax * bz - az * bx),
+                                  (ax * by - ay * bx));
             return res;
         }
 
@@ -259,26 +259,56 @@ namespace Lab6_Figures3D
         {
             double x1 = p1.X, y1 = p1.Y, z1 = p1.Z,
                    x2 = p2.X, y2 = p2.Y, z2 = p2.Z;
-            var res = (x1 * x2 + y1 * y2 + z1 * z2) /
-                   (Math.Sqrt(x1*x1 + y1*y1 + z1*z1) * Math.Sqrt(x2*x2 + y2*y2 + z2*z2));
+           // double lengthVec = (Math.Sqrt(x1 * x1 + y1 * y1 + z1 * z1) * Math.Sqrt(x2 * x2 + y2 * y2 + z2 * z2));
+            double res;
+            //if (lengthVec != 0)
+            res = (x1 * x2 + y1 * y2 + z1 * z2) / (Math.Sqrt(x1 * x1 + y1 * y1 + z1 * z1) * Math.Sqrt(x2 * x2 + y2 * y2 + z2 * z2));
+            // return Math.Cos(Math.PI - Math.Acos(res));
             return res;
         }
         public void RemovingNonFacePlanes()
         {
             List<List<int>> NotFasesPlanes = new List<List<int>>();
+            List<List<int>> FasesPlanes = new List<List<int>>();
 
             for (int i = 0; i < NormalVectors.Count; i++)
-                if (CosBetweenVectors(NormalVectors[i], CameraVector) < 0)
+            {
+                if (CosBetweenVectors(CameraVector, NormalVectors[i]) > 0)
+                {
+                    // NotFasesPlanes.Add(Planes[i]);
+                    FasesPlanes.Add(Planes[i]);
+                }
+                else
+                {
                     NotFasesPlanes.Add(Planes[i]);
-
+                }
+            }
                
-            if (NotFasesPlanes.Count == 1) // для тетраэдра - вид сверху, рисуем всё
+            if (Planes.Count - FasesPlanes.Count == 1) // для тетраэдра - вид сверху, рисуем всё
                 return;
-            
-            if (NotFasesPlanes.Count == 2) // если две нелицевых грани - одно ребро не рисуем
+            /*else if (Planes.Count - FasesPlanes.Count == 2) // если две нелицевых грани - одно ребро не рисуем
             {
                 var InvisibleLine = NotFasesPlanes[0].Intersect(NotFasesPlanes[1]).ToList();
                 Lines.Remove((InvisibleLine[0], InvisibleLine[1]));
+            }*/
+            else if (Planes.Count - FasesPlanes.Count > 1)
+            {
+                List<(int, int)> smt =  new List<(int, int)>();
+                foreach (var line in Lines)
+                {
+                    foreach (var plane in FasesPlanes)
+                    {
+                        if (plane.Contains(line.Item1) && plane.Contains(line.Item2))
+                        {
+                            smt.Add(line);
+                            break;
+                        }
+                    }
+                }
+                Lines.Clear();
+                Lines = smt;
+                //foreach (var x in smt)
+                  //  Lines.Add(x);
             }
         }
     }
