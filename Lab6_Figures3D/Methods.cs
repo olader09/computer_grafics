@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Math;
+using FigureParts.Point;
+using FigureParts.Edge;
+using GeometricPrimitives.ParametricLine;
+using GeometricPrimitives.CanonicFlat; 
 
 namespace Lab6_Figures3D
 {

@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Math;
-using static Lab6_Figures3D.Methods; 
+using static Lab6_Figures3D.Methods;
+using FigureParts.Point;
+using FigureParts.Edge;
+using GeometricPrimitives.CanonicFlat;
+using GeometricPrimitives.ParametricLine;
 
 namespace Lab6_Figures3D
 {
