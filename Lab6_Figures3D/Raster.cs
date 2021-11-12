@@ -9,13 +9,13 @@ namespace Lab6And7_Figures3D
 {
     public static class Raster
     {
-        public static void Triangle(double[,] canvas, Point p1, Point p2, Point p3, double z1, double z2, double z3, Color color, Color[,] color_canvas)
-        { 
+        public static void Triangle(double[,] canvas, Point p1, Point p2, Point p3, double Z1, double Z2, double Z3, Color color, Color[,] color_canvas)
+        {
             //int x1 = p1.X, y1 = p1.Y, x2 = p2.X, y2 = p2.Y, x3 = p3.X, y3 = p3.Y;
             //double z1_ = Color.FromArgb(1, 2, 3), c2_ = Color.FromArgb(4, 5, 6), c3_ = Color.FromArgb(7, 8, 9);
             //bool firstPoint = true, secondPoint = false, thirdPoint = false; // для рисования мышью
 
-            
+            drawGradient();
 
             void swap(ref int x, ref int y)
             {
@@ -24,19 +24,26 @@ namespace Lab6And7_Figures3D
                 y = a;
             }
 
+            void swapd(ref double x, ref double y)
+            {
+                double a = x;
+                x = y;
+                y = a;
+            }
+
             void drawGradient()
             {
                 int x1 = p1.X, x2 = p2.X, x3 = p3.X,
                     y1 = p1.Y, y2 = p2.Y, y3 = p3.Y;
-                int z1 =0,
-                    z2 = 0, 
-                    z3 = 0;
+                double z1 = Z1,
+                    z2 = Z2, 
+                    z3 = Z3;
 
                 if (y1 < y2) // в решении вторая точка всегда верхняя, поэтому делаем её такой по оси y //
                 {                                                                                       //
                     swap(ref x2, ref x1);                                                               //
                     swap(ref y2, ref y1);                                                               //
-                    swap(ref z2, ref z1);                                                               //
+                    swapd(ref z2, ref z1);                                                               //
                                                                                                         //int q1 = c1.R, q2 = c1.G, q3 = c1.B;                                                //
                                                                                                         //c1 = Color.FromArgb(c2.R, c2.G, c2.B);                                              //
                                                                                                         //c2 = Color.FromArgb(q1, q2, q3);                                                    //
@@ -47,7 +54,7 @@ namespace Lab6And7_Figures3D
                 {                                                                                       //
                     swap(ref x2, ref x3);                                                               //
                     swap(ref y2, ref y3);                                                               //
-                    swap(ref z2, ref z3);                                                                                //
+                    swapd(ref z2, ref z3);                                                                                //
                     //int q1 = c2.R, q2 = c2.G, q3 = c2.B;                                                //
                     //c2 = Color.FromArgb(c3.R, c3.G, c3.B);                                              //
                     //c3 = Color.FromArgb(q1, q2, q3);                                                    //
@@ -57,7 +64,7 @@ namespace Lab6And7_Figures3D
                 {
                     swap(ref x1, ref x3);
                     swap(ref y1, ref y3);
-                    swap(ref z1, ref z3);
+                    swapd(ref z1, ref z3);
                     //int q1 = c1.R, q2 = c1.G, q3 = c1.B;
                     //c1 = Color.FromArgb(c3.R, c3.G, c3.B);
                     //c3 = Color.FromArgb(q1, q2, q3);
@@ -207,18 +214,23 @@ namespace Lab6And7_Figures3D
 
                         //Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
                         if (x < 0)
+                        {
                             if (canvas[1, y] > z_cur)
                             {
                                 canvas[1, y] = z_cur;
                                 color_canvas[1, y] = color;
                             }
-                            else
-                            {
+                        }
+                        else
+                        {
+                            //if (canvas[x, y] > z_cur)
+                            //{
                                 canvas[x, y] = z_cur;
                                 color_canvas[x, y] = color;
-                            }
+                            //}
+                        }
 
-                        
+
                     }
                     //if (y == y1)
                     // break;
@@ -306,16 +318,21 @@ namespace Lab6And7_Figures3D
 
                         //Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
                         if (x < 0)
+                        {
                             if (canvas[1, y] > z_cur)
                             {
                                 canvas[1, y] = z_cur;
                                 color_canvas[1, y] = color;
                             }
-                            else
-                            {
+                        }
+                        else
+                        {
+                            //if (canvas[x, y] > z_cur)
+                            //{
                                 canvas[x, y] = z_cur;
                                 color_canvas[x, y] = color;
-                            }
+                            //}
+                        }
 
 
                     }
@@ -403,16 +420,21 @@ namespace Lab6And7_Figures3D
 
                         // Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
                         if (x < 0)
+                        {
                             if (canvas[1, y] > z_cur)
                             {
                                 canvas[1, y] = z_cur;
                                 color_canvas[1, y] = color;
                             }
-                            else
-                            {
+                        }
+                        else
+                        {
+                            //if (canvas[x, y] > z_cur)
+                            //{
                                 canvas[x, y] = z_cur;
                                 color_canvas[x, y] = color;
-                            }
+                            //}
+                        }
                     }
                 }
             }

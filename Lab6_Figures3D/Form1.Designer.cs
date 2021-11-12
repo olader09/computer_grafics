@@ -51,7 +51,6 @@ namespace Lab6_Figures3D
             this.LineTBP2 = new System.Windows.Forms.TextBox();
             this.LineTBP1 = new System.Windows.Forms.TextBox();
             this.PointGB = new System.Windows.Forms.GroupBox();
-            this.ClearButton = new System.Windows.Forms.Button();
             this.NumericRotationSplitCount = new System.Windows.Forms.NumericUpDown();
             this.BuildRotationFigureButton = new System.Windows.Forms.Button();
             this.richPointsTB = new System.Windows.Forms.RichTextBox();
@@ -61,6 +60,7 @@ namespace Lab6_Figures3D
             this.NumericPointZ = new System.Windows.Forms.NumericUpDown();
             this.NumericPointY = new System.Windows.Forms.NumericUpDown();
             this.NumericPointX = new System.Windows.Forms.NumericUpDown();
+            this.ClearButton = new System.Windows.Forms.Button();
             this.SceneFiguresList = new System.Windows.Forms.ListBox();
             this.AddFigureButton = new System.Windows.Forms.Button();
             this.CameraGroup = new System.Windows.Forms.GroupBox();
@@ -87,6 +87,7 @@ namespace Lab6_Figures3D
             this.DeltaYTB = new System.Windows.Forms.TextBox();
             this.DeltaXTB = new System.Windows.Forms.TextBox();
             this.FunctionCB = new System.Windows.Forms.ComboBox();
+            this.ZBuf = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.TransformGroup.SuspendLayout();
             this.CoefGB.SuspendLayout();
@@ -356,16 +357,6 @@ namespace Lab6_Figures3D
             this.PointGB.TabStop = false;
             this.PointGB.Text = "Point";
             // 
-            // ClearButton
-            // 
-            this.ClearButton.Location = new System.Drawing.Point(133, 10);
-            this.ClearButton.Name = "ClearButton";
-            this.ClearButton.Size = new System.Drawing.Size(116, 49);
-            this.ClearButton.TabIndex = 11;
-            this.ClearButton.Text = "Clear";
-            this.ClearButton.UseVisualStyleBackColor = true;
-            this.ClearButton.Click += new System.EventHandler(this.Clear_Click);
-            // 
             // NumericRotationSplitCount
             // 
             this.NumericRotationSplitCount.Location = new System.Drawing.Point(126, 77);
@@ -459,6 +450,16 @@ namespace Lab6_Figures3D
             this.NumericPointX.Size = new System.Drawing.Size(72, 27);
             this.NumericPointX.TabIndex = 0;
             // 
+            // ClearButton
+            // 
+            this.ClearButton.Location = new System.Drawing.Point(133, 10);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(116, 49);
+            this.ClearButton.TabIndex = 11;
+            this.ClearButton.Text = "Clear";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.Clear_Click);
+            // 
             // SceneFiguresList
             // 
             this.SceneFiguresList.FormattingEnabled = true;
@@ -466,7 +467,7 @@ namespace Lab6_Figures3D
             this.SceneFiguresList.Location = new System.Drawing.Point(10, 62);
             this.SceneFiguresList.Margin = new System.Windows.Forms.Padding(2);
             this.SceneFiguresList.Name = "SceneFiguresList";
-            this.SceneFiguresList.Size = new System.Drawing.Size(240, 184);
+            this.SceneFiguresList.Size = new System.Drawing.Size(240, 144);
             this.SceneFiguresList.TabIndex = 4;
             this.SceneFiguresList.SelectedIndexChanged += new System.EventHandler(this.SceneFiguresList_SelectedIndexChanged);
             // 
@@ -750,11 +751,22 @@ namespace Lab6_Figures3D
             this.FunctionCB.TabIndex = 0;
             this.FunctionCB.SelectedIndexChanged += new System.EventHandler(this.FunctionCB_SelectedIndexChanged);
             // 
+            // ZBuf
+            // 
+            this.ZBuf.AutoSize = true;
+            this.ZBuf.Location = new System.Drawing.Point(10, 212);
+            this.ZBuf.Name = "ZBuf";
+            this.ZBuf.Size = new System.Drawing.Size(84, 24);
+            this.ZBuf.TabIndex = 12;
+            this.ZBuf.Text = "Z Buffer";
+            this.ZBuf.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1106, 562);
+            this.Controls.Add(this.ZBuf);
             this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.GraphGB);
             this.Controls.Add(this.FigureCenter);
@@ -855,6 +867,7 @@ namespace Lab6_Figures3D
         private System.Windows.Forms.NumericUpDown NumericRotationSplitCount;
         private System.Windows.Forms.Button BuildRotationFigureButton;
         private System.Windows.Forms.Button ClearButton;
+        private System.Windows.Forms.CheckBox ZBuf;
     }
 }
 

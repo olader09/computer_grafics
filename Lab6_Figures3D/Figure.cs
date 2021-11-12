@@ -27,6 +27,8 @@ namespace Figure
 
         public List<Color> colors;
 
+        public List<List<int>> VF = new(); 
+
         // In world coordinates 
         public Point3D Center
         {
@@ -72,6 +74,8 @@ namespace Figure
             Lines = new(other.Lines);
             Planes = new(other.Planes);
             NormalVectors = new();
+            VF = other.VF == null ? null : new(other.VF);
+            colors = other.colors == null ? null : new(other.colors);
             AddingNormalVector();
         }
 
@@ -106,7 +110,7 @@ namespace Figure
             }
             Random r = new Random();
 
-            f.colors = f.Points.Select(x => Color.FromArgb(r.Next(0,255), r.Next(0, 255), r.Next(0, 255))).ToList();
+            f.colors = f.Planes.Select(x => Color.FromArgb(r.Next(0,255), r.Next(0, 255), r.Next(0, 255))).ToList();
             return (name, f);
         }
 
@@ -205,6 +209,8 @@ namespace Figure
                 //foreach (var x in smt)
                   //  Lines.Add(x);
             }
+
+            VF = new(FasesPlanes); 
         }
     }
 
