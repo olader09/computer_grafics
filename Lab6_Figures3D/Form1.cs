@@ -11,6 +11,7 @@ using Figure;
 using FigureParts.Point;
 using FigureParts.Edge;
 using GeometricPrimitives.CanonicFlat;
+using static Lab6And7_Figures3D.Raster;
 
 namespace Lab6_Figures3D
 {
@@ -31,7 +32,9 @@ namespace Lab6_Figures3D
         public double transformAngle;
         public double transformCoef;
 		
-		public double[,] ZBuffer; 
+		public double[,] ZBuffer;
+        public Color[,] CBuffer;
+
 
         public List<Point3D> listPoints;
 
@@ -39,6 +42,7 @@ namespace Lab6_Figures3D
         public Form1()
         {
             InitializeComponent();
+            
             // FiguresList.Items.AddRange(new object[] { "Tetrahedron", "Cube", "Octahedron", "Dodecahedron", "Icosahedron" });
             SceneFiguresList.SelectionMode = SelectionMode.One;
             g = Canvas.CreateGraphics();
@@ -54,8 +58,8 @@ namespace Lab6_Figures3D
             //figures.Add(new F4());
 
             // var r = Projections.ParallelPoint(new Point3D(1, 2, -1), new Flat3D(3, -1, 2, -27));
-            figures.Add("Coord", new Coord());
-            figures.Add("Grid", new Grid());
+            //figures.Add("Coord", new Coord());
+            //figures.Add("Grid", new Grid());
 
             RedrawObjects();
 
@@ -72,56 +76,124 @@ namespace Lab6_Figures3D
             var p2 = Projections.ParallelPoint(pp, new Flat3D(0, 0, 1, -2.25));*/
 			
 			ZBuffer = new double[Canvas.Width, Canvas.Height];
+            for (int i = 0; i < ZBuffer.GetLength(0); i++)
+                for (int j = 0; j < ZBuffer.GetLength(1); j++)
+                    ZBuffer[i, j] = double.MaxValue;
+
+            CBuffer = new Color[Canvas.Width, Canvas.Height];
+            for (int i = 0; i < CBuffer.GetLength(0); i++)
+                for (int j = 0; j < CBuffer.GetLength(1); j++)
+                    CBuffer[i, j] = Color.White;
         }
 
         public void RedrawObjects(string selectedFigure = null)
         {
-            g.Clear(DefaultBackColor);
+
+            if (ZBuf.Checked)
+            {
+                g.Clear(DefaultBackColor);
             Dictionary<string, Figure3D> new_fig = new Dictionary<string, Figure3D>();
             foreach (var f in figures)
             {
-                if (f.Key == selectedFigure)
-                {
+                //if (f.Key == selectedFigure)
+                //{
                     Figure3D fig = new Figure3D(f.Value);
                     fig.CameraVector = camera.View - camera.Location;
                     // fig.CameraVector = camera.View;
                     fig.RemovingNonFacePlanes();
                     new_fig[f.Key] = fig;
-                }
+                /*}
                 else
                 {
                     new_fig[f.Key] = f.Value;
-                }
+                }*/
             }
-                        
-            var fs = new List<(bool, Figure2D)>();
-            foreach (var f in new_fig)
-            {
-                fs.Add((f.Key == selectedFigure, camera.GetFigure2D(f.Value)));
-            }
-            var res = new List<(bool, Figure2D)>();
-            foreach (var f in fs)
-            {
-                var newF = new Figure2D();
-                newF.Lines = f.Item2.Lines;
-                newF.Planes = f.Item2.Planes;
-                newF.Points = new List<Point2D>();
-                foreach (var p in f.Item2.Points)
-                {
-                    var newP = camera.ToRealScreen(p);
-                    newF.Points.Add(newP);
-                }
-                // Scaling to real screen
-                // newF.Points = newF.Points.Select(p => new Point2D(p.X / camera.Width * size.Item1, p.Y / camera.Height * size.Item2)).ToList();
-                res.Add((f.Item1, newF));
-            }
-            ShowFigures(res);
-            Pen pen = new Pen(Color.Green);
-            //g.DrawLine(pen, From3D(camera.GetIJCoordinates(camera.Location)), From3D(camera.GetIJCoordinates(camera.View)));
-            //if (selectedFigure != null)
-            //  if (figures[selectedFigure].Points.Count>1)
-            //    g.DrawLine(pen, From3D(camera.GetIJCoordinates(figures[selectedFigure].Points[0])), From3D(camera.GetIJCoordinates(figures[selectedFigure].Points[1])));
 
+            ZBuffer = new double[Canvas.Width, Canvas.Height];
+            for (int i = 0; i < ZBuffer.GetLength(0); i++)
+                for (int j = 0; j < ZBuffer.GetLength(1); j++)
+                    ZBuffer[i, j] = double.MaxValue;
+
+            CBuffer = new Color[Canvas.Width, Canvas.Height];
+            for (int i = 0; i < CBuffer.GetLength(0); i++)
+                for (int j = 0; j < CBuffer.GetLength(1); j++)
+                    CBuffer[i, j] = Color.White;
+
+            foreach (var figure in new_fig)
+            {
+                //figure.Value.RemovingNonFacePlanes(); 
+                foreach (var plane in figure.Value.VF)
+                {
+                    
+                    List<Point> lst = new List<Point>();
+                    List<double> lst2 = new List<double>();
+                    foreach (var point in plane)
+                    {
+                        var a = Projections.ParallelPoint(figure.Value.Points.ElementAt(point), camera.GetScreenFlat());
+                       var x =  camera.GetIJCoordinates(figure.Value.Points.ElementAt(point));
+                        var y = camera.ToRealScreen(x);
+                        var z = From3D(y);
+                        lst.Add(z);
+                        lst2.Add(Methods.Point3DDistance(figure.Value.Points.ElementAt(point), a));
+                    }
+                    Triangle(ZBuffer, lst[0], lst[1], lst[2], lst2[0], lst2[1], lst2[2], figure.Value.colors.ElementAt(figure.Value.Planes.IndexOf(plane)), CBuffer);
+                }
+            }
+
+                var b = new Bitmap(Canvas.Width, Canvas.Height);
+                for (int i = 0; i < Canvas.Width; ++i)
+                    for (int j = 0; j < Canvas.Height; ++j)
+                        b.SetPixel(i, j, CBuffer[i, j]);
+                Canvas.Image = b;
+            }
+            else
+            {
+                g.Clear(DefaultBackColor);
+                Dictionary<string, Figure3D> new_fig = new Dictionary<string, Figure3D>();
+                foreach (var f in figures)
+                {
+                    if (f.Key == selectedFigure)
+                    {
+                        Figure3D fig = new Figure3D(f.Value);
+                        fig.CameraVector = camera.View - camera.Location;
+                        // fig.CameraVector = camera.View;
+                        fig.RemovingNonFacePlanes();
+                        new_fig[f.Key] = fig;
+                    }
+                    else
+                    {
+                        new_fig[f.Key] = f.Value;
+                    }
+                }
+
+                var fs = new List<(bool, Figure2D)>();
+                foreach (var f in new_fig)
+                {
+                    fs.Add((f.Key == selectedFigure, camera.GetFigure2D(f.Value)));
+                }
+                var res = new List<(bool, Figure2D)>();
+                foreach (var f in fs)
+                {
+                    var newF = new Figure2D();
+                    newF.Lines = f.Item2.Lines;
+                    newF.Planes = f.Item2.Planes;
+                    newF.Points = new List<Point2D>();
+                    foreach (var p in f.Item2.Points)
+                    {
+                        var newP = camera.ToRealScreen(p);
+                        newF.Points.Add(newP);
+                    }
+                    // Scaling to real screen
+                    // newF.Points = newF.Points.Select(p => new Point2D(p.X / camera.Width * size.Item1, p.Y / camera.Height * size.Item2)).ToList();
+                    res.Add((f.Item1, newF));
+                }
+                ShowFigures(res);
+                Pen pen = new Pen(Color.Green);
+                //g.DrawLine(pen, From3D(camera.GetIJCoordinates(camera.Location)), From3D(camera.GetIJCoordinates(camera.View)));
+                //if (selectedFigure != null)
+                //  if (figures[selectedFigure].Points.Count>1)
+                //    g.DrawLine(pen, From3D(camera.GetIJCoordinates(figures[selectedFigure].Points[0])), From3D(camera.GetIJCoordinates(figures[selectedFigure].Points[1])));
+            }
         }
 
         public Point From3D(Point2D p)

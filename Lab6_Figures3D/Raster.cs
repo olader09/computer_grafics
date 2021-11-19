@@ -9,91 +9,13 @@ namespace Lab6And7_Figures3D
 {
     public static class Raster
     {
-        public static UInt32 ShadeBackgroundPixel(int x, int y, Point p1, Point p2, Point p3, Color A, Color B, Color C)
+        public static void Triangle(double[,] canvas, Point p1, Point p2, Point p3, double Z1, double Z2, double Z3, Color color, Color[,] color_canvas)
         {
-            UInt32 pixelValue;
+            //int x1 = p1.X, y1 = p1.Y, x2 = p2.X, y2 = p2.Y, x3 = p3.X, y3 = p3.Y;
+            //double z1_ = Color.FromArgb(1, 2, 3), c2_ = Color.FromArgb(4, 5, 6), c3_ = Color.FromArgb(7, 8, 9);
+            //bool firstPoint = true, secondPoint = false, thirdPoint = false; // для рисования мышью
 
-            double l1, l2, l3;
-            int i;
-            pixelValue = 0xFFFFFFFF;
-
-                l1 = ((p2.Y - p3.Y) * ((double)(x) - p3.X) + (p3.X - p2.X) * ((double)(y) - p3.Y)) /
-                    ((p2.Y - p3.Y) * (p1.X - p3.X) + (p3.X - p2.X) * (p1.Y - p3.Y));
-                l2 = ((p3.Y - p1.Y) * ((double)(x) - p3.X) + (p1.X - p3.X) * ((double)(y) - p3.Y)) /
-                    ((p2.Y - p3.Y) * (p1.X - p3.X) + (p3.X - p2.X) * (p1.Y - p3.Y));
-                l3 = 1 - l1 - l2;
-
-                if (l1 >= 0 && l1 <= 1 && l2 >= 0 && l2 <= 1 && l3 >= 0 && l3 <= 1)
-                {
-                    pixelValue = (UInt32)0xFF000000 |
-                        ((UInt32)(l1 * ((A.ToArgb() & 0x00FF0000) >> 16) + l2 * ((B.ToArgb() & 0x00FF0000) >> 16) + l3 * ((C.ToArgb() & 0x00FF0000) >> 16)) << 16) |
-                        ((UInt32)(l1 * ((A.ToArgb() & 0x0000FF00) >> 8) + l2 * ((B.ToArgb() & 0x0000FF00) >> 8) + l3 * ((C.ToArgb() & 0x0000FF00) >> 8)) << 8) |
-                        (UInt32)(l1 * (A.ToArgb() & 0x000000FF) + l2 * (B.ToArgb() & 0x000000FF) + l3 * (C.ToArgb() & 0x000000FF));
-                    
-                }
-            
-
-            return pixelValue;
-        }
-        /*
-        public static void swap(object x, object y) { var t = x; x = y; y = t; }
-
-        public static List<int> Interpolate(int i0, int d0, int i1, int d1)
-        {
-            if (i0 == i1) {
-                return new() { d0 };
-            }
-            var values = new List<int>();
-            var a = (d1 - d0) / (i1 - i0);
-            var d = d0;
-            for (int i = i0; i < i1; ++i) {
-                values.Add(d);
-                d = d + a;
-            }
-            return values;
-        }
-
-        public static void DrawFilledTriangle(Point p0, Point p1, Point p2, Color color)
-        {
-   // Sort the points so that p0.Y <= p1.Y <= p2.Y
-    if (p1.Y < p0.Y) { swap(p1, p0); }
-            if (p2.Y < p0.Y) { swap(p2, p0); }
-            if (p2.Y < p1.Y) { swap(p2, p1); }
-
-            // Compute the x coordinates of the triangle edges
-            var x01 = Interpolate(p0.Y, p0.X, p1.Y, p1.X);
-            var x12 = Interpolate(p1.Y, p1.X, p2.Y, p2.X);
-            var x02 = Interpolate(p0.Y, p0.X, p2.Y, p2.X);
-
-   // Concatenate the short sides
-    remove_last(p0.p1.X)
-    p0.p1.p2.X = p0.p1.X + p1.p2.X
-
-   ❹// Determine which is left and which is right
-    m = floor(p0.p1.p2.X.length / 2)
-    if p0.p2.X[m] < p0.p1.p2.X[m] {
-                x_left = p0.p2.X
-        x_right = p0.p1.p2.X
-    }
-            else
-            {
-                x_left = p0.p1.p2.X
-              x_right = p0.p2.X
-          }
-
-   ❺// Draw the horizontal segments
-    for y = p0.Y to p2.Y {
-                for x = x_left[y - p0.Y] to x_right[y - p0.Y] {
-                    canvas.PutPixel(x, y, color)
-                }
-            }
-        }*/
-        /*
-        public static void Triangle(ref double[,] canvas, Point p1, Point p2, Point p3)
-        { 
-            int p1.X_ = 0, p1.Y_ = 1, p2.X_ = 0, p2.Y_ = 2, x3_ = 0, y3_ = 3;
-            Color c1_ = Color.FromArgb(1, 2, 3), c2_ = Color.FromArgb(4, 5, 6), c3_ = Color.FromArgb(7, 8, 9);
-            bool firstPoint = true, secondPoint = false, thirdPoint = false; // для рисования мышью
+            drawGradient();
 
             void swap(ref int x, ref int y)
             {
@@ -102,53 +24,69 @@ namespace Lab6And7_Figures3D
                 y = a;
             }
 
-            void drawGradient(int p1.X, int p1.Y, Color c1, int p2.X, int p2.Y, Color c2, int x3, int y3, Color c3)
+            void swapd(ref double x, ref double y)
             {
+                double a = x;
+                x = y;
+                y = a;
+            }
 
-                if (p1.Y < p2.Y) // в решении вторая точка всегда верхняя, поэтому делаем её такой по оси y //
+            void drawGradient()
+            {
+                int x1 = p1.X, x2 = p2.X, x3 = p3.X,
+                    y1 = p1.Y, y2 = p2.Y, y3 = p3.Y;
+                double z1 = Z1,
+                    z2 = Z2, 
+                    z3 = Z3;
+
+                if (y1 < y2) // в решении вторая точка всегда верхняя, поэтому делаем её такой по оси y //
                 {                                                                                       //
-                    swap(ref p2.X, ref p1.X);                                                               //
-                    swap(ref p2.Y, ref p1.Y);                                                               //
-                                                                                                        //
-                    int q1 = c1.R, q2 = c1.G, q3 = c1.B;                                                //
-                    c1 = Color.FromArgb(c2.R, c2.G, c2.B);                                              //
-                    c2 = Color.FromArgb(q1, q2, q3);                                                    //
-                                                                                                        //
+                    swap(ref x2, ref x1);                                                               //
+                    swap(ref y2, ref y1);                                                               //
+                    swapd(ref z2, ref z1);                                                               //
+                                                                                                        //int q1 = c1.R, q2 = c1.G, q3 = c1.B;                                                //
+                                                                                                        //c1 = Color.FromArgb(c2.R, c2.G, c2.B);                                              //
+                                                                                                        //c2 = Color.FromArgb(q1, q2, q3);                                                    //
+                                                                                                       //
                 }                                                                                       //  
                                                                                                         //  
-                if (y3 < p2.Y)                                                                            //
+                if (y3 < y2)                                                                            //
                 {                                                                                       //
-                    swap(ref p2.X, ref x3);                                                               //
-                    swap(ref p2.Y, ref y3);                                                               //
-                                                                                                        //
-                    int q1 = c2.R, q2 = c2.G, q3 = c2.B;                                                //
-                    c2 = Color.FromArgb(c3.R, c3.G, c3.B);                                              //
-                    c3 = Color.FromArgb(q1, q2, q3);                                                    //
+                    swap(ref x2, ref x3);                                                               //
+                    swap(ref y2, ref y3);                                                               //
+                    swapd(ref z2, ref z3);                                                                                //
+                    //int q1 = c2.R, q2 = c2.G, q3 = c2.B;                                                //
+                    //c2 = Color.FromArgb(c3.R, c3.G, c3.B);                                              //
+                    //c3 = Color.FromArgb(q1, q2, q3);                                                    //
                 }                                                                                       //
 
-                if (p1.X > x3)
+                if (x1 > x3)
                 {
-                    swap(ref p1.X, ref x3);
-                    swap(ref p1.Y, ref y3);
-
-                    int q1 = c1.R, q2 = c1.G, q3 = c1.B;
-                    c1 = Color.FromArgb(c3.R, c3.G, c3.B);
-                    c3 = Color.FromArgb(q1, q2, q3);
+                    swap(ref x1, ref x3);
+                    swap(ref y1, ref y3);
+                    swapd(ref z1, ref z3);
+                    //int q1 = c1.R, q2 = c1.G, q3 = c1.B;
+                    //c1 = Color.FromArgb(c3.R, c3.G, c3.B);
+                    //c3 = Color.FromArgb(q1, q2, q3);
                 }
 
-                if (p1.Y < y3)
+                if (y1 < y3)
                 {
-                    Tuple<int, int, int> p = drawGradientUpToDown1(p1.X, p1.Y, c1, p2.X, p2.Y, c2, x3, y3, c3);
+                    //Tuple<int, int, int> p = drawGradientUpToDown1(x1, y1, c1, x2, y2, c2, x3, y3, c3);
+                    double z_point = drawGradientUpToDown1(x1, y1, z1, x2, y2, z2, x3, y3, z3);
 
-                    float x_new = p2.X + (x3 - p2.X) * (p1.Y - p2.Y) / (float)(y3 - p2.Y);
+                    float x_new = x2 + (x3 - x2) * (y1 - y2) / (float)(y3 - y2);
 
-                    int red_new = (c2.R + c3.R) * (p1.Y - p2.Y) / (y3 - p2.Y);
-                    int green_new = (c2.G + c3.G) * (p1.Y - p2.Y) / (y3 - p2.Y);
-                    int blue_new = (c2.B + c3.B) * (p1.Y - p2.Y) / (y3 - p2.Y);
 
-                    if (red_new > 255)   // ну, не без этого
-                        red_new = 255;
-                    if (green_new > 255)
+                     //int z_new = (z2 + z3) * (y1 - y2) / (y3 - y2);
+
+                    //int red_new = (c2.R + c3.R) * (y1 - y2) / (y3 - y2);
+                    //int green_new = (c2.G + c3.G) * (y1 - y2) / (y3 - y2);
+                    //int blue_new = (c2.B + c3.B) * (y1 - y2) / (y3 - y2);
+
+                    //if (red_new > 255)   // ну, не без этого
+                      //  red_new = 255;
+                    /*if (green_new > 255)
                         green_new = 255;
                     if (blue_new > 255)
                         blue_new = 255;
@@ -157,28 +95,29 @@ namespace Lab6And7_Figures3D
                     if (green_new < 0)
                         green_new = 0;
                     if (blue_new < 0)
-                        blue_new = 0;
+                        blue_new = 0;*/
 
                     //Color c_new = Color.FromArgb(red_new, green_new, blue_new);
-                    Color c_new = Color.FromArgb(p.Item1, p.Item2, p.Item3);
+                    //Color c_new = Color.FromArgb(p.Item1, p.Item2, p.Item3);
 
-                    drawGradientUpToDown(p1.X, p1.Y, c1, p2.X, p2.Y, c2, (int)x_new, p1.Y, c_new);
+                    drawGradientUpToDown(x1, y1, z1, x2, y2, z2, (int)x_new, y1, z_point);
 
-                    drawGradientDownToUp(p1.X, p1.Y, c1, x3, y3, c3, (int)x_new, p1.Y, c_new);
+                    drawGradientDownToUp(x1, y1, z1, x3, y3, z3, (int)x_new, y1, z_point);
 
                 }
 
                 else
                 {
-                    float x_new = p2.X - (p2.X - p1.X) * (y3 - p2.Y) / (float)(p1.Y - p2.Y);
-                    Tuple<int, int, int> p = drawGradientUpToDown1(p1.X, p1.Y, c1, p2.X, p2.Y, c2, x3, y3, c3);
-                    int red_new = (c2.R + c1.R) * (y3 - p2.Y) / (p1.Y - p2.Y);
-                    int green_new = (c2.G + c1.G) * (y3 - p2.Y) / (p1.Y - p2.Y);
-                    int blue_new = (c2.B + c1.B) * (y3 - p2.Y) / (p1.Y - p2.Y);
+                    double x_new = x2 - (x2 - x1) * (y3 - y2) / (double)(y1 - y2);
+                    double z_point = drawGradientUpToDown1(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+                    //int red_new = (c2.R + c1.R) * (y3 - y2) / (y1 - y2);
+                    //int green_new = (c2.G + c1.G) * (y3 - y2) / (y1 - y2);
+                    //int blue_new = (c2.B + c1.B) * (y3 - y2) / (y1 - y2);
+                    //int z_new = (z2 + z1) * (y3 - y2) / (y1 - y2);
 
-                    Color c_new = Color.FromArgb(p.Item1, p.Item2, p.Item3);
+                    //Color c_new = Color.FromArgb(p.Item1, p.Item2, p.Item3);
                     //Color c_new = Color.FromArgb(red_new, green_new, blue_new);
-                    if (red_new > 255)   // ну, не без этого
+                   /* if (red_new > 255)   // ну, не без этого
                         red_new = 255;
                     if (green_new > 255)
                         green_new = 255;
@@ -189,20 +128,20 @@ namespace Lab6And7_Figures3D
                     if (green_new < 0)
                         green_new = 0;
                     if (blue_new < 0)
-                        blue_new = 0;
+                        blue_new = 0;*/
 
-                    drawGradientUpToDown((int)x_new, y3, c_new, p2.X, p2.Y, c2, x3, y3, c3);
-                    drawGradientDownToUp((int)x_new, y3, c_new, p1.X, p1.Y, c1, x3, y3, c3);
+                    drawGradientUpToDown((int)x_new, y3, z_point, x2, y2, z2, x3, y3, z3);
+                    drawGradientDownToUp((int)x_new, y3, z_point, x1, y1, z1, x3, y3, z3);
                 }
             }
             /////////
             // **********
-            void drawGradientUpToDown(int p1.X, int p1.Y, Color c1, int p2.X, int p2.Y, Color c2, int x3, int y3, Color c3)
+            void drawGradientUpToDown(int x1, int y1, double z1, int x2, int y2, double z2, int x3, int y3, double z3)
             {
                 int i = 0; // каждый пиксель по оси у
                 int j = 0; // каждый пиксель по оси х, когда рисуем прямые
 
-                int r1_begin = c1.R; // начальные цвета
+                /*int r1_begin = c1.R; // начальные цвета
                 int g1_begin = c1.G;
                 int b1_begin = c1.B;
 
@@ -213,35 +152,40 @@ namespace Lab6And7_Figures3D
                 int r3_begin = c3.R;
                 int g3_begin = c3.G;
                 int b3_begin = c3.B;
+                */
+                
 
 
-                if (p1.Y == p2.Y)
-                    p1.Y++;
-                if (p1.Y == y3)
+                if (y1 == y2)
+                    y1++;
+                if (y1 == y3)
                     y3++;
-                if (p2.Y == y3)
-                    p2.Y++;
+                if (y2 == y3)
+                    y2++;
 
 
-                int color_right_red = 0;  // цвет правой точки
-                int color_right_green = 0;
-                int color_right_blue = 0;
+                // int color_right_red = 0;  // цвет правой точки
+                //int color_right_green = 0;
+                //int color_right_blue = 0;
+                double z_right = 0;
 
-                for (int y = p2.Y; y < y3; y++)
+                for (int y = y2; y < y3; y++)
                 {
 
                     i++;
 
-                    int xleft = p2.X - (p2.X - p1.X) * i / (y3 - p2.Y); // левая точка текущей прямой
-                    int deltax = i * (x3 - p1.X) / (y3 - p2.Y);     // длина текущей прямой
+                    int xleft = x2 - (x2 - x1) * i / (y3 - y2); // левая точка текущей прямой
+                    int deltax = i * (x3 - x1) / (y3 - y2);     // длина текущей прямой
 
-                    int color_left_red = r2_begin + (i * (r1_begin - r2_begin) / (p1.Y - p2.Y)); // цвет левой точки
-                    int color_left_green = g2_begin + (i * (g1_begin - g2_begin) / (p1.Y - p2.Y));
-                    int color_left_blue = b2_begin + (i * (b1_begin - b2_begin) / (p1.Y - p2.Y));
+                    // int color_left_red = r2_begin + (i * (r1_begin - r2_begin) / (y1 - y2)); // цвет левой точки
+                    // int color_left_green = g2_begin + (i * (g1_begin - g2_begin) / (y1 - y2));
+                    // int color_left_blue = b2_begin + (i * (b1_begin - b2_begin) / (y1 - y2));
+                    double z_left = z2 + (i * (z1 - z2) / (y1 - y2));
 
-                    color_right_red = r2_begin + (i * (r3_begin - r2_begin) / (y3 - p2.Y));  // цвет правой точки
-                    color_right_green = g2_begin + (i * (g3_begin - g2_begin) / (y3 - p2.Y));
-                    color_right_blue = b2_begin + (i * (b3_begin - b2_begin) / (y3 - p2.Y));
+                   // color_right_red = r2_begin + (i * (r3_begin - r2_begin) / (y3 - y2));  // цвет правой точки
+                    //color_right_green = g2_begin + (i * (g3_begin - g2_begin) / (y3 - y2));
+                    //color_right_blue = b2_begin + (i * (b3_begin - b2_begin) / (y3 - y2));
+                    z_right = z2 + (i * (z3 - z2) / (y3 - y2));
 
                     j = 0;
 
@@ -249,31 +193,46 @@ namespace Lab6And7_Figures3D
                     for (int x = xleft; x < xleft + deltax; x++)
                     {
                         j++;
-                        int red_cur = color_left_red + (j * (color_right_red - color_left_red) / (x3 - p1.X));    // текущие цвета
-                        int green_cur = color_left_green + (j * (color_right_green - color_left_green) / (x3 - p1.X));
-                        int blue_cur = color_left_blue + (j * (color_right_blue - color_left_blue) / (x3 - p1.X));
+                        //int red_cur = color_left_red + (j * (color_right_red - color_left_red) / (x3 - x1));    // текущие цвета
+                        //int green_cur = color_left_green + (j * (color_right_green - color_left_green) / (x3 - x1));
+                        //int blue_cur = color_left_blue + (j * (color_right_blue - color_left_blue) / (x3 - x1));
+                        double z_cur = z_left + (j * (z_right - z_left) / (double)(x3 - x1));
 
-                        if (red_cur > 255)   // ну, не без этого
-                            red_cur = 255;
-                        if (green_cur > 255)
-                            green_cur = 255;
-                        if (blue_cur > 255)
-                            blue_cur = 255;
-                        if (red_cur < 0)
-                            red_cur = 0;
-                        if (green_cur < 0)
-                            green_cur = 0;
-                        if (blue_cur < 0)
-                            blue_cur = 0;
+                        /* if (red_cur > 255)   // ну, не без этого
+                             red_cur = 255;
+                         if (green_cur > 255)
+                             green_cur = 255;
+                         if (blue_cur > 255)
+                             blue_cur = 255;
+                         if (red_cur < 0)
+                             red_cur = 0;
+                         if (green_cur < 0)
+                             green_cur = 0;
+                         if (blue_cur < 0)
+                             blue_cur = 0;*/
 
-                        Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
+
+                        //Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
                         if (x < 0)
-                            canvas[1, y] = cur_color;
+                        {
+                            if (canvas[1, y] > z_cur)
+                            {
+                                canvas[1, y] = z_cur;
+                                color_canvas[1, y] = color;
+                            }
+                        }
                         else
-                            canvas[x, y] = cur_color;
+                        {
+                            //if (canvas[x, y] > z_cur)
+                            //{
+                                canvas[x, y] = z_cur;
+                                color_canvas[x, y] = color;
+                            //}
+                        }
+
 
                     }
-                    //if (y == p1.Y)
+                    //if (y == y1)
                     // break;
 
                 }
@@ -281,12 +240,12 @@ namespace Lab6And7_Figures3D
 
             }
             // **********------
-            Tuple<int, int, int> drawGradientUpToDown1(int p1.X, int p1.Y, Color c1, int p2.X, int p2.Y, Color c2, int x3, int y3, Color c3)
+            double drawGradientUpToDown1(int x1, int y1, double z1, int x2, int y2, double z2, int x3, int y3, double z3)
             {
                 int i = 0; // каждый пиксель по оси у
                 int j = 0; // каждый пиксель по оси х, когда рисуем прямые
 
-                int r1_begin = c1.R; // начальные цвета
+                /*int r1_begin = c1.R; // начальные цвета
                 int g1_begin = c1.G;
                 int b1_begin = c1.B;
 
@@ -296,36 +255,39 @@ namespace Lab6And7_Figures3D
 
                 int r3_begin = c3.R;
                 int g3_begin = c3.G;
-                int b3_begin = c3.B;
+                int b3_begin = c3.B;*/
 
 
-                if (p1.Y == p2.Y)
-                    p1.Y++;
-                if (p1.Y == y3)
+                if (y1 == y2)
+                    y1++;
+                if (y1 == y3)
                     y3++;
-                if (p2.Y == y3)
-                    p2.Y++;
+                if (y2 == y3)
+                    y2++;
 
 
-                int color_right_red = 0;  // цвет правой точки
-                int color_right_green = 0;
-                int color_right_blue = 0;
+                //int color_right_red = 0;  // цвет правой точки
+                //int color_right_green = 0;
+                //int color_right_blue = 0;
+                double z_right = 0;
 
-                for (int y = p2.Y; y < y3; y++)
+                for (int y = y2; y < y3; y++)
                 {
 
                     i++;
-                    float x_new_ = p2.X + (x3 - p2.X) * (p1.Y - p2.Y) / (float)(y3 - p2.Y);
-                    int xleft = p2.X - (p2.X - p1.X) * i / (y3 - p2.Y); // левая точка текущей прямой
-                    int deltax = i * (x3 - p1.X) / (y3 - p2.Y);     // длина текущей прямой
+                    int x_new_ = x2 + (x3 - x2) * (y1 - y2) / (y3 - y2);
+                    int xleft = x2 - (x2 - x1) * i / (y3 - y2); // левая точка текущей прямой
+                    int deltax = i * (x3 - x1) / (y3 - y2);     // длина текущей прямой
 
-                    int color_left_red = r2_begin + (i * (r1_begin - r2_begin) / (p1.Y - p2.Y)); // цвет левой точки
-                    int color_left_green = g2_begin + (i * (g1_begin - g2_begin) / (p1.Y - p2.Y));
-                    int color_left_blue = b2_begin + (i * (b1_begin - b2_begin) / (p1.Y - p2.Y));
+                    //int color_left_red = r2_begin + (i * (r1_begin - r2_begin) / (y1 - y2)); // цвет левой точки
+                    //int color_left_green = g2_begin + (i * (g1_begin - g2_begin) / (y1 - y2));
+                    //int color_left_blue = b2_begin + (i * (b1_begin - b2_begin) / (y1 - y2));
+                    double z_left = z2 + (i * (z1 - z2) / (double)(y1 - y2));
 
-                    color_right_red = r2_begin + (i * (r3_begin - r2_begin) / (y3 - p2.Y));  // цвет правой точки
-                    color_right_green = g2_begin + (i * (g3_begin - g2_begin) / (y3 - p2.Y));
-                    color_right_blue = b2_begin + (i * (b3_begin - b2_begin) / (y3 - p2.Y));
+                    /*color_right_red = r2_begin + (i * (r3_begin - r2_begin) / (y3 - y2));  // цвет правой точки
+                    color_right_green = g2_begin + (i * (g3_begin - g2_begin) / (y3 - y2));
+                    color_right_blue = b2_begin + (i * (b3_begin - b2_begin) / (y3 - y2));*/
+                    z_right = z2 + (i * (z3 - z2) / (double)(y2 - y2));
 
                     j = 0;
 
@@ -333,10 +295,12 @@ namespace Lab6And7_Figures3D
                     for (int x = xleft; x < xleft + deltax; x++)
                     {
                         j++;
-                        int red_cur = color_left_red + (j * (color_right_red - color_left_red) / (x3 - p1.X));    // текущие цвета
-                        int green_cur = color_left_green + (j * (color_right_green - color_left_green) / (x3 - p1.X));
-                        int blue_cur = color_left_blue + (j * (color_right_blue - color_left_blue) / (x3 - p1.X));
+                        // int red_cur = color_left_red + (j * (color_right_red - color_left_red) / (x3 - x1));    // текущие цвета
+                        //int green_cur = color_left_green + (j * (color_right_green - color_left_green) / (x3 - x1));
+                        //int blue_cur = color_left_blue + (j * (color_right_blue - color_left_blue) / (x3 - x1));
+                        double z_cur = z_left + (j * (z_right- z_left) / (double)(x3 - x1));
 
+                        /*
                         if (red_cur > 255)   // ну, не без этого
                             red_cur = 255;
                         if (green_cur > 255)
@@ -349,31 +313,48 @@ namespace Lab6And7_Figures3D
                             green_cur = 0;
                         if (blue_cur < 0)
                             blue_cur = 0;
+                        */
 
-                        Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
-                        if (x < 0)
-                            canvas[1, y] = cur_color;
+
+                        //Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
+                        /*if (x < 0)
+                        {
+                            if (canvas[1, y] > z_cur)
+                            {
+                                canvas[1, y] = z_cur;
+                                color_canvas[1, y] = color;
+                            }
+                        }
                         else
-                            canvas[x, y] = cur_color;
+                        {
+                            //if (canvas[x, y] > z_cur)
+                            //{
+                                canvas[x, y] = z_cur;
+                                color_canvas[x, y] = color;
+                            //}
+                        }*/
+
 
                     }
-                    if (y == p1.Y)
+                    if (y == y1)
                         break;
 
                 }
-                //drawGradientDownToUp(p1.X, p1.Y, c1, x3, y3, c3, (int)x_new, p1.Y, c_new);
-                //x3 = ((int)(p2.X + (x3 - p2.X) * (p1.Y - p2.Y) / (float)(y3 - p2.Y)));
-                //float x_new = p2.X + (x3 - p2.X) * (p1.Y - p2.Y) / (float)(y3 - p2.Y);
-                Color c_new = Color.FromArgb(color_right_red, color_right_green, color_right_blue);
-                return Tuple.Create(color_right_red, color_right_green, color_right_blue);
+                //drawGradientDownToUp(x1, y1, c1, x3, y3, c3, (int)x_new, y1, c_new);
+                //x3 = ((int)(x2 + (x3 - x2) * (y1 - y2) / (float)(y3 - y2)));
+                //float x_new = x2 + (x3 - x2) * (y1 - y2) / (float)(y3 - y2);
+                //Color c_new = Color.FromArgb(color_right_red, color_right_green, color_right_blue);
+                //return Tuple.Create(color_right_red, color_right_green, color_right_blue);
+                return z_right;
 
             }
             //-------------
-            void drawGradientDownToUp(int p1.X, int p1.Y, Color c1, int p2.X, int p2.Y, Color c2, int x3, int y3, Color c3)
+            void drawGradientDownToUp(int x1, int y1, double z1, int x2, int y2, double z2, int x3, int y3, double z3)
             {
                 int i = 0;
                 int j = 0;
 
+               /* 
                 int r1_begin = c1.R;
                 int g1_begin = c1.G;
                 int b1_begin = c1.B;
@@ -385,37 +366,42 @@ namespace Lab6And7_Figures3D
                 int r3_begin = c3.R;
                 int g3_begin = c3.G;
                 int b3_begin = c3.B;
+               */
 
-                if (p1.Y == p2.Y)
-                    p1.Y++;
-                if (p1.Y == y3)
+                if (y1 == y2)
+                    y1++;
+                if (y1 == y3)
                     y3++;
-                if (p2.Y == y3)
+                if (y2 == y3)
                     y3++;
 
-                for (int y = p2.Y; y >= y3; y--)
+                for (int y = y2; y >= y3; y--)
                 {
                     i++;
-                    int xleft = p2.X - (p2.X - p1.X) * i / (p2.Y - y3);
-                    int deltax = i * (x3 - p1.X) / (p2.Y - y3);
+                    int xleft = x2 - (x2 - x1) * i / (y2 - y3);
+                    int deltax = i * (x3 - x1) / (y2 - y3);
 
-                    int color_left_red = r2_begin + (i * (r1_begin - r2_begin) / (p2.Y - p1.Y));
-                    int color_left_green = g2_begin + (i * (g1_begin - g2_begin) / (p2.Y - p1.Y));
-                    int color_left_blue = b2_begin + (i * (b1_begin - b2_begin) / (p2.Y - p1.Y));
+                    // int color_left_red = r2_begin + (i * (r1_begin - r2_begin) / (y2 - y1));
+                    // int color_left_green = g2_begin + (i * (g1_begin - g2_begin) / (y2 - y1));
+                    // int color_left_blue = b2_begin + (i * (b1_begin - b2_begin) / (y2 - y1));
+                    double z_left = z2 + (i * (z1 - z2) / (double)(y2 - y1));
 
-                    int color_right_red = r2_begin + (i * (r3_begin - r2_begin) / (p2.Y - y3));
-                    int color_right_green = g2_begin + (i * (g3_begin - g2_begin) / (p2.Y - y3));
-                    int color_right_blue = b2_begin + (i * (b3_begin - b2_begin) / (p2.Y - y3));
+                    //int color_right_red = r2_begin + (i * (r3_begin - r2_begin) / (y2 - y3));
+                    //int color_right_green = g2_begin + (i * (g3_begin - g2_begin) / (y2 - y3));
+                    //int color_right_blue = b2_begin + (i * (b3_begin - b2_begin) / (y2 - y3));
+                    double z_right = z2 + (i * (z3 - z2) / (double)(y2 - y3));
 
                     j = 0;
 
                     for (int x = xleft; x < xleft + deltax; x++)
                     {
                         j++;
-                        int red_cur = color_left_red + (j * (color_right_red - color_left_red) / (x3 - p1.X));
-                        int green_cur = color_left_green + (j * (color_right_green - color_left_green) / (x3 - p1.X));
-                        int blue_cur = color_left_blue + (j * (color_right_blue - color_left_blue) / (x3 - p1.X));
+                        //int red_cur = color_left_red + (j * (color_right_red - color_left_red) / (x3 - x1));
+                        //int green_cur = color_left_green + (j * (color_right_green - color_left_green) / (x3 - x1));
+                        //int blue_cur = color_left_blue + (j * (color_right_blue - color_left_blue) / (x3 - x1));
+                        double z_cur = z_left + (j * (z_right - z_left) / (x3 - x1));
 
+                        /*
                         if (red_cur > 255)
                             red_cur = 255;
                         if (green_cur > 255)
@@ -429,23 +415,36 @@ namespace Lab6And7_Figures3D
                             green_cur = 0;
                         if (blue_cur < 0)
                             blue_cur = 0;
+                        */
 
 
-                        Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
+                        // Color cur_color = Color.FromArgb(red_cur, green_cur, blue_cur);
                         if (x < 0)
-                            canvas[1, y] = cur_color;
+                        {
+                            if (canvas[1, y] > z_cur)
+                            {
+                                canvas[1, y] = z_cur;
+                                color_canvas[1, y] = color;
+                            }
+                        }
                         else
-                            canvas[x, y] = cur_color;
+                        {
+                            //if (canvas[x, y] > z_cur)
+                            //{
+                                canvas[x, y] = z_cur;
+                                color_canvas[x, y] = color;
+                            //}
+                        }
                     }
                 }
             }
-
+            /*
             void do_gradient (Point ev)
             {
                 if (firstPoint)
                 {
-                    p1.X_ = ev.X;
-                    p1.Y_ = ev.Y;
+                    x1_ = ev.X;
+                    y1_ = ev.Y;
                     c1_ = SelectedColor; // Z
 
                     firstPoint = false;
@@ -454,8 +453,8 @@ namespace Lab6And7_Figures3D
                 }
                 else if (secondPoint)
                 {
-                    p2.X_ = ev.X;
-                    p2.Y_ = ev.Y;
+                    x2_ = ev.X;
+                    y2_ = ev.Y;
                     c2_ = SelectedColor; // Z
 
                     secondPoint = false;
@@ -470,14 +469,13 @@ namespace Lab6And7_Figures3D
                     thirdPoint = false;
                     firstPoint = true;
 
-                    drawGradient(p1.X_, p1.Y_, c1_, p2.X_, p2.Y_, c2_, x3_, y3_, c3_);
+                    drawGradient(x1_, y1_, c1_, x2_, y2_, c2_, x3_, y3_, c3_);
 
                 }
             };
-        
-         }
-         */
+            */
 
 
+        }
     }
 }
