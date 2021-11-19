@@ -552,6 +552,12 @@ namespace Lab6_Figures3D
             iname = 1;
         }
 
-        
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GetTransformAngle();
+            GetTransformEdge();
+            camera.Rotate(transformEdge, transformAngle);
+            RedrawObjects(); 
+        }
     }
 }
