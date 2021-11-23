@@ -54,13 +54,7 @@ namespace GeometricFunctions
                 return new_p.Z / vec.Z;
             else return 0; 
         }
-
-        public static double GetUnitScale(Edge3D edge, Point3D point)
-        {
-            var nf = NormalFlat(LineByPointAndVector(edge.P1, (edge.P2 - edge.P1)), point);
-            var p = Projections.Parallel(edge.P1, nf);
-            return GetDistanceInUnits(edge, p); 
-        }
+ 
 
         public static Flat3D FlatByPointAndVector(Point3D point, Point3D vector)
         {
@@ -105,18 +99,17 @@ namespace GeometricFunctions
             return new Point((int)point.X, (int)point.Y);
         }
 
-        public static Point PointOnRealScreen(Point3D point, int screenWidth, int screenHeight)
+        public static Point PointOnRealScreen(Point3D point, int screenWidth, int screenHeight, int scale)
         {
             return new Point(
-                (int)(screenWidth / 2 + point.X * 100),
-                (int)(screenHeight / 2 - point.Y * 100)
+                (int)(screenWidth / 2 + point.X * scale),
+                (int)(screenHeight / 2 - point.Y * scale)
             ); ;
         }
 
-        /*
         public static List<(int, int, Color)> RasterTriangle()
         {
-
-        }*/
+            throw new NotImplementedException("TODO");
+        }
     }
 }

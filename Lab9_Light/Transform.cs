@@ -61,11 +61,5 @@ namespace GeometricFunctions
             return Matrix.To3DPoint(res);
         }
 
-        public static Point3D Reflect(Flat3D flat, Point3D point)
-        {
-            var pointOnFlat = Projections.Parallel(point, flat);
-            var vec = pointOnFlat - point;
-            return point + vec * 2;
-        }
     }
 }

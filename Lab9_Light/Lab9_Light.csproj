@@ -38,13 +38,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accord, Version=3.8.2.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\Lab1\packages\Accord.3.8.2-alpha\lib\net462\Accord.dll</HintPath>
+      <HintPath>bin\Debug\Accord.dll</HintPath>
     </Reference>
     <Reference Include="Accord.Math, Version=3.8.2.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\Lab1\packages\Accord.Math.3.8.2-alpha\lib\net462\Accord.Math.dll</HintPath>
+      <HintPath>bin\Debug\Accord.Math.dll</HintPath>
     </Reference>
     <Reference Include="Accord.Math.Core, Version=3.8.2.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\Lab1\packages\Accord.Math.3.8.2-alpha\lib\net462\Accord.Math.Core.dll</HintPath>
+      <HintPath>bin\Debug\Accord.Math.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

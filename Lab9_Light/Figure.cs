@@ -89,6 +89,18 @@ namespace Figure
                 }
                 var p = new Plane3D();
                 p.PointIndices = planePoints;
+                p.VertexColors = new List<Color>(); 
+                Random r = new Random(); 
+                foreach (var _ in p.PointIndices)
+                {
+                    var R = r.Next(0, 255);
+                    var G = r.Next(0, 255);
+                    var B = r.Next(0, 255);
+                    p.VertexColors.Add(Color.FromArgb(R, G, B));
+                }
+                p.PlaneFill = PlaneFillType.Color;
+                p.Texture = Figure3D.Textures["puchkin"];
+                p.TextureCoordinates = new List<(int, int)>() { (10, 200), (10, 10), (200, 10), (200, 200) };
                 f.Planes.Add(p);
             }
             f.LinesVisibility = new List<bool>();
@@ -130,11 +142,6 @@ namespace Figure
             Points = Points.Select(p => Transform.RotateAroundLine(edge, p, angle)).ToList();
         }
 
-        public void Reflect(Flat3D flat)
-        {
-            Points = Points.Select(p => Transform.Reflect(flat, p)).ToList(); 
-        }
-
         public void SetNormalVectors()
         {
             foreach (var plane in Planes)
@@ -167,12 +174,12 @@ namespace Figure
             }
         }
 
-        public Figure3D Project()
+        public static Dictionary<string, Image> Textures = new Dictionary<string, Image>()
         {
-            Figure3D result = new Figure3D(this);
-            result.Points = result.Points.Select(p => new Point3D(p.X / (p.Z + 1), p.Y / (p.Z + 1), p.Z)/*Projections.Perspective1(p)*/).ToList();
-            return result;
-        }
+            ["obama"] = Bitmap.FromFile("obm.png"),
+            ["putin"] = Bitmap.FromFile("ptn.png"),
+            ["puchkin"] = Bitmap.FromFile("pck.png"),
+        };
     }
 
     public class Figure2D

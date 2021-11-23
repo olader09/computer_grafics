@@ -8,22 +8,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Rendering.RenderingPipeline;
-using Cam;
+using Cam; 
 using Figure;
+using GeometricFunctions;
 
-namespace Lab9_Light
+namespace Room
 {
-    public enum Act { CameraMove, ObjectMove, NoAction }
+    public enum Act { CameraMove, ObjectMove, NoAction}
 
     public partial class Form1 : Form
     {
         public int iname = 1;
         public Camera camera;
         public Dictionary<string, Figure3D> figures;
-        public string selectedFigure;
+        public string selectedFigure; 
         public Graphics graphics;
         public Action RENDER;
         public Act action;
+        public Func<Figure3D, Figure3D> projector;
+        public int picSize = 200;
+        public double[,] ZBuffer;
+        public Color[,] CBuffer; 
 
         public Form1()
         {
@@ -36,14 +41,17 @@ namespace Lab9_Light
             // RENDER = FullCarcassPipeline;
             RENDER = FaceCarcassPipeline;
             action = Act.NoAction;
+            projector = Projections.ProjectP1;
+            ZBuffer = new double[Canvas.Width, Canvas.Height];
+            CBuffer = new Color[Canvas.Width, Canvas.Height];
         }
 
         public void FullCarcassPipeline()
         {
             graphics.Clear(DefaultBackColor);
             var f = GetFiguresInViewCoordinates(figures.Values.ToList(), camera.GetView());
-            f = GetProjectedFigures(f);
-            DrawFullCarcass(f, graphics, Canvas.Width, Canvas.Height);
+            f = GetProjectedFigures(f, projector);
+            DrawFullCarcass(f, graphics, Canvas.Width, Canvas.Height, picSize);
         }
 
         public void FaceCarcassPipeline()
@@ -52,8 +60,40 @@ namespace Lab9_Light
             var f = GetFiguresInViewCoordinates(figures.Values.ToList(), camera.GetView());
             //f.ForEach(x => { x.SetNormalVectors(); x.MarkPlanesAsFaceOrNonFace(); });
             CutNonFacePlanes(f);
-            f = GetProjectedFigures(f);
-            DrawFaceCarcass(f, graphics, Canvas.Width, Canvas.Height);
+            //TextBox.Text = string.Join("\n", f[2].Planes.Select(x => x.NormalVector.ToString())); 
+            f = GetProjectedFigures(f, projector);
+            DrawFaceCarcass(f, graphics, Canvas.Width, Canvas.Height, picSize);
+        }
+
+        public void ZBufferPipeline()
+        {
+            graphics.Clear(DefaultBackColor);
+            var f = GetFiguresInViewCoordinates(figures.Values.ToList(), camera.GetView());
+            CutNonFacePlanes(f);
+            RestoreBuffers();
+            f = GetProjectedFigures(f, projector);
+            DrawZBuffer(f, ZBuffer, CBuffer, Canvas.Width, Canvas.Height, picSize);
+
+            var b = new Bitmap(Canvas.Width, Canvas.Height);
+
+            //using (var fb = new GraphFunc.FastBitmap(b))
+            {
+                for (int i = 0; i < Canvas.Width; ++i)
+                    for (int j = 0; j < Canvas.Height; ++j)
+                        b.SetPixel(i, j, CBuffer[i, j]);
+            }
+
+            Canvas.Image = b;
+        }
+
+        public void RestoreBuffers()
+        {
+            for (int i = 0; i < Canvas.Width; ++i)
+                for (int j = 0; j < Canvas.Height; ++j)
+                {
+                    ZBuffer[i, j] = double.MaxValue;
+                    CBuffer[i, j] = DefaultBackColor; 
+                }
         }
 
         private void AddFigureButton_Click(object sender, EventArgs e)
@@ -65,7 +105,7 @@ namespace Lab9_Light
                 var figure = Figure3D.DownloadTXT(open.FileName);
                 var name = figure.Item1;
                 if (figures.ContainsKey(name))
-                    name += iname++;
+                    name += iname++; 
                 figures.Add(name, figure.Item2);
                 SceneFigures.Items.Add(figure.Item1);
                 RENDER();
@@ -145,9 +185,12 @@ namespace Lab9_Light
             }
             else if (action == Act.ObjectMove)
             {
-                var x = new FigureParts.Point.Point3D(0.1, 0, 0);
-                var y = new FigureParts.Point.Point3D(0, 0.1, 0);
-                var z = new FigureParts.Point.Point3D(0, 0, 0.1);
+                if (selectedFigure == null)
+                    return; 
+
+                var x = new FigureParts.Point.Point3D(0.2, 0, 0);
+                var y = new FigureParts.Point.Point3D(0, 0.2, 0);
+                var z = new FigureParts.Point.Point3D(0, 0, 0.2);
                 var o = new FigureParts.Point.Point3D(0, 0, 0);
 
                 var tx = new FigureParts.Edge.Edge3D(o, x);
@@ -199,6 +242,27 @@ namespace Lab9_Light
                         figures[selectedFigure].Rotate(tz, -5);
                         break;
 
+                    // SCALE
+                    case 'm':
+                        figures[selectedFigure].Scale(figures[selectedFigure].Center, 1.1);
+                        break;
+
+                    case 'n':
+                        figures[selectedFigure].Scale(figures[selectedFigure].Center, 0.9);
+                        break;
+
+                    case 't':
+                        figures[selectedFigure].Planes.ForEach(p =>
+                        {
+                            if (p.PlaneFill == FigureParts.Plane.PlaneFillType.Color)
+                                p.PlaneFill = FigureParts.Plane.PlaneFillType.Texture; 
+                        });
+                        break;
+
+                    case 'c':
+                        figures[selectedFigure].Planes.ForEach(p => p.PlaneFill = FigureParts.Plane.PlaneFillType.Color);
+                        break;
+
                     case 'x':
                         action = Act.NoAction;
                         ActionLabel.Text = "Action: No Action";
@@ -218,12 +282,48 @@ namespace Lab9_Light
                 return;
             figures[selectedFigure].LinesColor = Color.Red;
             foreach (var f in figures.Where(x => x.Key != selectedFigure).Select(x => x.Value))
-                f.LinesColor = Color.Black;
+                f.LinesColor = Color.Black; 
             RENDER();
+        }
+
+        private void radioButtonParallel_CheckedChanged(object sender, EventArgs e)
+        {
+            projector = Projections.ProjectParallel;
+            RENDER(); 
+        }
+
+        private void radioButtonCentralP1_CheckedChanged(object sender, EventArgs e)
+        {
+            projector = Projections.ProjectP1;
+            RENDER();
+        }
+
+        private void CamSize_ValueChanged(object sender, EventArgs e)
+        {
+            picSize = (int)CamSize.Value;
+            RENDER();
+        }
+
+        private void CarcassRB_CheckedChanged(object sender, EventArgs e)
+        {
+            RENDER = FullCarcassPipeline;
+            RENDER();
+        }
+
+        private void FaceCarcassRB_CheckedChanged(object sender, EventArgs e)
+        {
+            RENDER = FaceCarcassPipeline;
+            RENDER();
+        }
+
+        private void ZBufferRB_CheckedChanged(object sender, EventArgs e)
+        {
+            RENDER = ZBufferPipeline;
+            RENDER(); 
         }
     }
 
-    public class Set<T> where T : IComparable<T>
+    public class Set<T> where T: IComparable<T>
     {
         private T[] Elements;
 
@@ -235,7 +335,7 @@ namespace Lab9_Light
                     b = true;
             if (!b)
                 Elements.Append(elem);
-            return b;
+            return b; 
         }
 
         public bool RemoveElem(T elem)
@@ -253,7 +353,7 @@ namespace Lab9_Light
 
         public Set()
         {
-            Elements = new T[0];
+            Elements = new T[0]; 
         }
     }
 }

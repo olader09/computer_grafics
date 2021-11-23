@@ -125,10 +125,11 @@ namespace FigureParts
         {
             public List<int> PointIndices { get; set; }
             public List<Color> VertexColors { get; set; }
-            public List<(double, double)> TextureCoordinates { get; set; }
+            public List<(int, int)> TextureCoordinates { get; set; }
             public Point3D NormalVector { get; set; }
             public bool Visible { get; set; }
             public PlaneFillType PlaneFill { get; set; }
+            public Image Texture { get; set; }
 
             public List<Plane3D> Triangulate()
             {
@@ -138,13 +139,14 @@ namespace FigureParts
                 for (int i = 2; i < PointIndices.Count; ++i)
                 {
                     var toAdd = new Plane3D();
-                    toAdd.PointIndices = new List<int>() { 0, i - 1, i };
+                    toAdd.PointIndices = new List<int>() { PointIndices[0], PointIndices[i - 1], PointIndices[i] };
                     if (PlaneFill == PlaneFillType.Color)
                         toAdd.VertexColors = new List<Color>() { VertexColors[0], VertexColors[i - 1], VertexColors[i] };
                     else if (PlaneFill == PlaneFillType.Texture)
-                        toAdd.TextureCoordinates = new List<(double, double)>() { TextureCoordinates[0], TextureCoordinates[i - 1], TextureCoordinates[i] };
+                        toAdd.TextureCoordinates = TextureCoordinates == null ? null : new List<(int, int)>() { TextureCoordinates[0], TextureCoordinates[i - 1], TextureCoordinates[i] };
                     toAdd.NormalVector = NormalVector;
                     toAdd.Visible = Visible;
+                    toAdd.Texture = Texture;
                     res.Add(toAdd);
                 }
                 return res;
