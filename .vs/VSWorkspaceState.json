@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Lab1",
+    "\\Lab9_Light",
+    "\\OpenGLStart"
   ],
-  "SelectedNode": "\\CompGraph7Sem.sln",
+  "SelectedNode": "\\Lab9_Light\\Form1.Designer.cs",
   "PreviewInSolutionExplorer": false
 }

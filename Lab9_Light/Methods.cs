@@ -26,7 +26,7 @@ namespace GeometricFunctions
         public static Line3D LineByPointAndVector(Point3D point, Point3D vector)
         {
             var p = new double[3] { point.X, point.Y, point.Z };
-            var v = new double[3] { vector.X, vector.Y, vector.Z }; 
+            var v = new double[3] { vector.X, vector.Y, vector.Z };
             return new Line3D(new Line2D(v[0], p[0]), new Line2D(v[1], p[1]), new Line2D(v[2], p[2]));
         }
 
@@ -52,9 +52,9 @@ namespace GeometricFunctions
                 return new_p.Y / vec.Y;
             else if (vec.Z > double.Epsilon)
                 return new_p.Z / vec.Z;
-            else return 0; 
+            else return 0;
         }
- 
+
 
         public static Flat3D FlatByPointAndVector(Point3D point, Point3D vector)
         {
@@ -107,9 +107,19 @@ namespace GeometricFunctions
             ); ;
         }
 
-        public static List<(int, int, Color)> RasterTriangle()
+        public static double LightValue(double dist) => Math.Pow(1 / Math.Exp(dist + 1), 1 / 5.0);
+        public static double LightValue2(double dist) => Math.Pow(1 / Math.Pow(dist + 1, 2), 0.2);
+
+        public static Color Mult(this Color c, double d)
         {
-            throw new NotImplementedException("TODO");
+            if (d == double.NaN)
+                d = 0;
+            return Color.FromArgb((int)(c.R * d), (int)(c.G * d), (int)(c.B * d));
+        }
+
+        public static Color GetColorOfPointWithLight(Point3D point, Color color, Point3D normal, Figure.Figure3D bulb)
+        {
+            return color.Mult(LightValue2(Point3DDistance(point, bulb.Center))).Mult(Max(0, -CosBetweenVectors(point - bulb.Center, normal)));
         }
     }
 }

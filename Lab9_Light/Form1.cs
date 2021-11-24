@@ -8,27 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Rendering.RenderingPipeline;
-using Cam; 
+using Cam;
 using Figure;
 using GeometricFunctions;
 
 namespace Room
 {
-    public enum Act { CameraMove, ObjectMove, NoAction}
+    public enum Act { CameraMove, ObjectMove, NoAction }
 
     public partial class Form1 : Form
     {
         public int iname = 1;
         public Camera camera;
         public Dictionary<string, Figure3D> figures;
-        public string selectedFigure; 
+        public string selectedFigure;
         public Graphics graphics;
         public Action RENDER;
         public Act action;
         public Func<Figure3D, Figure3D> projector;
         public int picSize = 200;
         public double[,] ZBuffer;
-        public Color[,] CBuffer; 
+        public Color[,] CBuffer;
+        public Bitmap bmp;
 
         public Form1()
         {
@@ -37,6 +38,8 @@ namespace Room
             figures = new Dictionary<string, Figure3D>();
             figures.Add("Coord", new Coord());
             figures.Add("Grid", new Grid());
+            figures.Add("Light", new LightBulb(new FigureParts.Point.Point3D(2, 2, 2)));
+            SceneFigures.Items.Add((string)"Light");
             graphics = Canvas.CreateGraphics();
             // RENDER = FullCarcassPipeline;
             RENDER = FaceCarcassPipeline;
@@ -76,14 +79,45 @@ namespace Room
 
             var b = new Bitmap(Canvas.Width, Canvas.Height);
 
-            //using (var fb = new GraphFunc.FastBitmap(b))
+            using (var fb = new GraphFunc.FastBitmap(b))
             {
                 for (int i = 0; i < Canvas.Width; ++i)
                     for (int j = 0; j < Canvas.Height; ++j)
-                        b.SetPixel(i, j, CBuffer[i, j]);
+                        fb.SetPixel(new Point(i, j), CBuffer[i, j]);
             }
 
             Canvas.Image = b;
+        }
+
+        public void ShadePipeline()
+        {
+            graphics.Clear(DefaultBackColor);
+            var f = GetFiguresInViewCoordinates(figures.Values.ToList(), camera.GetView());
+            CutNonFacePlanes(f);
+            RestoreBuffers();
+            f = GetProjectedFigures(f, projector);
+            DrawShade(f, ZBuffer, CBuffer, Canvas.Width, Canvas.Height, picSize);
+
+            var b = new Bitmap(Canvas.Width, Canvas.Height);
+            // {
+            using (var fb = new GraphFunc.FastBitmap(b))
+            {
+                for (int i = 0; i < Canvas.Width; ++i)
+                    for (int j = 0; j < Canvas.Height; ++j)
+                        fb.SetPixel(new Point(i, j), CBuffer[i, j]);
+                Canvas.Image = b;
+            }
+            Canvas.Refresh();
+
+
+            Figure3D bulb = new Figure3D(figures["Light"]);
+            bulb.Points = bulb.Points.Select(p => Matrix.To3DPoint(Matrix.Point(p) * camera.GetView())).ToList();
+            bulb = projector(bulb);
+            var point = Methods.PointOnRealScreen(bulb.Center, Canvas.Width, Canvas.Height, picSize);
+            var z = bulb.Center.Z;
+            if (z < 0) return;
+            var radius = 50 / (1 + (float)z);
+            graphics.DrawEllipse(new Pen(Color.Red, 1.5f), point.X - radius / 2, point.Y - radius / 2, radius, radius);
         }
 
         public void RestoreBuffers()
@@ -92,7 +126,7 @@ namespace Room
                 for (int j = 0; j < Canvas.Height; ++j)
                 {
                     ZBuffer[i, j] = double.MaxValue;
-                    CBuffer[i, j] = DefaultBackColor; 
+                    CBuffer[i, j] = DefaultBackColor;
                 }
         }
 
@@ -105,7 +139,7 @@ namespace Room
                 var figure = Figure3D.DownloadTXT(open.FileName);
                 var name = figure.Item1;
                 if (figures.ContainsKey(name))
-                    name += iname++; 
+                    name += iname++;
                 figures.Add(name, figure.Item2);
                 SceneFigures.Items.Add(figure.Item1);
                 RENDER();
@@ -186,7 +220,7 @@ namespace Room
             else if (action == Act.ObjectMove)
             {
                 if (selectedFigure == null)
-                    return; 
+                    return;
 
                 var x = new FigureParts.Point.Point3D(0.2, 0, 0);
                 var y = new FigureParts.Point.Point3D(0, 0.2, 0);
@@ -255,7 +289,7 @@ namespace Room
                         figures[selectedFigure].Planes.ForEach(p =>
                         {
                             if (p.PlaneFill == FigureParts.Plane.PlaneFillType.Color)
-                                p.PlaneFill = FigureParts.Plane.PlaneFillType.Texture; 
+                                p.PlaneFill = FigureParts.Plane.PlaneFillType.Texture;
                         });
                         break;
 
@@ -282,14 +316,14 @@ namespace Room
                 return;
             figures[selectedFigure].LinesColor = Color.Red;
             foreach (var f in figures.Where(x => x.Key != selectedFigure).Select(x => x.Value))
-                f.LinesColor = Color.Black; 
+                f.LinesColor = Color.Black;
             RENDER();
         }
 
         private void radioButtonParallel_CheckedChanged(object sender, EventArgs e)
         {
             projector = Projections.ProjectParallel;
-            RENDER(); 
+            RENDER();
         }
 
         private void radioButtonCentralP1_CheckedChanged(object sender, EventArgs e)
@@ -319,11 +353,17 @@ namespace Room
         private void ZBufferRB_CheckedChanged(object sender, EventArgs e)
         {
             RENDER = ZBufferPipeline;
-            RENDER(); 
+            RENDER();
+        }
+
+        private void ShadeRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RENDER = ShadePipeline;
+            RENDER();
         }
     }
 
-    public class Set<T> where T: IComparable<T>
+    public class Set<T> where T : IComparable<T>
     {
         private T[] Elements;
 
@@ -335,7 +375,7 @@ namespace Room
                     b = true;
             if (!b)
                 Elements.Append(elem);
-            return b; 
+            return b;
         }
 
         public bool RemoveElem(T elem)
@@ -353,7 +393,7 @@ namespace Room
 
         public Set()
         {
-            Elements = new T[0]; 
+            Elements = new T[0];
         }
     }
 }

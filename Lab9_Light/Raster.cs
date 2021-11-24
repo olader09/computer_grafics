@@ -16,7 +16,7 @@ namespace GeometricFunctions
             else if (p1.Item1.Y == p3.Item1.Y)
                 return HorizontalTriangle(p2.Item1, p1.Item1, p3.Item1, p2.Item2, p1.Item2, p3.Item2);
             else if (p2.Item1.Y == p3.Item1.Y)
-                return HorizontalTriangle(p1.Item1, p2.Item1, p3.Item1, p1.Item2, p2.Item2, p3.Item2); 
+                return HorizontalTriangle(p1.Item1, p2.Item1, p3.Item1, p1.Item2, p2.Item2, p3.Item2);
             else
             {
                 var l = new List<(Point, double[])>() { p1, p2, p3 };
@@ -55,7 +55,7 @@ namespace GeometricFunctions
 
             List<(Point, double[])> p1p2 = new List<(Point, double[])>();
             int rows = p2.Y - p1.Y;
-            if (rows == 0) return new List<(Point, double[])>(); 
+            if (rows == 0) return new List<(Point, double[])>();
 
             double[] p1p2diff = new double[a1.Length];
             for (int i = 0; i < a1.Length; ++i)
@@ -83,7 +83,7 @@ namespace GeometricFunctions
                 );
 
             // Triangle 
-            List<(Point, double[])> result = new List<(Point, double[])>(); 
+            List<(Point, double[])> result = new List<(Point, double[])>();
 
             for (int i = 0; i < Math.Abs(rows) + 1; ++i)
             {
@@ -91,8 +91,8 @@ namespace GeometricFunctions
                 double[] diff = new double[a1.Length];
                 for (int k = 0; k < a1.Length; ++k)
                     diff[k] = (p1p3[i].Item2[k] - p1p2[i].Item2[k]) / cols;
-                
-                for (int j = 0; j < cols; ++j)
+
+                for (int j = 0; j < cols + 1; ++j)
                 {
                     result.Add(
                         (

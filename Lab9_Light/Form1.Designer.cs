@@ -41,6 +41,7 @@ namespace Room
             this.ZBufferRB = new System.Windows.Forms.RadioButton();
             this.FaceCarcassRB = new System.Windows.Forms.RadioButton();
             this.CarcassRB = new System.Windows.Forms.RadioButton();
+            this.ShadeRadioButton = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CamSize)).BeginInit();
             this.ProjectionGB.SuspendLayout();
@@ -150,6 +151,7 @@ namespace Room
             // 
             // RenderingGB
             // 
+            this.RenderingGB.Controls.Add(this.ShadeRadioButton);
             this.RenderingGB.Controls.Add(this.ZBufferRB);
             this.RenderingGB.Controls.Add(this.FaceCarcassRB);
             this.RenderingGB.Controls.Add(this.CarcassRB);
@@ -196,6 +198,18 @@ namespace Room
             this.CarcassRB.UseVisualStyleBackColor = true;
             this.CarcassRB.CheckedChanged += new System.EventHandler(this.CarcassRB_CheckedChanged);
             // 
+            // ShadeRadioButton
+            // 
+            this.ShadeRadioButton.AutoSize = true;
+            this.ShadeRadioButton.Location = new System.Drawing.Point(7, 119);
+            this.ShadeRadioButton.Name = "ShadeRadioButton";
+            this.ShadeRadioButton.Size = new System.Drawing.Size(81, 24);
+            this.ShadeRadioButton.TabIndex = 3;
+            this.ShadeRadioButton.TabStop = true;
+            this.ShadeRadioButton.Text = "Shade";
+            this.ShadeRadioButton.UseVisualStyleBackColor = true;
+            this.ShadeRadioButton.CheckedChanged += new System.EventHandler(this.ShadeRadioButton_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -236,6 +250,7 @@ namespace Room
         private System.Windows.Forms.RadioButton ZBufferRB;
         private System.Windows.Forms.RadioButton FaceCarcassRB;
         private System.Windows.Forms.RadioButton CarcassRB;
+        private System.Windows.Forms.RadioButton ShadeRadioButton;
     }
 }
 
