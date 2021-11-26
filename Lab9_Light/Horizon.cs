@@ -115,13 +115,6 @@ namespace FloatingHorizon
 
         public void Draw(Graphics imageGraphics, functionType function)
         {
-            #region Debug
-            Debug.Assert(imageGraphics != null);
-            Debug.Assert(zMin != EMPTY_VALUE && zMax != EMPTY_VALUE && xMin != EMPTY_VALUE &&
-                xMax != EMPTY_VALUE);
-            Debug.Assert(xStep != 0 && zStep != 0);
-            #endregion
-
             CalcBodyCenter(function);
             StartDoubleBuffering();
             ResetHorizons();
@@ -417,16 +410,16 @@ namespace FloatingHorizon
         }
 
 
-        public void InitializeHorizonDrawer()
+        public void InitializeHorizonDrawer(int x, int y, int z)
         {
             try
             {
                 SetBoundsOnX(-5, 5);
                 SetBoundsOnZ(-5, 5);
                 SetXZsteps(0.05, 0.2);
-                SetAngleX(30);
-                SetAngleY(15);
-                SetAngleZ(1);
+                SetAngleX(x);
+                SetAngleY(y);
+                SetAngleZ(z);
             }
             catch (System.Exception)
             {

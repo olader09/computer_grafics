@@ -38,16 +38,22 @@ namespace Room
             this.CamSize = new System.Windows.Forms.NumericUpDown();
             this.ProjectionGB = new System.Windows.Forms.GroupBox();
             this.RenderingGB = new System.Windows.Forms.GroupBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.HorizonRadioButton = new System.Windows.Forms.RadioButton();
             this.ShadeRadioButton = new System.Windows.Forms.RadioButton();
             this.ZBufferRB = new System.Windows.Forms.RadioButton();
             this.FaceCarcassRB = new System.Windows.Forms.RadioButton();
             this.CarcassRB = new System.Windows.Forms.RadioButton();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.NumericUpDownX = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownY = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownZ = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CamSize)).BeginInit();
             this.ProjectionGB.SuspendLayout();
             this.RenderingGB.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownZ)).BeginInit();
             this.SuspendLayout();
             // 
             // Canvas
@@ -154,7 +160,7 @@ namespace Room
             this.ProjectionGB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ProjectionGB.Name = "ProjectionGB";
             this.ProjectionGB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ProjectionGB.Size = new System.Drawing.Size(204, 115);
+            this.ProjectionGB.Size = new System.Drawing.Size(120, 115);
             this.ProjectionGB.TabIndex = 8;
             this.ProjectionGB.TabStop = false;
             this.ProjectionGB.Text = "Projection";
@@ -175,6 +181,16 @@ namespace Room
             this.RenderingGB.TabIndex = 9;
             this.RenderingGB.TabStop = false;
             this.RenderingGB.Text = "Rendering";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(85, 74);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(120, 84);
+            this.listBox1.TabIndex = 5;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // HorizonRadioButton
             // 
@@ -240,21 +256,68 @@ namespace Room
             this.CarcassRB.UseVisualStyleBackColor = true;
             this.CarcassRB.CheckedChanged += new System.EventHandler(this.CarcassRB_CheckedChanged);
             // 
-            // listBox1
+            // NumericUpDownX
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(85, 74);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 84);
-            this.listBox1.TabIndex = 5;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.NumericUpDownX.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.NumericUpDownX.Location = new System.Drawing.Point(138, 235);
+            this.NumericUpDownX.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.NumericUpDownX.Name = "NumericUpDownX";
+            this.NumericUpDownX.Size = new System.Drawing.Size(79, 22);
+            this.NumericUpDownX.TabIndex = 10;
+            this.NumericUpDownX.ValueChanged += new System.EventHandler(this.NumericUpDownX_ValueChanged);
+            // 
+            // NumericUpDownY
+            // 
+            this.NumericUpDownY.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.NumericUpDownY.Location = new System.Drawing.Point(138, 263);
+            this.NumericUpDownY.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.NumericUpDownY.Name = "NumericUpDownY";
+            this.NumericUpDownY.Size = new System.Drawing.Size(79, 22);
+            this.NumericUpDownY.TabIndex = 11;
+            this.NumericUpDownY.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // NumericUpDownZ
+            // 
+            this.NumericUpDownZ.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.NumericUpDownZ.Location = new System.Drawing.Point(138, 291);
+            this.NumericUpDownZ.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.NumericUpDownZ.Name = "NumericUpDownZ";
+            this.NumericUpDownZ.Size = new System.Drawing.Size(79, 22);
+            this.NumericUpDownZ.TabIndex = 12;
+            this.NumericUpDownZ.ValueChanged += new System.EventHandler(this.NumericUpDownZ_ValueChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(919, 512);
+            this.Controls.Add(this.NumericUpDownZ);
+            this.Controls.Add(this.NumericUpDownY);
+            this.Controls.Add(this.NumericUpDownX);
             this.Controls.Add(this.RenderingGB);
             this.Controls.Add(this.ProjectionGB);
             this.Controls.Add(this.ActionLabel);
@@ -272,6 +335,9 @@ namespace Room
             this.ProjectionGB.PerformLayout();
             this.RenderingGB.ResumeLayout(false);
             this.RenderingGB.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownZ)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -294,6 +360,9 @@ namespace Room
         private System.Windows.Forms.RadioButton ShadeRadioButton;
         private System.Windows.Forms.RadioButton HorizonRadioButton;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.NumericUpDown NumericUpDownX;
+        private System.Windows.Forms.NumericUpDown NumericUpDownY;
+        private System.Windows.Forms.NumericUpDown NumericUpDownZ;
     }
 }
 

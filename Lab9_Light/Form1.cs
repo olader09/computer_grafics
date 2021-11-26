@@ -31,6 +31,7 @@ namespace Room
         public Color[,] CBuffer;
         public Bitmap bmp;
         public int ind; 
+        public int angle_x, angle_y, angle_z;
 
         private List<FloatingHorizon.functionType> functions;
 
@@ -135,7 +136,7 @@ namespace Room
         {
             graphics.Clear(DefaultBackColor);
             FloatingHorizon.HorizonDrawer hd = new FloatingHorizon.HorizonDrawer(Canvas.Width, Canvas.Height);
-            hd.InitializeHorizonDrawer();
+            hd.InitializeHorizonDrawer(angle_x, angle_y, angle_z);
             hd.Draw(graphics, functions[ind]);
         }
 
@@ -387,9 +388,27 @@ namespace Room
             RENDER();
         }
 
+        private void NumericUpDownX_ValueChanged(object sender, EventArgs e)
+        {
+            angle_x = (int)NumericUpDownX.Value;
+            RENDER();
+        }
+
+        private void NumericUpDownZ_ValueChanged(object sender, EventArgs e)
+        {
+            angle_z = (int)NumericUpDownZ.Value;
+            RENDER();
+        }
+
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             ind = listBox1.SelectedIndex;
+            RENDER();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            angle_y = (int)NumericUpDownY.Value;
             RENDER();
         }
     }

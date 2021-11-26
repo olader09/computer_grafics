@@ -108,7 +108,7 @@ namespace Figure
                 }
                 p.PlaneFill = PlaneFillType.Color;
                 p.Texture = Figure3D.Textures["puchkin"];
-                p.TextureCoordinates = new List<(int, int)>() { (10, 200), (10, 10), (200, 10), (200, 200) };
+                p.TextureCoordinates = new List<(int, int)>() { (10, 170), (10, 10), (140, 10), (140, 170) };
                 f.Planes.Add(p);
             }
             f.LinesVisibility = new List<bool>();
@@ -201,7 +201,7 @@ namespace Figure
         {
            // ["obama"] = Bitmap.FromFile("obm.png"),
             // ["putin"] = Bitmap.FromFile("ptn.png"),
-            ["puchkin"] = Bitmap.FromFile("pck.png"),
+            ["puchkin"] = Bitmap.FromFile("pck.jpg"),
         };
     }
 
