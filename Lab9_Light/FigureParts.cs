@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing; 
+using System.Drawing;
+using System.Drawing;
 
 namespace FigureParts
 {
@@ -54,6 +55,10 @@ namespace FigureParts
                 return new Point3D(-p.X, -p.Y, -p.Z);
             }
 
+            public Point2D ToPoint2D()
+            {
+                return new Point2D(X, Y);
+            }
             public override string ToString()
             {
                 return $"{X:00.00} {Y:00.00} {Z:00.00}";
@@ -74,6 +79,11 @@ namespace FigureParts
             public static Point2D operator +(Point2D one, Point2D other)
             {
                 return new Point2D(one.X + other.X, one.Y + other.Y);
+            }
+
+            public static implicit operator System.Drawing.Point(Point2D pointD)
+            {
+                return new System.Drawing.Point((int)Math.Round(pointD.X), (int)Math.Round(pointD.Y));
             }
         }
 

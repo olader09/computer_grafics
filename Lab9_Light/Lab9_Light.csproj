@@ -70,6 +70,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GeometricPrimitives.cs" />
+    <Compile Include="Horizon.cs" />
     <Compile Include="Matrices.cs" />
     <Compile Include="Methods.cs" />
     <Compile Include="Program.cs" />

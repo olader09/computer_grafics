@@ -38,10 +38,12 @@ namespace Room
             this.CamSize = new System.Windows.Forms.NumericUpDown();
             this.ProjectionGB = new System.Windows.Forms.GroupBox();
             this.RenderingGB = new System.Windows.Forms.GroupBox();
+            this.HorizonRadioButton = new System.Windows.Forms.RadioButton();
+            this.ShadeRadioButton = new System.Windows.Forms.RadioButton();
             this.ZBufferRB = new System.Windows.Forms.RadioButton();
             this.FaceCarcassRB = new System.Windows.Forms.RadioButton();
             this.CarcassRB = new System.Windows.Forms.RadioButton();
-            this.ShadeRadioButton = new System.Windows.Forms.RadioButton();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CamSize)).BeginInit();
             this.ProjectionGB.SuspendLayout();
@@ -50,27 +52,30 @@ namespace Room
             // 
             // Canvas
             // 
-            this.Canvas.Location = new System.Drawing.Point(249, 13);
+            this.Canvas.Location = new System.Drawing.Point(221, 10);
+            this.Canvas.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(773, 615);
+            this.Canvas.Size = new System.Drawing.Size(687, 492);
             this.Canvas.TabIndex = 0;
             this.Canvas.TabStop = false;
             // 
             // SceneFigures
             // 
             this.SceneFigures.FormattingEnabled = true;
-            this.SceneFigures.ItemHeight = 20;
-            this.SceneFigures.Location = new System.Drawing.Point(13, 66);
+            this.SceneFigures.ItemHeight = 16;
+            this.SceneFigures.Location = new System.Drawing.Point(12, 53);
+            this.SceneFigures.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SceneFigures.Name = "SceneFigures";
-            this.SceneFigures.Size = new System.Drawing.Size(230, 184);
+            this.SceneFigures.Size = new System.Drawing.Size(205, 148);
             this.SceneFigures.TabIndex = 1;
             this.SceneFigures.SelectedIndexChanged += new System.EventHandler(this.SceneFigures_SelectedIndexChanged);
             // 
             // AddFigureButton
             // 
-            this.AddFigureButton.Location = new System.Drawing.Point(13, 13);
+            this.AddFigureButton.Location = new System.Drawing.Point(12, 10);
+            this.AddFigureButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddFigureButton.Name = "AddFigureButton";
-            this.AddFigureButton.Size = new System.Drawing.Size(230, 47);
+            this.AddFigureButton.Size = new System.Drawing.Size(204, 38);
             this.AddFigureButton.TabIndex = 2;
             this.AddFigureButton.Text = "Add Figure";
             this.AddFigureButton.UseVisualStyleBackColor = true;
@@ -79,18 +84,19 @@ namespace Room
             // ActionLabel
             // 
             this.ActionLabel.AutoSize = true;
-            this.ActionLabel.Location = new System.Drawing.Point(12, 253);
+            this.ActionLabel.Location = new System.Drawing.Point(11, 202);
             this.ActionLabel.Name = "ActionLabel";
-            this.ActionLabel.Size = new System.Drawing.Size(131, 20);
+            this.ActionLabel.Size = new System.Drawing.Size(116, 17);
             this.ActionLabel.TabIndex = 3;
             this.ActionLabel.Text = "Action: No Action";
             // 
             // radioButtonParallel
             // 
             this.radioButtonParallel.AutoSize = true;
-            this.radioButtonParallel.Location = new System.Drawing.Point(6, 25);
+            this.radioButtonParallel.Location = new System.Drawing.Point(5, 20);
+            this.radioButtonParallel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButtonParallel.Name = "radioButtonParallel";
-            this.radioButtonParallel.Size = new System.Drawing.Size(85, 24);
+            this.radioButtonParallel.Size = new System.Drawing.Size(76, 21);
             this.radioButtonParallel.TabIndex = 5;
             this.radioButtonParallel.TabStop = true;
             this.radioButtonParallel.Text = "Parallel";
@@ -100,9 +106,10 @@ namespace Room
             // radioButtonCentralP1
             // 
             this.radioButtonCentralP1.AutoSize = true;
-            this.radioButtonCentralP1.Location = new System.Drawing.Point(6, 55);
+            this.radioButtonCentralP1.Location = new System.Drawing.Point(5, 44);
+            this.radioButtonCentralP1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButtonCentralP1.Name = "radioButtonCentralP1";
-            this.radioButtonCentralP1.Size = new System.Drawing.Size(108, 24);
+            this.radioButtonCentralP1.Size = new System.Drawing.Size(95, 21);
             this.radioButtonCentralP1.TabIndex = 6;
             this.radioButtonCentralP1.TabStop = true;
             this.radioButtonCentralP1.Text = "Central P1";
@@ -116,7 +123,8 @@ namespace Room
             0,
             0,
             0});
-            this.CamSize.Location = new System.Drawing.Point(6, 112);
+            this.CamSize.Location = new System.Drawing.Point(5, 90);
+            this.CamSize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CamSize.Maximum = new decimal(new int[] {
             300,
             0,
@@ -128,7 +136,7 @@ namespace Room
             0,
             0});
             this.CamSize.Name = "CamSize";
-            this.CamSize.Size = new System.Drawing.Size(120, 26);
+            this.CamSize.Size = new System.Drawing.Size(107, 22);
             this.CamSize.TabIndex = 7;
             this.CamSize.Value = new decimal(new int[] {
             200,
@@ -142,32 +150,64 @@ namespace Room
             this.ProjectionGB.Controls.Add(this.radioButtonParallel);
             this.ProjectionGB.Controls.Add(this.CamSize);
             this.ProjectionGB.Controls.Add(this.radioButtonCentralP1);
-            this.ProjectionGB.Location = new System.Drawing.Point(13, 277);
+            this.ProjectionGB.Location = new System.Drawing.Point(12, 222);
+            this.ProjectionGB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ProjectionGB.Name = "ProjectionGB";
-            this.ProjectionGB.Size = new System.Drawing.Size(230, 144);
+            this.ProjectionGB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ProjectionGB.Size = new System.Drawing.Size(204, 115);
             this.ProjectionGB.TabIndex = 8;
             this.ProjectionGB.TabStop = false;
             this.ProjectionGB.Text = "Projection";
             // 
             // RenderingGB
             // 
+            this.RenderingGB.Controls.Add(this.listBox1);
+            this.RenderingGB.Controls.Add(this.HorizonRadioButton);
             this.RenderingGB.Controls.Add(this.ShadeRadioButton);
             this.RenderingGB.Controls.Add(this.ZBufferRB);
             this.RenderingGB.Controls.Add(this.FaceCarcassRB);
             this.RenderingGB.Controls.Add(this.CarcassRB);
-            this.RenderingGB.Location = new System.Drawing.Point(13, 428);
+            this.RenderingGB.Location = new System.Drawing.Point(12, 342);
+            this.RenderingGB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RenderingGB.Name = "RenderingGB";
-            this.RenderingGB.Size = new System.Drawing.Size(230, 200);
+            this.RenderingGB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.RenderingGB.Size = new System.Drawing.Size(204, 160);
             this.RenderingGB.TabIndex = 9;
             this.RenderingGB.TabStop = false;
             this.RenderingGB.Text = "Rendering";
             // 
+            // HorizonRadioButton
+            // 
+            this.HorizonRadioButton.AutoSize = true;
+            this.HorizonRadioButton.Location = new System.Drawing.Point(7, 122);
+            this.HorizonRadioButton.Name = "HorizonRadioButton";
+            this.HorizonRadioButton.Size = new System.Drawing.Size(78, 21);
+            this.HorizonRadioButton.TabIndex = 4;
+            this.HorizonRadioButton.TabStop = true;
+            this.HorizonRadioButton.Text = "Horizon";
+            this.HorizonRadioButton.UseVisualStyleBackColor = true;
+            this.HorizonRadioButton.CheckedChanged += new System.EventHandler(this.HorizonRadioButton_CheckedChanged);
+            // 
+            // ShadeRadioButton
+            // 
+            this.ShadeRadioButton.AutoSize = true;
+            this.ShadeRadioButton.Location = new System.Drawing.Point(6, 95);
+            this.ShadeRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ShadeRadioButton.Name = "ShadeRadioButton";
+            this.ShadeRadioButton.Size = new System.Drawing.Size(70, 21);
+            this.ShadeRadioButton.TabIndex = 3;
+            this.ShadeRadioButton.TabStop = true;
+            this.ShadeRadioButton.Text = "Shade";
+            this.ShadeRadioButton.UseVisualStyleBackColor = true;
+            this.ShadeRadioButton.CheckedChanged += new System.EventHandler(this.ShadeRadioButton_CheckedChanged);
+            // 
             // ZBufferRB
             // 
             this.ZBufferRB.AutoSize = true;
-            this.ZBufferRB.Location = new System.Drawing.Point(6, 88);
+            this.ZBufferRB.Location = new System.Drawing.Point(5, 70);
+            this.ZBufferRB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ZBufferRB.Name = "ZBufferRB";
-            this.ZBufferRB.Size = new System.Drawing.Size(93, 24);
+            this.ZBufferRB.Size = new System.Drawing.Size(81, 21);
             this.ZBufferRB.TabIndex = 2;
             this.ZBufferRB.TabStop = true;
             this.ZBufferRB.Text = "Z-Buffer";
@@ -177,9 +217,10 @@ namespace Room
             // FaceCarcassRB
             // 
             this.FaceCarcassRB.AutoSize = true;
-            this.FaceCarcassRB.Location = new System.Drawing.Point(6, 57);
+            this.FaceCarcassRB.Location = new System.Drawing.Point(5, 46);
+            this.FaceCarcassRB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.FaceCarcassRB.Name = "FaceCarcassRB";
-            this.FaceCarcassRB.Size = new System.Drawing.Size(132, 24);
+            this.FaceCarcassRB.Size = new System.Drawing.Size(115, 21);
             this.FaceCarcassRB.TabIndex = 1;
             this.FaceCarcassRB.TabStop = true;
             this.FaceCarcassRB.Text = "Face Carcass";
@@ -189,32 +230,31 @@ namespace Room
             // CarcassRB
             // 
             this.CarcassRB.AutoSize = true;
-            this.CarcassRB.Location = new System.Drawing.Point(7, 26);
+            this.CarcassRB.Location = new System.Drawing.Point(6, 21);
+            this.CarcassRB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CarcassRB.Name = "CarcassRB";
-            this.CarcassRB.Size = new System.Drawing.Size(126, 24);
+            this.CarcassRB.Size = new System.Drawing.Size(110, 21);
             this.CarcassRB.TabIndex = 0;
             this.CarcassRB.TabStop = true;
             this.CarcassRB.Text = "Just Carcass";
             this.CarcassRB.UseVisualStyleBackColor = true;
             this.CarcassRB.CheckedChanged += new System.EventHandler(this.CarcassRB_CheckedChanged);
             // 
-            // ShadeRadioButton
+            // listBox1
             // 
-            this.ShadeRadioButton.AutoSize = true;
-            this.ShadeRadioButton.Location = new System.Drawing.Point(7, 119);
-            this.ShadeRadioButton.Name = "ShadeRadioButton";
-            this.ShadeRadioButton.Size = new System.Drawing.Size(81, 24);
-            this.ShadeRadioButton.TabIndex = 3;
-            this.ShadeRadioButton.TabStop = true;
-            this.ShadeRadioButton.Text = "Shade";
-            this.ShadeRadioButton.UseVisualStyleBackColor = true;
-            this.ShadeRadioButton.CheckedChanged += new System.EventHandler(this.ShadeRadioButton_CheckedChanged);
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(85, 74);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(120, 84);
+            this.listBox1.TabIndex = 5;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1034, 640);
+            this.ClientSize = new System.Drawing.Size(919, 512);
             this.Controls.Add(this.RenderingGB);
             this.Controls.Add(this.ProjectionGB);
             this.Controls.Add(this.ActionLabel);
@@ -222,6 +262,7 @@ namespace Room
             this.Controls.Add(this.SceneFigures);
             this.Controls.Add(this.Canvas);
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HandleKey);
@@ -251,6 +292,8 @@ namespace Room
         private System.Windows.Forms.RadioButton FaceCarcassRB;
         private System.Windows.Forms.RadioButton CarcassRB;
         private System.Windows.Forms.RadioButton ShadeRadioButton;
+        private System.Windows.Forms.RadioButton HorizonRadioButton;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 

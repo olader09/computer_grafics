@@ -30,6 +30,15 @@ namespace Room
         public double[,] ZBuffer;
         public Color[,] CBuffer;
         public Bitmap bmp;
+        public int ind; 
+
+        private List<FloatingHorizon.functionType> functions;
+
+        private double F1(double x, double y) => 1 / (1 + x * x) + 1 / (1 + y * y);
+        private double SinCos(double x, double y) => Math.Sin(x) * Math.Cos(y);
+        private double F3(double x, double y) => (x * x + 3 * y * y) * Math.Exp(-(x * x + y * y));
+        private double F4(double x, double y) => Math.Exp(-(x * x + y * y) / 8) * Math.Sin(x * x) + Math.Cos(y * y);
+        private double F5(double x, double y) => x * y * y * Math.Exp(-(x*x + y*y)/3);
 
         public Form1()
         {
@@ -47,6 +56,8 @@ namespace Room
             projector = Projections.ProjectP1;
             ZBuffer = new double[Canvas.Width, Canvas.Height];
             CBuffer = new Color[Canvas.Width, Canvas.Height];
+            functions = new List<FloatingHorizon.functionType>() { F1, SinCos, F3, F4, F5 };
+            listBox1.Items.AddRange(new object[] { "F1", "SinCos", "F3", "F4", "F5" });
         }
 
         public void FullCarcassPipeline()
@@ -118,6 +129,14 @@ namespace Room
             if (z < 0) return;
             var radius = 50 / (1 + (float)z);
             graphics.DrawEllipse(new Pen(Color.Red, 1.5f), point.X - radius / 2, point.Y - radius / 2, radius, radius);
+        }
+
+        public void HorizonPipeline()
+        {
+            graphics.Clear(DefaultBackColor);
+            FloatingHorizon.HorizonDrawer hd = new FloatingHorizon.HorizonDrawer(Canvas.Width, Canvas.Height);
+            hd.InitializeHorizonDrawer();
+            hd.Draw(graphics, functions[ind]);
         }
 
         public void RestoreBuffers()
@@ -359,6 +378,18 @@ namespace Room
         private void ShadeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             RENDER = ShadePipeline;
+            RENDER();
+        }
+
+        private void HorizonRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RENDER = HorizonPipeline;
+            RENDER();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ind = listBox1.SelectedIndex;
             RENDER();
         }
     }
